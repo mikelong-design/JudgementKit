@@ -1,0 +1,33 @@
+flowchart TD
+  %% =========================
+  %% Domain Strategy (3 domains)
+  %% =========================
+
+  A["Traffic entry<br/>LinkedIn • SEO • AI citations • direct type-in"] --> B{"Which domain is requested?"}
+
+  %% Catcher domains (never serve content)
+  B -->|"judgmentkit.com"| C1["judgmentkit.com<br/>Redirect-only"]
+  B -->|"judgementkit.com"| C2["judgementkit.com<br/>Redirect-only"]
+
+  %% Canonical domain (serves the site)
+  B -->|"judgmentkit.design"| D["judgmentkit.design<br/>Canonical site"]
+
+  %% One-hop permanent redirects (preserve path & query)
+  C1 -->|"301/308 (one hop)<br/>preserve path + query"| E["https://judgmentkit.design/$path?$query"]
+  C2 -->|"301/308 (one hop)<br/>preserve path + query"| E
+
+  %% Canonical host/protocol normalization
+  D --> F{"Normalize on canonical"}
+  F -->|"http -> https"| E
+  F -->|"www -> apex (if www exists)"| E
+  F -->|"already canonical"| G["Serve content (200)"]
+
+  %% Canonical-only SEO objects
+  G --> H["Canonical-only signals<br/>rel=canonical • sitemap • OG tags<br/>(never on .com domains)"]
+
+  %% Platform IA (what you want cited)
+  H --> I["Platform IA under /kits<br/>Kit pages + module deep links"]
+  I --> I1["/kits/design-judgment"]
+  I1 --> I2["/responsibilities-matrix"]
+  I1 --> I3["/decision-rights"]
+  I1 --> I4["/weekly-cadence"]
