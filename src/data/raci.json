@@ -1,0 +1,9 @@
+[
+  { "decisionType": "Primary user flow + key states", "designer": "A/R", "pm": "C", "engineering": "C" },
+  { "decisionType": "Success criteria + tradeoff call", "designer": "C", "pm": "A/R", "engineering": "C" },
+  { "decisionType": "Interaction patterns / system behavior", "designer": "A/R", "pm": "C", "engineering": "C" },
+  { "decisionType": "Component system changes", "designer": "A/R", "pm": "I", "engineering": "C" },
+  { "decisionType": "AI-generated UI allowed into build", "designer": "A/R (quality gate)", "pm": "C", "engineering": "R (implementation gate)" },
+  { "decisionType": "Accessibility sign-off", "designer": "A/R", "pm": "I", "engineering": "R (technical compliance)" },
+  { "decisionType": "Post-ship UX debt prioritization", "designer": "R", "pm": "A", "engineering": "C" }
+]

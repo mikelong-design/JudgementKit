@@ -1,0 +1,36 @@
+body.layout-baseline {
+  --page-bg: linear-gradient(180deg, #edf3fb 0%, #f5f8fc 34%, #f1f5fb 100%);
+  --page-bg-tone: #f4f8fc;
+  --surface: rgba(255, 255, 255, 0.74);
+  --surface-strong: rgba(255, 255, 255, 0.9);
+  --button-bg: #f0d7a8;
+  --button-bg-2: #f8e9ca;
+  --link: #265788;
+}
+
+.layout-baseline .hero-wrap {
+  grid-template-columns: 1.3fr 1fr;
+  align-items: start;
+}
+
+.layout-baseline .hero-wrap > :nth-child(3) {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.66);
+  padding: 0.95rem;
+}
+
+.layout-baseline .kit-modules {
+  margin-top: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+@media (max-width: 1023px) {
+  .layout-baseline .hero-wrap {
+    grid-template-columns: 1fr;
+  }
+
+  .layout-baseline .kit-modules {
+    grid-template-columns: 1fr;
+  }
+}

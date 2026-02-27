@@ -1,0 +1,58 @@
+body.layout-flow {
+  --page-bg: linear-gradient(170deg, #f2f3fb 0%, #f7f8fe 46%, #f0f4fb 100%);
+  --page-bg-tone: #f5f6fd;
+  --surface: rgba(255, 255, 255, 0.78);
+  --surface-strong: rgba(255, 255, 255, 0.92);
+  --button-bg: #d5d8f6;
+  --button-bg-2: #ebeefe;
+  --link: #344b8b;
+}
+
+.layout-flow .hero-wrap {
+  grid-template-columns: 1fr;
+}
+
+.layout-flow .flow-summary {
+  margin-top: 0.95rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.95rem;
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.layout-flow .flow-summary p + p {
+  margin-top: 0.55rem;
+}
+
+.layout-flow .flow-stage {
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.94), rgba(245, 248, 255, 0.86));
+}
+
+.layout-flow .flow-stage em {
+  font-style: normal;
+  color: var(--muted-2);
+  font-size: 0.84rem;
+}
+
+.layout-flow .flow-stage p {
+  margin-top: 0.35rem;
+}
+
+.layout-flow .flow-links {
+  margin-top: 0.85rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.layout-flow .flow-links span {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.76);
+  padding: 0.22rem 0.58rem;
+  font-size: 0.82rem;
+  color: var(--muted);
+}

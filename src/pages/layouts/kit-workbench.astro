@@ -1,0 +1,345 @@
+---
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/inter/600.css';
+import '@fontsource/inter/700.css';
+import '@fontsource/instrument-serif/400.css';
+
+import {
+  failureModes,
+  getMatrixRows,
+  getRaciRows,
+  heroSlides,
+  howToUseSteps,
+  kitModules
+} from '../../lib/kit-content';
+import '../../styles/kit-shared.css';
+import '../../styles/layout-workbench.css';
+
+const matrix = getMatrixRows();
+const raci = getRaciRows();
+const pageTitle = 'Design Judgment Kit - Workbench Layout';
+const pageDescription =
+  'A dashboard-style layout focused on kit modules and fast operating decisions.';
+const ogImage = '/assets/ownership_visible_v4_header_1536x804.png';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:type" content="website" />
+  </head>
+  <body class="layout-workbench">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <header class="site-nav">
+      <div class="nav-inner">
+        <a class="brand" href="#overview">Kit Workbench</a>
+        <button
+          type="button"
+          class="menu-toggle"
+          aria-expanded="false"
+          aria-controls="mobile-nav"
+          data-menu-toggle
+        >
+          Menu
+        </button>
+        <nav class="nav-links" aria-label="Primary">
+          <a href="/">Review Hub</a>
+          <a href="#overview">Overview</a>
+          <a href="#kit-at-a-glance">Kit at a glance</a>
+          <a href="#matrix">Matrix</a>
+          <a href="#decision-rights">Decision Rights</a>
+          <a href="#runbook">Runbook</a>
+          <a href="#downloads">Downloads</a>
+        </nav>
+      </div>
+      <nav id="mobile-nav" class="mobile-menu" data-open="false" aria-label="Mobile sections">
+        <a href="/">Review Hub</a>
+        <a href="#overview">Overview</a>
+        <a href="#kit-at-a-glance">Kit at a glance</a>
+        <a href="#matrix">Matrix</a>
+        <a href="#decision-rights">Decision Rights</a>
+        <a href="#runbook">Runbook</a>
+        <a href="#downloads">Downloads</a>
+      </nav>
+    </header>
+
+    <main id="main-content" class="layout-shell">
+      <section id="overview" aria-labelledby="overview-title">
+        <div class="hero-wrap">
+          <figure class="hero-media">
+            <div class="hero-carousel" role="region" aria-label="Hero image comparison" tabindex="0" data-carousel>
+              <div class="hero-carousel-track">
+                {
+                  heroSlides.map((slide, index) => (
+                    <figure class="hero-slide" data-slide hidden={index !== 0} aria-hidden={index !== 0}>
+                      <img
+                        class="hero-banner"
+                        src={slide.src}
+                        alt={slide.alt}
+                        width="1536"
+                        height="804"
+                        loading={index === 0 ? 'eager' : 'lazy'}
+                        decoding="async"
+                      />
+                    </figure>
+                  ))
+                }
+              </div>
+              <div class="hero-carousel-controls">
+                <button type="button" class="carousel-nav" data-carousel-prev>
+                  Previous
+                </button>
+                <div class="carousel-dots" role="tablist" aria-label="Hero image options">
+                  {
+                    heroSlides.map((slide, index) => (
+                      <button
+                        type="button"
+                        class="carousel-dot"
+                        data-carousel-dot={index}
+                        aria-label={`Show image ${index + 1}: ${slide.label}`}
+                        aria-current={index === 0 ? 'true' : 'false'}
+                      ></button>
+                    ))
+                  }
+                </div>
+                <button type="button" class="carousel-nav" data-carousel-next>
+                  Next
+                </button>
+              </div>
+            </div>
+          </figure>
+
+          <div class="workbench-panel">
+            <span class="muted-chip">Concept 1: Workbench</span>
+            <h1 id="overview-title">Kit-first operating console</h1>
+            <p class="subhead">
+              This layout treats the page like a weekly operating board: module cards on top, working
+              tables in the center, and quick rituals to keep decisions from drifting.
+            </p>
+            <div class="cta-row">
+              <a class="button primary" href="#kit-at-a-glance">See kit modules</a>
+              <a class="button ghost" href="#runbook">Open runbook</a>
+            </div>
+            <ul class="quick-checklist">
+              <li>Start with one active initiative and assign owners.</li>
+              <li>Run matrix checks before engineering scope locks in.</li>
+              <li>Close the week with explicit decision callouts.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="workbench-grid">
+          <article class="workbench-panel">
+            <h2>What this optimizes</h2>
+            <p>
+              Fast scanning and direct action. Teams can jump from module context to matrix rows and
+              decision-rights without scrolling through design philosophy.
+            </p>
+          </article>
+          <article class="workbench-panel">
+            <h2>Review posture</h2>
+            <p>
+              Best when you want to evaluate “can we run this next week?” rather than storytelling tone.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="kit-at-a-glance" aria-labelledby="kit-at-a-glance-title">
+        <h2 id="kit-at-a-glance-title">Kit at a glance</h2>
+        <p class="intro">Each module is concrete and operational, designed to be used in live delivery work.</p>
+        <div class="kit-modules">
+          {
+            kitModules.map((module) => (
+              <article class="module-card">
+                <strong>{module.title}</strong>
+                <p>{module.summary}</p>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <section id="matrix" aria-labelledby="matrix-title">
+        <h2 id="matrix-title">Responsibilities matrix</h2>
+        <p class="intro">Filter by keywords during planning, grooming, or review conversations.</p>
+
+        <div class="matrix-controls">
+          <label class="sr-only" for="matrix-search">Search responsibilities</label>
+          <input
+            id="matrix-search"
+            type="search"
+            placeholder="Search responsibilities by keyword"
+            autocomplete="off"
+            data-matrix-search
+          />
+          <button type="button" data-matrix-clear>Clear</button>
+          <p class="result-count" aria-live="polite" data-matrix-count>
+            Showing {matrix.length} of {matrix.length}
+          </p>
+        </div>
+
+        <div class="panel matrix-desktop">
+          <div class="table-wrap">
+            <table class="data-table" aria-describedby="matrix-title">
+              <thead>
+                <tr>
+                  <th scope="col">Area</th>
+                  <th scope="col">What you own</th>
+                  <th scope="col">Week to week</th>
+                  <th scope="col">Guardrails</th>
+                  <th scope="col">Warning signs</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  matrix.map((item) => (
+                    <tr data-matrix-row data-search={item.search}>
+                      <th scope="row">{item.area}</th>
+                      <td>{item.own}</td>
+                      <td>{item.weekToWeek}</td>
+                      <td>{item.guardrails}</td>
+                      <td>{item.warning}</td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+          </div>
+          <p class="helper">Use this table live in planning sessions to catch drift early.</p>
+        </div>
+
+        <div class="matrix-mobile" aria-label="Responsibilities in card form">
+          {
+            matrix.map((item) => (
+              <details class="matrix-card" data-matrix-card data-search={item.search}>
+                <summary>
+                  <strong>{item.area}</strong>
+                  <span>{item.own}</span>
+                </summary>
+                <div class="matrix-card-body">
+                  <p>
+                    <strong>Week to week:</strong> {item.weekToWeek}
+                  </p>
+                  <p>
+                    <strong>Guardrails:</strong> {item.guardrails}
+                  </p>
+                  <p>
+                    <strong>Warning signs:</strong> {item.warning}
+                  </p>
+                </div>
+              </details>
+            ))
+          }
+        </div>
+      </section>
+
+      <section id="decision-rights" aria-labelledby="decision-rights-title">
+        <h2 id="decision-rights-title">Decision-rights snapshot</h2>
+        <p class="context">Keep this visible in sprint planning and release readiness reviews.</p>
+
+        <div class="panel raci-desktop">
+          <div class="table-wrap">
+            <table class="data-table" aria-describedby="decision-rights-title">
+              <thead>
+                <tr>
+                  <th scope="col">Decision type</th>
+                  <th scope="col">Designer</th>
+                  <th scope="col">PM</th>
+                  <th scope="col">Engineering</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  raci.map((row) => (
+                    <tr>
+                      <th scope="row">{row.decisionType}</th>
+                      <td>{row.designer}</td>
+                      <td>{row.pm}</td>
+                      <td>{row.engineering}</td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="raci-mobile" aria-label="Decision rights in card form">
+          {
+            raci.map((row) => (
+              <article class="raci-card">
+                <h3>{row.decisionType}</h3>
+                <dl>
+                  <dt>Designer</dt>
+                  <dd>{row.designer}</dd>
+                  <dt>PM</dt>
+                  <dd>{row.pm}</dd>
+                  <dt>Engineering</dt>
+                  <dd>{row.engineering}</dd>
+                </dl>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <section id="runbook" aria-labelledby="runbook-title">
+        <h2 id="runbook-title">Runbook</h2>
+        <ol>
+          {
+            howToUseSteps.map((step) => (
+              <li>{step}</li>
+            ))
+          }
+        </ol>
+        <aside class="callout" aria-label="Common failure modes">
+          <h3>Common failure modes</h3>
+          <ul>
+            {
+              failureModes.map((failure) => (
+                <li>{failure}</li>
+              ))
+            }
+          </ul>
+        </aside>
+      </section>
+
+      <section id="downloads" aria-labelledby="downloads-title">
+        <h2 id="downloads-title">Downloads</h2>
+        <div class="downloads-row">
+          <a class="button ghost" href="#downloads" aria-disabled="true" title="PDF coming soon">
+            Matrix + RACI (PDF)
+          </a>
+          <a class="button" href="/downloads/matrix.csv" download>
+            Matrix (CSV)
+          </a>
+          <a class="button" href="/downloads/raci.csv" download>
+            RACI (CSV)
+          </a>
+        </div>
+      </section>
+
+      <footer>
+        <p>Concept focus: dense operational scanning for weekly decision quality rituals.</p>
+      </footer>
+    </main>
+
+    <script>
+      import { initKitPage } from '../../scripts/init-kit-page';
+
+      initKitPage();
+    </script>
+  </body>
+</html>

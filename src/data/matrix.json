@@ -1,0 +1,72 @@
+[
+  {
+    "area": "Decision quality early",
+    "own": "Make tradeoffs visible before the team commits",
+    "weekToWeek": "You’re in the first working session, not the final review. You name risks, user impact, and constraints while options are still flexible.",
+    "guardrails": "“Looks finished” ≠ “agreed.” AI drafts trigger a tradeoff check, not an auto-approval.",
+    "warning": "You’re asked to review after tickets are written or after UI is already in PR."
+  },
+  {
+    "area": "Intent + rationale",
+    "own": "Keep the why legible",
+    "weekToWeek": "You write 3–5 bullets that explain intent, constraints, and what good means for this slice.",
+    "guardrails": "AI output must be paired with intent: what are we optimizing for?",
+    "warning": "People circulate screenshots without context and treat reactions as decisions."
+  },
+  {
+    "area": "Interaction quality",
+    "own": "States, edge cases, and user trust",
+    "weekToWeek": "You cover empty/error/loading states, recovery flows, permissions, confirmations, and clear feedback.",
+    "guardrails": "AI often skips states. You insist on state coverage before done.",
+    "warning": "You’re only asked to polish the happy path. UX debt appears after launch."
+  },
+  {
+    "area": "System coherence",
+    "own": "Prevent drift across surfaces",
+    "weekToWeek": "You align patterns, tokens, components, and behavior rules across the product.",
+    "guardrails": "AI creates plausible but inconsistent patterns. You standardize before duplication spreads.",
+    "warning": "Every feature invents a new pattern because the AI suggested it."
+  },
+  {
+    "area": "Draft discipline",
+    "own": "Keep work reversible",
+    "weekToWeek": "You label what’s draft vs committed and keep batches small enough to revise without drama.",
+    "guardrails": "AI increases speed; you protect reversibility so fast output doesn’t become the default.",
+    "warning": "Too late to change shows up early."
+  },
+  {
+    "area": "Quality bar (craft)",
+    "own": "Define what good means beyond polish",
+    "weekToWeek": "You define a lightweight bar: clarity, consistency, accessibility, state coverage, and rationale.",
+    "guardrails": "AI makes polish cheap; you keep the bar anchored in usability and coherence.",
+    "warning": "Craft becomes a style debate instead of a product-quality discussion."
+  },
+  {
+    "area": "Collaboration model",
+    "own": "Stay embedded where decisions happen",
+    "weekToWeek": "You set working agreements: when you’re needed, which decisions require you, and how async reviews work.",
+    "guardrails": "Pairing helps but isn’t required; decision timing matters more than perfect ratios.",
+    "warning": "You’re treated like a service desk instead of a partner shaping direction."
+  },
+  {
+    "area": "Outcome ownership",
+    "own": "Tie design to measurable impact",
+    "weekToWeek": "You help define success metrics and run post-ship checks (support signals, drop-offs, usability issues).",
+    "guardrails": "AI can inflate output volume; keep accountability anchored in outcomes.",
+    "warning": "You’re accountable for polish but absent from outcome review."
+  },
+  {
+    "area": "User validation",
+    "own": "Bring reality checks into the loop",
+    "weekToWeek": "You run lightweight tests and prototype checks before build locks in.",
+    "guardrails": "AI can create confidence without evidence; bring evidence back into the room.",
+    "warning": "Research is treated as optional because the AI already designed it."
+  },
+  {
+    "area": "AI literacy (practical)",
+    "own": "Use AI as acceleration, not authority",
+    "weekToWeek": "You use AI for drafts, variants, and synthesis, then apply judgment and system constraints.",
+    "guardrails": "AI generates, humans validate.",
+    "warning": "You’re expected to just prompt it to solve product ambiguity."
+  }
+]

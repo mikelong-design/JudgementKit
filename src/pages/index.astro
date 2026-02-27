@@ -1,0 +1,186 @@
+---
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/inter/600.css';
+import '@fontsource/inter/700.css';
+import '@fontsource/instrument-serif/400.css';
+
+import '../styles/kit-shared.css';
+import '../styles/layout-review-hub.css';
+
+const pageTitle = 'Design Judgment Kit - Local Layout Review Hub';
+const pageDescription =
+  'Local-only review hub for kit-first layout concepts. No deployment changes included.';
+
+const layoutRoutes = [
+  {
+    href: '/layouts/baseline',
+    title: 'Baseline (kit-refined)',
+    chip: 'Balanced narrative',
+    summary: 'Keeps current structure, removes style-guide content, and adds explicit kit modules.',
+    optimize: 'Continuity with minimal IA change'
+  },
+  {
+    href: '/layouts/kit-workbench',
+    title: 'Kit Workbench',
+    chip: 'Dashboard posture',
+    summary: 'Front-loads module cards and operational checklists for fast decision-oriented scanning.',
+    optimize: 'Weekly operating usability'
+  },
+  {
+    href: '/layouts/kit-flow',
+    title: 'Kit Flow',
+    chip: 'Stage-driven',
+    summary: 'Maps judgment checkpoints directly to delivery phases from frame to audit.',
+    optimize: 'When-to-use clarity'
+  },
+  {
+    href: '/layouts/kit-ops-deck',
+    title: 'Kit Ops Deck',
+    chip: 'Cadence-first',
+    summary: 'Uses a side rail and cadence deck to emphasize ongoing rituals and role accountability.',
+    optimize: 'Operations discipline'
+  }
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+  </head>
+  <body class="layout-review-hub">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <header class="site-nav">
+      <div class="nav-inner">
+        <a class="brand" href="#review-pack">Design Judgment Kit</a>
+        <button
+          type="button"
+          class="menu-toggle"
+          aria-expanded="false"
+          aria-controls="mobile-nav"
+          data-menu-toggle
+        >
+          Menu
+        </button>
+        <nav class="nav-links" aria-label="Primary">
+          <a href="#review-pack">Review pack</a>
+          <a href="#layout-urls">Local URLs</a>
+          <a href="#compare">Comparison</a>
+        </nav>
+      </div>
+      <nav id="mobile-nav" class="mobile-menu" data-open="false" aria-label="Mobile sections">
+        <a href="#review-pack">Review pack</a>
+        <a href="#layout-urls">Local URLs</a>
+        <a href="#compare">Comparison</a>
+      </nav>
+    </header>
+
+    <main id="main-content" class="layout-shell">
+      <section id="review-pack" aria-labelledby="review-pack-title">
+        <div class="hub-intro">
+          <span class="muted-chip">Local review only</span>
+          <h1 id="review-pack-title">Kit-first layout exploration pack</h1>
+          <p class="subhead">
+            This route is your local review hub. It links to one cleaned baseline and three additional
+            layout concepts, all built around practical kit usage and explicitly excluding any style-guide
+            section.
+          </p>
+          <div class="cta-row">
+            <a class="button primary" href="#layout-urls">Open local URLs</a>
+            <a class="button ghost" href="#compare">Jump to comparison table</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="layout-urls" aria-labelledby="layout-urls-title">
+        <h2 id="layout-urls-title">Local URLs</h2>
+        <p class="intro">Each concept has a dedicated route for isolated local review.</p>
+        <div class="layout-grid">
+          {
+            layoutRoutes.map((layout) => (
+              <article class="layout-link-card">
+                <span class="muted-chip">{layout.chip}</span>
+                <h3>{layout.title}</h3>
+                <p>{layout.summary}</p>
+                <p>
+                  <strong>Optimizes:</strong> {layout.optimize}
+                </p>
+                <a href={layout.href}>{layout.href}</a>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <section id="compare" aria-labelledby="compare-title">
+        <h2 id="compare-title">Quick comparison</h2>
+        <p class="context">Use this table to choose which direction to refine after local review.</p>
+
+        <div class="compare-table-wrap">
+          <table class="compare-table" aria-describedby="compare-title">
+            <thead>
+              <tr>
+                <th scope="col">Route</th>
+                <th scope="col">IA emphasis</th>
+                <th scope="col">Scanning style</th>
+                <th scope="col">Review posture</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">/layouts/baseline</th>
+                <td>Balanced narrative + modules</td>
+                <td>Linear</td>
+                <td>Low-change continuity check</td>
+              </tr>
+              <tr>
+                <th scope="row">/layouts/kit-workbench</th>
+                <td>Module-first dashboard</td>
+                <td>Fast scan and action</td>
+                <td>Operational usability check</td>
+              </tr>
+              <tr>
+                <th scope="row">/layouts/kit-flow</th>
+                <td>Stage-based workflow rail</td>
+                <td>Top-down by delivery phase</td>
+                <td>Timing and sequence check</td>
+              </tr>
+              <tr>
+                <th scope="row">/layouts/kit-ops-deck</th>
+                <td>Cadence + side-rail modules</td>
+                <td>Ritual-oriented</td>
+                <td>Governance and role clarity check</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="review-notes">
+          <strong>Review note:</strong>
+          <ul>
+            <li>No route includes an irrelevant visual-guidelines section.</li>
+            <li>All concept routes retain search, carousel, mobile nav, and responsive table/card behavior.</li>
+            <li>No deployment workflow was changed; this is local review only.</li>
+          </ul>
+        </div>
+      </section>
+
+      <footer>
+        <p>Generated for local concept review. Deploy decision intentionally deferred.</p>
+      </footer>
+    </main>
+
+    <script>
+      import { initKitPage } from '../scripts/init-kit-page';
+
+      initKitPage();
+    </script>
+  </body>
+</html>

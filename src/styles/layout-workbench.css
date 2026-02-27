@@ -1,0 +1,52 @@
+body.layout-workbench {
+  --page-bg: linear-gradient(160deg, #eef6f5 0%, #f7fbf8 42%, #ecf4ef 100%);
+  --page-bg-tone: #f3f9f4;
+  --surface: rgba(255, 255, 255, 0.76);
+  --surface-strong: rgba(255, 255, 255, 0.92);
+  --button-bg: #bfe0bf;
+  --button-bg-2: #d8edd2;
+  --link: #215a4a;
+}
+
+.layout-workbench .hero-wrap {
+  grid-template-columns: 1.15fr 0.85fr;
+  align-items: start;
+}
+
+.layout-workbench .workbench-grid {
+  margin-top: 1rem;
+  grid-template-columns: 1.05fr 0.95fr;
+}
+
+.layout-workbench .workbench-panel {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.8);
+  padding: 1rem;
+  box-shadow: var(--shadow);
+}
+
+.layout-workbench .kit-modules {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.layout-workbench .quick-checklist {
+  margin-top: 0.9rem;
+  padding-left: 1.1rem;
+  color: var(--muted);
+}
+
+.layout-workbench .quick-checklist li + li {
+  margin-top: 0.35rem;
+}
+
+@media (max-width: 1023px) {
+  .layout-workbench .hero-wrap,
+  .layout-workbench .workbench-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .layout-workbench .kit-modules {
+    grid-template-columns: 1fr;
+  }
+}

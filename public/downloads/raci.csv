@@ -1,0 +1,8 @@
+decisionType,designer,pm,engineering
+Primary user flow + key states,A/R,C,C
+Success criteria + tradeoff call,C,A/R,C
+Interaction patterns / system behavior,A/R,C,C
+Component system changes,A/R,I,C
+AI-generated UI allowed into build,A/R (quality gate),C,R (implementation gate)
+Accessibility sign-off,A/R,I,R (technical compliance)
+Post-ship UX debt prioritization,R,A,C
