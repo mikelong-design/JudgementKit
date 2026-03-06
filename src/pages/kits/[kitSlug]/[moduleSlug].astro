@@ -1,0 +1,144 @@
+---
+import SiteLayout from '../../../components/SiteLayout.astro';
+import MatrixModule from '../../../components/MatrixModule.astro';
+import DecisionRightsModule from '../../../components/DecisionRightsModule.astro';
+import WeeklyCadenceModule from '../../../components/WeeklyCadenceModule.astro';
+import { getAllKits, getKitBySlug, getModuleBySlug, orderedModules, type ModuleSlug } from '../../../lib/kits';
+
+export function getStaticPaths() {
+  return getAllKits().flatMap((kit) =>
+    orderedModules(kit).map((module) => ({
+      params: { kitSlug: kit.slug, moduleSlug: module.slug }
+    }))
+  );
+}
+
+const kit = getKitBySlug(Astro.params.kitSlug || '');
+
+if (!kit) {
+  throw new Error(`Unknown kit slug: ${Astro.params.kitSlug}`);
+}
+
+const moduleEntry = getModuleBySlug(kit, Astro.params.moduleSlug || '');
+
+if (!moduleEntry) {
+  throw new Error(`Unknown module slug: ${Astro.params.moduleSlug}`);
+}
+
+const navLinks = [
+  { href: '/', label: 'Platform' },
+  { href: '/kits', label: 'Kits' },
+  { href: `/kits/${kit.slug}`, label: kit.title },
+  { href: '#module-content', label: 'Module' }
+];
+
+const modules = orderedModules(kit);
+const supportingImageBySlug: Record<ModuleSlug, string> = {
+  'responsibilities-matrix': '/assets/support_draft_vs_default_header_1536x804.png',
+  'decision-rights': '/assets/ownership_visible_v4_header_tight_1536x804.png',
+  'weekly-cadence': '/assets/support_judgment_early_header_1536x804.png'
+};
+---
+
+<SiteLayout
+  title={`${kit.title}: ${moduleEntry.title}`}
+  description={moduleEntry.summary}
+  path={`/kits/${kit.slug}/${moduleEntry.slug}`}
+  navLinks={navLinks}
+  ogImage={supportingImageBySlug[moduleEntry.slug]}
+  bodyClass="module-page"
+>
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ol>
+      <li><a href="/">Platform</a></li>
+      <li><a href="/kits">Kits</a></li>
+      <li><a href={`/kits/${kit.slug}`}>{kit.title}</a></li>
+      <li aria-current="page">{moduleEntry.title}</li>
+    </ol>
+  </nav>
+
+  <section class="module-columns" aria-labelledby="module-title">
+    <div class="module-section">
+      <div class="module-header">
+        <span class="muted-chip">{moduleEntry.slug}</span>
+        <h1 id="module-title">{moduleEntry.title}</h1>
+        <p class="subhead">{moduleEntry.summary}</p>
+        {moduleEntry.intro && <p>{moduleEntry.intro}</p>}
+        {moduleEntry.context && <p class="context">{moduleEntry.context}</p>}
+      </div>
+
+      {moduleEntry.body && (
+        <div class="module-copy">
+          {
+            moduleEntry.body.map((paragraph) => (
+              <p>{paragraph}</p>
+            ))
+          }
+        </div>
+      )}
+
+      <figure class="supporting-image">
+        <img
+          src={supportingImageBySlug[moduleEntry.slug]}
+          alt={`${moduleEntry.title} editorial illustration`}
+          width="1536"
+          height="804"
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+    </div>
+
+    <aside class="module-sidecard">
+      <strong>Kit navigation</strong>
+      <ul>
+        {
+          modules.map((item) => (
+            <li>
+              <a href={`/kits/${kit.slug}/${item.slug}`}>{item.title}</a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <strong>Kit runbook</strong>
+      <ol>
+        {
+          kit.howToUse.map((step) => (
+            <li>{step}</li>
+          ))
+        }
+      </ol>
+    </aside>
+  </section>
+
+  <section id="module-content" class="module-section" aria-labelledby="module-content-title">
+    <h2 id="module-content-title">{moduleEntry.title}</h2>
+
+    {moduleEntry.tableData?.kind === 'matrix' && (
+      <MatrixModule rows={moduleEntry.tableData.rows} helper={moduleEntry.helper} />
+    )}
+
+    {moduleEntry.tableData?.kind === 'raci' && <DecisionRightsModule rows={moduleEntry.tableData.rows} />}
+
+    {moduleEntry.tableData?.kind === 'cadence' && <WeeklyCadenceModule rows={moduleEntry.tableData.rows} />}
+
+    {moduleEntry.downloads && (
+      <div class="downloads-row">
+        {
+          moduleEntry.downloads.map((download) => (
+            <a
+              class:list={['button', download.disabled ? 'ghost' : '']}
+              href={download.disabled ? '#downloads' : download.href}
+              download={!download.disabled}
+              aria-disabled={download.disabled ? 'true' : undefined}
+              title={download.note}
+            >
+              {download.label}
+            </a>
+          ))
+        }
+      </div>
+    )}
+  </section>
+</SiteLayout>

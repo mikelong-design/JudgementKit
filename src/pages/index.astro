@@ -1,186 +1,212 @@
 ---
-import '@fontsource/inter/400.css';
-import '@fontsource/inter/500.css';
-import '@fontsource/inter/600.css';
-import '@fontsource/inter/700.css';
-import '@fontsource/instrument-serif/400.css';
+import SiteLayout from '../components/SiteLayout.astro';
+import { getAllKits, orderedModules } from '../lib/kits';
+import { SITE } from '../lib/site';
 
-import '../styles/kit-shared.css';
-import '../styles/layout-review-hub.css';
+const kits = getAllKits();
+const currentKit = kits[0];
+const primaryModules = currentKit ? orderedModules(currentKit) : [];
 
-const pageTitle = 'Design Judgment Kit - Local Layout Review Hub';
-const pageDescription =
-  'Local-only review hub for kit-first layout concepts. No deployment changes included.';
-
-const layoutRoutes = [
-  {
-    href: '/layouts/baseline',
-    title: 'Baseline (kit-refined)',
-    chip: 'Balanced narrative',
-    summary: 'Keeps current structure, removes style-guide content, and adds explicit kit modules.',
-    optimize: 'Continuity with minimal IA change'
-  },
-  {
-    href: '/layouts/kit-workbench',
-    title: 'Kit Workbench',
-    chip: 'Dashboard posture',
-    summary: 'Front-loads module cards and operational checklists for fast decision-oriented scanning.',
-    optimize: 'Weekly operating usability'
-  },
-  {
-    href: '/layouts/kit-flow',
-    title: 'Kit Flow',
-    chip: 'Stage-driven',
-    summary: 'Maps judgment checkpoints directly to delivery phases from frame to audit.',
-    optimize: 'When-to-use clarity'
-  },
-  {
-    href: '/layouts/kit-ops-deck',
-    title: 'Kit Ops Deck',
-    chip: 'Cadence-first',
-    summary: 'Uses a side rail and cadence deck to emphasize ongoing rituals and role accountability.',
-    optimize: 'Operations discipline'
-  }
+const navLinks = [
+  { href: '/#vision', label: 'Vision' },
+  { href: '/kits', label: 'Kits' },
+  { href: '/#domain-strategy', label: 'Domain Strategy' },
+  { href: '/review', label: 'Review Routes' }
 ];
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>{pageTitle}</title>
-    <meta name="description" content={pageDescription} />
-  </head>
-  <body class="layout-review-hub">
-    <a class="skip-link" href="#main-content">Skip to content</a>
-
-    <header class="site-nav">
-      <div class="nav-inner">
-        <a class="brand" href="#review-pack">Design Judgment Kit</a>
-        <button
-          type="button"
-          class="menu-toggle"
-          aria-expanded="false"
-          aria-controls="mobile-nav"
-          data-menu-toggle
-        >
-          Menu
-        </button>
-        <nav class="nav-links" aria-label="Primary">
-          <a href="#review-pack">Review pack</a>
-          <a href="#layout-urls">Local URLs</a>
-          <a href="#compare">Comparison</a>
-        </nav>
+<SiteLayout
+  title="Platform"
+  description={SITE.description}
+  path="/"
+  navLinks={navLinks}
+  bodyClass="platform-home"
+>
+  <section class="platform-hero" id="top" aria-labelledby="home-title">
+    <div class="hero-copy">
+      <span class="muted-chip">Canonical platform: judgmentkit.design</span>
+      <h1 id="home-title">Judgment Kit Platform</h1>
+      <p class="subhead">
+        Judgment Kit is a platform of practical operating kits that help AI-accelerated product teams
+        preserve <strong>decision quality</strong>, <strong>accountability</strong>, and
+        <strong> product coherence</strong> when output becomes cheap and finished-looking.
+      </p>
+      <div class="cta-row">
+        <a class="button primary" href="/kits">Browse kits</a>
+        <a class="button ghost" href={currentKit ? `/kits/${currentKit.slug}` : '/kits'}>Open current kit</a>
       </div>
-      <nav id="mobile-nav" class="mobile-menu" data-open="false" aria-label="Mobile sections">
-        <a href="#review-pack">Review pack</a>
-        <a href="#layout-urls">Local URLs</a>
-        <a href="#compare">Comparison</a>
-      </nav>
-    </header>
+      <p class="small-note">
+        Core thesis: <em>AI accelerates drafts; judgment prevents drafts becoming defaults.</em>
+      </p>
+      <p>
+        The failure mode has changed. Teams do not struggle to generate options; they struggle to keep
+        polished drafts from quietly becoming decisions without explicit ownership or tradeoff review.
+      </p>
+      <p>
+        Judgment Kit turns judgment into a repeatable operating system so responsibilities, decision
+        rights, and cadence are visible before work hardens.
+      </p>
+    </div>
 
-    <main id="main-content" class="layout-shell">
-      <section id="review-pack" aria-labelledby="review-pack-title">
-        <div class="hub-intro">
-          <span class="muted-chip">Local review only</span>
-          <h1 id="review-pack-title">Kit-first layout exploration pack</h1>
-          <p class="subhead">
-            This route is your local review hub. It links to one cleaned baseline and three additional
-            layout concepts, all built around practical kit usage and explicitly excluding any style-guide
-            section.
-          </p>
-          <div class="cta-row">
-            <a class="button primary" href="#layout-urls">Open local URLs</a>
-            <a class="button ghost" href="#compare">Jump to comparison table</a>
-          </div>
-        </div>
-      </section>
+    <div class="hero-sidebar">
+      <div class="summary-grid">
+        <article class="summary-card">
+          <strong>Responsibilities are explicit</strong>
+          <p>What is owned, protected, and monitored as output accelerates.</p>
+        </article>
+        <article class="summary-card">
+          <strong>Decision rights are explicit</strong>
+          <p>Who is accountable before polished drafts harden into default decisions.</p>
+        </article>
+        <article class="summary-card">
+          <strong>Cadence is explicit</strong>
+          <p>Judgment shows up as ritual instead of rescue work.</p>
+        </article>
+      </div>
 
-      <section id="layout-urls" aria-labelledby="layout-urls-title">
-        <h2 id="layout-urls-title">Local URLs</h2>
-        <p class="intro">Each concept has a dedicated route for isolated local review.</p>
-        <div class="layout-grid">
-          {
-            layoutRoutes.map((layout) => (
-              <article class="layout-link-card">
-                <span class="muted-chip">{layout.chip}</span>
-                <h3>{layout.title}</h3>
-                <p>{layout.summary}</p>
-                <p>
-                  <strong>Optimizes:</strong> {layout.optimize}
-                </p>
-                <a href={layout.href}>{layout.href}</a>
-              </article>
-            ))
-          }
-        </div>
-      </section>
+      <figure class="supporting-image">
+        <img
+          src="/assets/ownership_visible_v4_header_1536x804.png"
+          alt="A small group shares a lantern in fog, lighting a clear path while other lanterns drift unattended."
+          width="1536"
+          height="804"
+          loading="eager"
+          decoding="async"
+        />
+      </figure>
+    </div>
+  </section>
 
-      <section id="compare" aria-labelledby="compare-title">
-        <h2 id="compare-title">Quick comparison</h2>
-        <p class="context">Use this table to choose which direction to refine after local review.</p>
+  <section id="vision" aria-labelledby="vision-title">
+    <span class="eyebrow">Vision</span>
+    <h2 id="vision-title">Draft speed is no longer the bottleneck</h2>
+    <div class="kit-grid">
+      <article class="spec-card">
+        <strong>Looks complete gets treated as consensus</strong>
+        <p>Teams collapse into default decisions because polished drafts arrive before rationale and ownership.</p>
+      </article>
+      <article class="spec-card">
+        <strong>Output volume increases without clear ownership</strong>
+        <p>AI expands production capacity faster than teams clarify who protects coherence and quality.</p>
+      </article>
+      <article class="spec-card">
+        <strong>Teams ship polish faster than they ship judgment</strong>
+        <p>Operational rituals lag behind generation speed, so mistakes become expensive before they become visible.</p>
+      </article>
+    </div>
+  </section>
 
-        <div class="compare-table-wrap">
-          <table class="compare-table" aria-describedby="compare-title">
-            <thead>
-              <tr>
-                <th scope="col">Route</th>
-                <th scope="col">IA emphasis</th>
-                <th scope="col">Scanning style</th>
-                <th scope="col">Review posture</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">/layouts/baseline</th>
-                <td>Balanced narrative + modules</td>
-                <td>Linear</td>
-                <td>Low-change continuity check</td>
-              </tr>
-              <tr>
-                <th scope="row">/layouts/kit-workbench</th>
-                <td>Module-first dashboard</td>
-                <td>Fast scan and action</td>
-                <td>Operational usability check</td>
-              </tr>
-              <tr>
-                <th scope="row">/layouts/kit-flow</th>
-                <td>Stage-based workflow rail</td>
-                <td>Top-down by delivery phase</td>
-                <td>Timing and sequence check</td>
-              </tr>
-              <tr>
-                <th scope="row">/layouts/kit-ops-deck</th>
-                <td>Cadence + side-rail modules</td>
-                <td>Ritual-oriented</td>
-                <td>Governance and role clarity check</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+  <section aria-labelledby="non-goals-title">
+    <span class="eyebrow">Non-goals</span>
+    <h2 id="non-goals-title">The platform is not a tool catalog</h2>
+    <div class="kit-grid">
+      <article class="spec-card">
+        <strong>Not a prompt library</strong>
+        <p>The kits are built for live delivery work, not prompt collection or vendor comparison.</p>
+      </article>
+      <article class="spec-card">
+        <strong>Not LLM-specific guidance</strong>
+        <p>The operating model focuses on judgment and accountability, not model recommendations.</p>
+      </article>
+      <article class="spec-card">
+        <strong>Not design philosophy essays</strong>
+        <p>Every page should stay operational, citeable, and useful in active product decisions.</p>
+      </article>
+    </div>
+  </section>
 
-        <div class="review-notes">
-          <strong>Review note:</strong>
-          <ul>
-            <li>No route includes an irrelevant visual-guidelines section.</li>
-            <li>All concept routes retain search, carousel, mobile nav, and responsive table/card behavior.</li>
-            <li>No deployment workflow was changed; this is local review only.</li>
-          </ul>
-        </div>
-      </section>
+  <section aria-labelledby="kit-contract-title">
+    <span class="eyebrow">Kit Contract</span>
+    <h2 id="kit-contract-title">What ships in every kit</h2>
+    <div class="kit-contract">
+      <div class="module-nav-grid">
+        {
+          primaryModules.map((module) => (
+            <article class="module-nav-card">
+              <span class="muted-chip">{module.slug}</span>
+              <h3>{module.title}</h3>
+              <p>{module.summary}</p>
+            </article>
+          ))
+        }
+      </div>
+      <div class="review-panel">
+        <p>Each kit must also ship a short “How to use this kit” runbook and explicit failure modes.</p>
+        <p>The flow variant is optional and maps the kit to delivery stages from Frame through Audit.</p>
+      </div>
+    </div>
+  </section>
 
-      <footer>
-        <p>Generated for local concept review. Deploy decision intentionally deferred.</p>
-      </footer>
-    </main>
+  <section id="kits" aria-labelledby="current-kits-title">
+    <span class="eyebrow">Current Kits</span>
+    <h2 id="current-kits-title">Citeable kits and modules</h2>
+    <div class="current-kits-grid">
+      {
+        kits.map((kit) => (
+          <article class="kit-card">
+            <span class="muted-chip">{kit.audience}</span>
+            <h3>{kit.title}</h3>
+            <p>{kit.subtitle}</p>
+            <p>
+              <strong>Thesis:</strong> {kit.coreThesis}
+            </p>
+            <div class="cta-row">
+              <a class="button primary" href={`/kits/${kit.slug}`}>Open kit</a>
+              <a class="button ghost" href={`/kits/${kit.slug}/${kit.modules[0]?.slug}`}>Open first module</a>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
 
-    <script>
-      import { initKitPage } from '../scripts/init-kit-page';
+  <section id="domain-strategy" aria-labelledby="domain-title">
+    <span class="eyebrow">Domain Strategy</span>
+    <h2 id="domain-title">One canonical domain, two redirect-only catchers</h2>
+    <div class="domain-grid">
+      <figure class="domain-diagram">
+        <img
+          src="/diagrams/domain-strategy-platform.svg"
+          alt="Domain strategy flow showing judgmentkit.design as canonical and .com domains redirecting in one hop."
+          width="980"
+          height="540"
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+      <div class="domain-rules">
+        <article class="domain-rule">
+          <strong>Canonical</strong>
+          <p>`judgmentkit.design` serves all HTML, metadata, and sitemap references.</p>
+        </article>
+        <article class="domain-rule">
+          <strong>Redirect-only catchers</strong>
+          <p>`judgmentkit.com` and `judgementkit.com` permanently redirect to the matching canonical path.</p>
+        </article>
+        <article class="domain-rule">
+          <strong>Normalization</strong>
+          <p>`www` redirects to apex and Vercel handles HTTP to HTTPS, preserving path and query.</p>
+        </article>
+      </div>
+    </div>
+  </section>
 
-      initKitPage();
-    </script>
-  </body>
-</html>
+  <section aria-labelledby="ia-title">
+    <span class="eyebrow">Information Architecture</span>
+    <h2 id="ia-title">Platform pages are organized for citation</h2>
+    <div class="ia-grid">
+      <article class="ia-card">
+        <strong>/kits</strong>
+        <p>Kit library index.</p>
+      </article>
+      <article class="ia-card">
+        <strong>/kits/&lt;kit-slug&gt;</strong>
+        <p>Kit landing page with modules, runbook, failure modes, and flow view.</p>
+      </article>
+      <article class="ia-card">
+        <strong>/kits/&lt;kit-slug&gt;/&lt;module-slug&gt;</strong>
+        <p>Shareable deep links for individual modules like responsibilities, decision rights, and cadence.</p>
+      </article>
+    </div>
+  </section>
+</SiteLayout>

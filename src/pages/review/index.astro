@@ -1,0 +1,118 @@
+---
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/inter/600.css';
+import '@fontsource/inter/700.css';
+import '@fontsource/instrument-serif/400.css';
+
+import '../../styles/kit-shared.css';
+import '../../styles/layout-review-hub.css';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Judgment Kit Review Routes</title>
+    <meta
+      name="description"
+      content="Local-only review hub for non-canonical layout exploration routes."
+    />
+    <meta name="robots" content="noindex,nofollow" />
+  </head>
+  <body class="layout-review-hub">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <header class="site-nav">
+      <div class="nav-inner">
+        <a class="brand" href="#review-pack">Judgment Kit Review</a>
+        <button
+          type="button"
+          class="menu-toggle"
+          aria-expanded="false"
+          aria-controls="mobile-nav"
+          data-menu-toggle
+        >
+          Menu
+        </button>
+        <nav class="nav-links" aria-label="Primary">
+          <a href="/">Platform</a>
+          <a href="#review-pack">Review pack</a>
+          <a href="#layout-urls">Local URLs</a>
+          <a href="#compare">Comparison</a>
+        </nav>
+      </div>
+      <nav id="mobile-nav" class="mobile-menu" data-open="false" aria-label="Mobile sections">
+        <a href="/">Platform</a>
+        <a href="#review-pack">Review pack</a>
+        <a href="#layout-urls">Local URLs</a>
+        <a href="#compare">Comparison</a>
+      </nav>
+    </header>
+
+    <main id="main-content" class="layout-shell">
+      <section id="review-pack" aria-labelledby="review-pack-title">
+        <div class="hub-intro">
+          <span class="muted-chip">Review only</span>
+          <h1 id="review-pack-title">Kit-first layout exploration pack</h1>
+          <p class="subhead">
+            These routes remain available for internal review. They are not canonical platform IA and are
+            excluded from indexing.
+          </p>
+          <div class="cta-row">
+            <a class="button primary" href="#layout-urls">Open local URLs</a>
+            <a class="button ghost" href="/">Back to platform</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="layout-urls" aria-labelledby="layout-urls-title">
+        <h2 id="layout-urls-title">Review URLs</h2>
+        <p class="intro">Each concept route stays available for isolated review and comparison.</p>
+        <div class="layout-grid">
+          <article class="layout-link-card">
+            <span class="muted-chip">Balanced narrative</span>
+            <h3>Baseline (kit-refined)</h3>
+            <p>Keeps current structure and explicit kit modules for continuity review.</p>
+            <a href="/layouts/baseline">/layouts/baseline</a>
+          </article>
+          <article class="layout-link-card">
+            <span class="muted-chip">Dashboard posture</span>
+            <h3>Kit Workbench</h3>
+            <p>Front-loads module cards and operational checklists for fast scanning.</p>
+            <a href="/layouts/kit-workbench">/layouts/kit-workbench</a>
+          </article>
+          <article class="layout-link-card">
+            <span class="muted-chip">Stage-driven</span>
+            <h3>Kit Flow</h3>
+            <p>Maps judgment checkpoints directly to delivery phases from frame to audit.</p>
+            <a href="/layouts/kit-flow">/layouts/kit-flow</a>
+          </article>
+          <article class="layout-link-card">
+            <span class="muted-chip">Cadence-first</span>
+            <h3>Kit Ops Deck</h3>
+            <p>Emphasizes rituals and accountability with a side-rail operating posture.</p>
+            <a href="/layouts/kit-ops-deck">/layouts/kit-ops-deck</a>
+          </article>
+        </div>
+      </section>
+
+      <section id="compare" aria-labelledby="compare-title">
+        <h2 id="compare-title">Review posture</h2>
+        <div class="review-notes">
+          <p>These routes are intentionally non-canonical and should not be used as the public information architecture.</p>
+          <p>The production platform now lives under `/` and `/kits/*`.</p>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      import { initKitPage } from '../../scripts/init-kit-page';
+
+      initKitPage();
+    </script>
+  </body>
+</html>

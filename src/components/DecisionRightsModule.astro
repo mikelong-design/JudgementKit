@@ -1,0 +1,54 @@
+---
+import type { RaciRow } from '../lib/kits';
+
+interface Props {
+  rows: RaciRow[];
+}
+
+const { rows } = Astro.props;
+---
+
+<div class="panel raci-desktop">
+  <div class="table-wrap">
+    <table class="data-table" aria-label="Decision rights snapshot">
+      <thead>
+        <tr>
+          <th scope="col">Decision type</th>
+          <th scope="col">Designer</th>
+          <th scope="col">PM</th>
+          <th scope="col">Engineering</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          rows.map((row) => (
+            <tr>
+              <th scope="row">{row.decisionType}</th>
+              <td>{row.designer}</td>
+              <td>{row.pm}</td>
+              <td>{row.engineering}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="raci-mobile" aria-label="Decision rights in card form">
+  {
+    rows.map((row) => (
+      <article class="raci-card">
+        <h3>{row.decisionType}</h3>
+        <dl>
+          <dt>Designer</dt>
+          <dd>{row.designer}</dd>
+          <dt>PM</dt>
+          <dd>{row.pm}</dd>
+          <dt>Engineering</dt>
+          <dd>{row.engineering}</dd>
+        </dl>
+      </article>
+    ))
+  }
+</div>

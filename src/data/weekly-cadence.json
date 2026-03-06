@@ -1,0 +1,17 @@
+[
+  {
+    "ritual": "Monday alignment",
+    "timing": "Start of week",
+    "focus": "Pick one high-risk initiative, name the decision owner, and confirm non-negotiables before new drafts spread."
+  },
+  {
+    "ritual": "Midweek checkpoint",
+    "timing": "During execution",
+    "focus": "Review active drafts against the matrix guardrails, state coverage, and implementation constraints while changes are still reversible."
+  },
+  {
+    "ritual": "Friday review",
+    "timing": "End of week",
+    "focus": "Audit what hardened into decisions, capture rationale, and tune the operating rules for the next cycle."
+  }
+]

@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 540" role="img" aria-labelledby="title desc">
+  <title id="title">Judgment Kit domain strategy</title>
+  <desc id="desc">Traffic enters via judgmentkit.design, judgmentkit.com, or judgementkit.com. The .com domains redirect in one hop to the canonical design domain, which serves the /kits information architecture and module deep links.</desc>
+  <style>
+    .bg { fill: #f4f7fb; }
+    .panel { fill: #ffffff; stroke: #cfd8e3; stroke-width: 2; rx: 18; }
+    .accent { fill: #f6ead0; stroke: #c5a15e; stroke-width: 2; rx: 18; }
+    .text { font: 16px Inter, Arial, sans-serif; fill: #172033; }
+    .title { font: 700 18px Inter, Arial, sans-serif; fill: #172033; }
+    .muted { font: 14px Inter, Arial, sans-serif; fill: #4f5f76; }
+    .line { stroke: #5c7697; stroke-width: 3; fill: none; marker-end: url(#arrow); }
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 z" fill="#5c7697" />
+    </marker>
+  </defs>
+  <rect class="bg" width="980" height="540" />
+
+  <rect class="panel" x="40" y="52" width="220" height="88" />
+  <text class="title" x="66" y="90">Traffic entry</text>
+  <text class="muted" x="66" y="118">SEO, AI citations, LinkedIn, direct</text>
+
+  <rect class="panel" x="40" y="210" width="230" height="88" />
+  <text class="title" x="66" y="248">judgmentkit.com</text>
+  <text class="muted" x="66" y="276">Redirect-only catcher</text>
+
+  <rect class="panel" x="40" y="340" width="230" height="88" />
+  <text class="title" x="66" y="378">judgementkit.com</text>
+  <text class="muted" x="66" y="406">Redirect-only catcher</text>
+
+  <rect class="accent" x="360" y="180" width="270" height="126" />
+  <text class="title" x="388" y="222">judgmentkit.design</text>
+  <text class="muted" x="388" y="252">Canonical platform</text>
+  <text class="muted" x="388" y="278">Serves content, metadata, and sitemap</text>
+
+  <rect class="panel" x="712" y="110" width="220" height="74" />
+  <text class="title" x="736" y="145">/</text>
+  <text class="muted" x="736" y="168">Platform homepage</text>
+
+  <rect class="panel" x="712" y="214" width="220" height="74" />
+  <text class="title" x="736" y="248">/kits</text>
+  <text class="muted" x="736" y="271">Kit library</text>
+
+  <rect class="panel" x="712" y="318" width="220" height="116" />
+  <text class="title" x="736" y="352">/kits/design-judgment</text>
+  <text class="muted" x="736" y="378">Kit page + module deep links</text>
+  <text class="muted" x="736" y="404">/responsibilities-matrix</text>
+  <text class="muted" x="736" y="426">/decision-rights</text>
+
+  <path class="line" d="M260 96 C316 96, 320 220, 360 220" />
+  <path class="line" d="M270 254 C330 254, 320 244, 360 244" />
+  <path class="line" d="M270 384 C330 384, 320 266, 360 266" />
+  <path class="line" d="M630 220 C674 220, 682 147, 712 147" />
+  <path class="line" d="M630 240 C674 240, 682 251, 712 251" />
+  <path class="line" d="M630 268 C674 268, 682 374, 712 374" />
+
+  <text class="muted" x="300" y="168">301/308, preserve path + query</text>
+  <text class="muted" x="344" y="336">Normalize http and www to apex</text>
+</svg>

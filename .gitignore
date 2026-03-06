@@ -15,7 +15,9 @@ pnpm-debug.log*
 
 # environment variables
 .env
+.env.local
 .env.production
+.godaddy.local.env
 
 # macOS-specific files
 .DS_Store

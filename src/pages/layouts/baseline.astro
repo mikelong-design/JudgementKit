@@ -33,6 +33,7 @@ const ogImage = '/assets/ownership_visible_v4_header_1536x804.png';
     <meta name="generator" content={Astro.generator} />
     <title>{pageTitle}</title>
     <meta name="description" content={pageDescription} />
+    <meta name="robots" content="noindex,nofollow" />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDescription} />
     <meta property="og:image" content={ogImage} />
@@ -58,7 +59,7 @@ const ogImage = '/assets/ownership_visible_v4_header_1536x804.png';
           Menu
         </button>
         <nav class="nav-links" aria-label="Primary">
-          <a href="/">Review Hub</a>
+          <a href="/review">Review Hub</a>
           <a href="#overview">Overview</a>
           <a href="#kit-modules">Kit Modules</a>
           <a href="#matrix">Matrix</a>
@@ -68,7 +69,7 @@ const ogImage = '/assets/ownership_visible_v4_header_1536x804.png';
         </nav>
       </div>
       <nav id="mobile-nav" class="mobile-menu" data-open="false" aria-label="Mobile sections">
-        <a href="/">Review Hub</a>
+        <a href="/review">Review Hub</a>
         <a href="#overview">Overview</a>
         <a href="#kit-modules">Kit Modules</a>
         <a href="#matrix">Matrix</a>

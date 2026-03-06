@@ -1,0 +1,80 @@
+---
+import type { MatrixRow } from '../lib/kits';
+
+interface Props {
+  rows: MatrixRow[];
+  helper?: string;
+}
+
+const { rows, helper } = Astro.props;
+---
+
+<div class="matrix-controls">
+  <label class="sr-only" for="matrix-search">Search responsibilities</label>
+  <input
+    id="matrix-search"
+    type="search"
+    placeholder="Search responsibilities by keyword"
+    autocomplete="off"
+    data-matrix-search
+  />
+  <button type="button" data-matrix-clear>Clear</button>
+  <p class="result-count" aria-live="polite" data-matrix-count>
+    Showing {rows.length} of {rows.length}
+  </p>
+</div>
+
+<div class="panel matrix-desktop">
+  <div class="table-wrap">
+    <table class="data-table matrix-table" aria-label="Responsibilities matrix">
+      <thead>
+        <tr>
+          <th scope="col">Area</th>
+          <th scope="col">What you own</th>
+          <th scope="col">Week to week</th>
+          <th scope="col">Guardrails</th>
+          <th scope="col">Warning signs</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          rows.map((item) => (
+            <tr data-matrix-row data-search={item.search}>
+              <th scope="row">{item.area}</th>
+              <td>{item.own}</td>
+              <td>{item.weekToWeek}</td>
+              <td>{item.guardrails}</td>
+              <td>{item.warning}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+  {helper && <p class="helper">{helper}</p>}
+</div>
+
+<div class="matrix-mobile" aria-label="Responsibilities in card form">
+  {
+    rows.map((item) => (
+      <details class="matrix-card" data-matrix-card data-search={item.search}>
+        <summary>
+          <strong>{item.area}</strong>
+          <span>{item.own}</span>
+        </summary>
+        <div class="matrix-card-body">
+          <p>
+            <strong>Week to week:</strong> {item.weekToWeek}
+          </p>
+          <p>
+            <strong>Guardrails:</strong> {item.guardrails}
+          </p>
+          <p>
+            <strong>Warning signs:</strong> {item.warning}
+          </p>
+        </div>
+      </details>
+    ))
+  }
+  {helper && <p class="helper">{helper}</p>}
+</div>

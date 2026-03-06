@@ -1,0 +1,62 @@
+---
+import SiteLayout from '../../components/SiteLayout.astro';
+import { getAllKits, orderedModules } from '../../lib/kits';
+
+const kits = getAllKits();
+const navLinks = [
+  { href: '/', label: 'Platform' },
+  { href: '/kits', label: 'Kits' },
+  { href: '/review', label: 'Review Routes' }
+];
+---
+
+<SiteLayout
+  title="Kits"
+  description="Browse Judgment Kit operating kits and their citeable module deep links."
+  path="/kits"
+  navLinks={navLinks}
+  bodyClass="kits-index"
+>
+  <section aria-labelledby="kits-index-title">
+    <span class="eyebrow">Kit Library</span>
+    <h1 id="kits-index-title">Judgment Kit library</h1>
+    <p class="subhead">
+      Kits are organized as shareable operating systems. Each one ships the same contract backbone and
+      exposes deep-linkable modules for planning sessions, decision logs, docs, Slack threads, and AI
+      citations.
+    </p>
+  </section>
+
+  <section aria-labelledby="library-title">
+    <h2 id="library-title">Current kits</h2>
+    <div class="current-kits-grid">
+      {
+        kits.map((kit) => {
+          const modules = orderedModules(kit);
+          return (
+            <article class="kit-card">
+              <span class="muted-chip">{kit.slug}</span>
+              <h3>{kit.title}</h3>
+              <p>{kit.subtitle}</p>
+              <p>{kit.summary}</p>
+              <div class="module-nav-grid">
+                {
+                  modules.map((module) => (
+                    <article class="module-nav-card">
+                      <strong>{module.title}</strong>
+                      <p>{module.summary}</p>
+                      <a href={`/kits/${kit.slug}/${module.slug}`}>Open module</a>
+                    </article>
+                  ))
+                }
+              </div>
+              <div class="cta-row">
+                <a class="button primary" href={`/kits/${kit.slug}`}>Open kit</a>
+              </div>
+            </article>
+          );
+        })
+      }
+    </div>
+  </section>
+</SiteLayout>

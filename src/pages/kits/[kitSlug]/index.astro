@@ -1,0 +1,162 @@
+---
+import SiteLayout from '../../../components/SiteLayout.astro';
+import { getAllKits, getKitBySlug, orderedModules } from '../../../lib/kits';
+
+export function getStaticPaths() {
+  return getAllKits().map((kit) => ({
+    params: { kitSlug: kit.slug }
+  }));
+}
+
+const kit = getKitBySlug(Astro.params.kitSlug || '');
+
+if (!kit) {
+  throw new Error(`Unknown kit slug: ${Astro.params.kitSlug}`);
+}
+
+const modules = orderedModules(kit);
+const navLinks = [
+  { href: '/', label: 'Platform' },
+  { href: '/kits', label: 'Kits' },
+  { href: `#modules`, label: 'Modules' },
+  { href: `#how-to-use`, label: 'How to Use' },
+  { href: `#flow`, label: 'Flow' }
+];
+---
+
+<SiteLayout
+  title={kit.title}
+  description={kit.summary}
+  path={`/kits/${kit.slug}`}
+  navLinks={navLinks}
+  bodyClass="kit-page"
+>
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ol>
+      <li><a href="/">Platform</a></li>
+      <li><a href="/kits">Kits</a></li>
+      <li aria-current="page">{kit.title}</li>
+    </ol>
+  </nav>
+
+  <section class="platform-hero" aria-labelledby="kit-title">
+    <div class="hero-copy">
+      <span class="muted-chip">{kit.audience}</span>
+      <h1 id="kit-title">{kit.title}</h1>
+      <p class="subhead">{kit.subtitle}</p>
+      <p>{kit.summary}</p>
+      <p>
+        <strong>Core thesis:</strong> {kit.coreThesis}
+      </p>
+      <div class="cta-row">
+        <a class="button primary" href={`#modules`}>Open modules</a>
+        <a class="button ghost" href={`/kits/${kit.slug}/${modules[0]?.slug}`}>Open first module</a>
+      </div>
+    </div>
+
+    <div class="hero-sidebar">
+      <article class="summary-card">
+        <strong>How this kit is used</strong>
+        <p>Apply it to one active initiative where AI drafts are moving fast and decision ambiguity is rising.</p>
+      </article>
+      <article class="summary-card">
+        <strong>What this protects</strong>
+        <p>Decision quality, ownership, rationale capture, and system coherence before commitments lock in.</p>
+      </article>
+      {kit.artDirection && (
+        <article class="summary-card">
+          <strong>Illustration direction</strong>
+          <p>{kit.artDirection.name}</p>
+        </article>
+      )}
+    </div>
+  </section>
+
+  <section id="modules" aria-labelledby="modules-title">
+    <span class="eyebrow">Modules</span>
+    <h2 id="modules-title">Kit modules</h2>
+    <div class="module-nav-grid">
+      {
+        modules.map((module) => (
+          <article class="module-nav-card">
+            <span class="muted-chip">{module.slug}</span>
+            <h3>{module.title}</h3>
+            <p>{module.summary}</p>
+            <a href={`/kits/${kit.slug}/${module.slug}`}>Open module page</a>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section id="how-to-use" aria-labelledby="how-title">
+    <span class="eyebrow">Runbook</span>
+    <h2 id="how-title">How to use this kit</h2>
+    <div class="module-columns">
+      <div class="module-section">
+        <ol>
+          {
+            kit.howToUse.map((step) => (
+              <li>{step}</li>
+            ))
+          }
+        </ol>
+      </div>
+      <aside class="module-sidecard" aria-label="Common failure modes">
+        <strong>Common failure modes</strong>
+        <ul>
+          {
+            kit.failureModes.map((item) => (
+              <li>{item}</li>
+            ))
+          }
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  {kit.flowStages && (
+    <section id="flow" class="flow-section" aria-labelledby="flow-title">
+      <span class="eyebrow">Flow Variant</span>
+      <h2 id="flow-title">Stage-driven workflow</h2>
+      <div class="flow-rail">
+        {
+          kit.flowStages.map((stage) => (
+            <article class="flow-stage">
+              <strong>{stage.stage}</strong>
+              <p>{stage.purpose}</p>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+  )}
+
+  <section aria-labelledby="credits-title">
+    <span class="eyebrow">Credits</span>
+    <h2 id="credits-title">Credits and art direction</h2>
+    <div class="module-columns">
+      <div class="module-section">
+        <ul>
+          {
+            (kit.credits || []).map((credit) => (
+              <li>{credit}</li>
+            ))
+          }
+        </ul>
+      </div>
+      {kit.artDirection && (
+        <aside class="module-sidecard">
+          <strong>{kit.artDirection.name}</strong>
+          <ul>
+            {
+              kit.artDirection.principles.map((item) => (
+                <li>{item}</li>
+              ))
+            }
+          </ul>
+        </aside>
+      )}
+    </div>
+  </section>
+</SiteLayout>

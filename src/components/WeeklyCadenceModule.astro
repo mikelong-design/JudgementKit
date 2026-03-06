@@ -1,0 +1,21 @@
+---
+import type { CadenceRow } from '../lib/kits';
+
+interface Props {
+  rows: CadenceRow[];
+}
+
+const { rows } = Astro.props;
+---
+
+<div class="ops-cadence cadence-grid">
+  {
+    rows.map((row) => (
+      <article class="cadence-item">
+        <span class="muted-chip">{row.timing}</span>
+        <strong>{row.ritual}</strong>
+        <p>{row.focus}</p>
+      </article>
+    ))
+  }
+</div>

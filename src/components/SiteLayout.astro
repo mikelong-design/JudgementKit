@@ -1,0 +1,106 @@
+---
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/inter/600.css';
+import '@fontsource/inter/700.css';
+import '@fontsource/instrument-serif/400.css';
+
+import '../styles/kit-shared.css';
+import '../styles/platform.css';
+
+import { SITE, absoluteUrl, buildPageTitle, ogImageUrl, type NavLink } from '../lib/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  path: string;
+  navLinks?: NavLink[];
+  robots?: string;
+  ogImage?: string;
+  bodyClass?: string;
+}
+
+const {
+  title,
+  description = SITE.description,
+  path,
+  navLinks = [],
+  robots = 'index,follow',
+  ogImage = SITE.ogImage,
+  bodyClass = ''
+} = Astro.props;
+
+const fullTitle = buildPageTitle(title);
+const canonical = absoluteUrl(path);
+const resolvedOgImage = ogImageUrl(ogImage);
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content={robots} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={resolvedOgImage} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={resolvedOgImage} />
+  </head>
+  <body class={bodyClass}>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <header class="site-nav">
+      <div class="nav-inner">
+        <a class="brand" href="/">{SITE.name}</a>
+        <button
+          type="button"
+          class="menu-toggle"
+          aria-expanded="false"
+          aria-controls="mobile-nav"
+          data-menu-toggle
+        >
+          Menu
+        </button>
+        <nav class="nav-links" aria-label="Primary">
+          {
+            navLinks.map((link) => (
+              <a href={link.href}>{link.label}</a>
+            ))
+          }
+        </nav>
+      </div>
+      <nav id="mobile-nav" class="mobile-menu" data-open="false" aria-label="Mobile sections">
+        {
+          navLinks.map((link) => (
+            <a href={link.href}>{link.label}</a>
+          ))
+        }
+      </nav>
+    </header>
+
+    <main id="main-content" class="layout-shell">
+      <slot />
+      <footer>
+        <p>Judgment Kit is a platform of practical operating kits for AI-accelerated product teams.</p>
+        <p>Canonical platform: judgmentkit.design</p>
+      </footer>
+    </main>
+
+    <script>
+      import { initKitPage } from '../scripts/init-kit-page';
+
+      initKitPage();
+    </script>
+  </body>
+</html>
