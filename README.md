@@ -1,102 +1,64 @@
 # Judgment Kit Platform
 
-**Judgment Kit** is a platform of practical operating kits that help AI-accelerated product teams preserve **decision quality, accountability, and product coherence** when output becomes cheap and finished-looking.
+**Judgment Kit** is a platform of practical operating kits for AI-accelerated product teams that protect decision quality, accountability, and product coherence when output becomes cheap and finished-looking.
 
-- **Canonical platform:** https://judgmentkit.design
-- **Primary audience:** design leaders, with cross-functional relevance for PM and engineering
-- **Core thesis:** *AI accelerates drafts; judgment prevents drafts becoming defaults.*
+**Primary audience:** design leaders, with direct relevance for PM and engineering partners.  
+**Core thesis:** *AI accelerates drafts; judgment prevents drafts becoming defaults.*
 
-## Vision
+This repository contains the Astro site and structured kit content that powers [judgmentkit.design](https://judgmentkit.design). It is the source for the public platform, the current design-judgment kit, and the review-only layout routes used to refine the site.
 
-AI changes the pace of production work. The common failure pattern is no longer that teams cannot generate enough options. It is that:
+## Purpose
 
-- polished drafts get treated as consensus,
-- output volume increases without clear ownership,
-- teams ship polish faster than they ship judgment.
+Judgment Kit exists to make judgment operational when AI increases output faster than teams increase clarity.
 
-Judgment Kit turns judgment into a repeatable operating system:
+The common failure pattern is no longer that teams cannot generate enough options. It is that polished drafts get treated as consensus, ownership stays implicit, and teams ship polish faster than they ship judgment.
 
-- responsibilities are explicit,
-- decision rights are explicit,
-- cadence is explicit.
+Judgment Kit turns judgment into a repeatable operating system by making three things explicit:
 
-### Non-goals
-
-Judgment Kit is not:
-
-- a tool directory or prompt library,
-- vendor-specific guidance,
-- an essay on design philosophy.
-
-It is a kit library meant to be used in live delivery work.
+- responsibilities,
+- decision rights,
+- weekly cadence.
 
 ## What ships in a kit
 
-Every kit follows the **Kit Contract**:
+Every kit follows the same contract:
 
-1. **Responsibilities Matrix**
-   Clarifies what the role owns, protects, and monitors while AI output accelerates.
-2. **Decision Rights Snapshot (RACI-style)**
+1. **Responsibilities Matrix**  
+   Clarifies what a role owns, protects, and monitors while AI output accelerates.
+2. **Decision Rights Snapshot**  
    Defines who is accountable before polished drafts harden into default decisions.
-3. **Weekly Operating Cadence**
+3. **Weekly Operating Cadence**  
    Turns judgment quality into a repeatable ritual instead of rescue work.
 
-Each kit also includes:
+Each kit also includes a short runbook, explicit failure modes, and an optional stage-based flow variant.
 
-- a short 3-step “How to use this kit” runbook,
-- explicit common failure modes,
-- an optional stage-driven flow variant.
-
-## Current kits
+## Current kit
 
 ### Design Judgment Kit
 
-**Subtitle:** Product design responsibilities + decision rights for AI-accelerated teams.
+Product design responsibilities and decision rights for AI-accelerated teams.
 
-**Module deep links**
+- Audience: design leaders, with working relevance for PM and engineering
+- Thesis: *AI accelerates drafts; judgment prevents drafts becoming defaults.*
+- Core outcome: make responsibilities, decision rights, and weekly operating cadence explicit before polished drafts become default direction
+
+Current module deep links:
 
 - `/kits/design-judgment/responsibilities-matrix`
 - `/kits/design-judgment/decision-rights`
 - `/kits/design-judgment/weekly-cadence`
 
-## Information architecture
+## About this repo
 
-- `/` platform homepage
-- `/kits` kit library
-- `/kits/<kit-slug>` kit landing page
-- `/kits/<kit-slug>/<module-slug>` module deep link
+This repo is the website codebase for the Judgment Kit platform. It currently includes:
 
-Canonical module slugs:
+- the public platform homepage and `/kits` library routes,
+- the typed kit content model in [`src/lib/kits.ts`](/Users/mike/JudgementKit/src/lib/kits.ts),
+- static data sources for the matrix, decision-rights snapshot, and weekly cadence,
+- downloadable CSV assets generated at build time,
+- internal review routes for layout exploration.
 
-- `responsibilities-matrix`
-- `decision-rights`
-- `weekly-cadence`
-
-## Domain strategy
-
-We run one canonical, indexable domain and treat the `.com` domains as redirect-only catchers.
-
-### Domains
-
-- `judgmentkit.design` canonical platform
-- `judgmentkit.com` redirect-only catcher
-- `judgementkit.com` redirect-only catcher
-
-### Rules
-
-- Only `judgmentkit.design` serves content.
-- `.com` domains permanently redirect to canonical in one hop.
-- Redirects preserve path and query.
-- `www.judgmentkit.design` redirects to apex.
-- Canonical tags, sitemap entries, and OG metadata reference only `judgmentkit.design`.
-
-### Verification
-
-```bash
-curl -I https://judgmentkit.com/kits/design-judgment
-curl -I https://judgementkit.com/kits/design-judgment/decision-rights
-curl -I https://www.judgmentkit.design/
-```
+The platform is intentionally not a prompt library, vendor directory, or design-philosophy essay. The site is meant to be useful in live delivery work.
 
 ## Local development
 
@@ -135,36 +97,24 @@ pnpm preview
 pnpm check
 ```
 
-## Review routes
+## Information architecture
 
-The repo still includes non-canonical layout exploration routes for internal review:
+The public site is organized as a small kit platform:
 
-- `/review`
-- `/layouts/baseline`
-- `/layouts/kit-workbench`
-- `/layouts/kit-flow`
-- `/layouts/kit-ops-deck`
+- `/` platform homepage
+- `/kits` kit library
+- `/kits/<kit-slug>` kit landing page
+- `/kits/<kit-slug>/<module-slug>` module deep link
 
-These routes are intentionally marked `noindex` and are excluded from canonical platform navigation and the sitemap.
+Canonical module slugs are:
+
+- `responsibilities-matrix`
+- `decision-rights`
+- `weekly-cadence`
 
 ## Content model
 
-Kits are defined in a shared typed content source and generate static routes. Adding a new kit should be a content operation, not a routing rewrite.
-
-Each kit definition includes:
-
-- `slug`
-- `title`
-- `subtitle`
-- `summary`
-- `audience`
-- `coreThesis`
-- `modules`
-- `howToUse`
-- `failureModes`
-- optional `flowStages`
-- optional `credits`
-- optional art-direction metadata
+Kits are defined in shared typed content so new kits can be added as content work instead of route rewrites. Each kit definition includes the core platform fields for title, audience, thesis, modules, runbook content, failure modes, and optional flow/credit metadata.
 
 ## Downloads
 
@@ -173,12 +123,39 @@ Current downloadable assets:
 - `/downloads/matrix.csv`
 - `/downloads/raci.csv`
 
-PDF export remains optional and is not implemented yet.
+PDF export is planned but not implemented yet.
+
+## Domain and deployment notes
+
+- Canonical platform: [judgmentkit.design](https://judgmentkit.design)
+- Redirect-only catcher domains: `judgmentkit.com` and `judgementkit.com`
+- `www.judgmentkit.design` redirects to the apex domain
+- Canonical tags, sitemap entries, and OG metadata should reference only `judgmentkit.design`
+
+Verification examples:
+
+```bash
+curl -I https://judgmentkit.com/kits/design-judgment
+curl -I https://judgementkit.com/kits/design-judgment/decision-rights
+curl -I https://www.judgmentkit.design/
+```
+
+## Review routes
+
+The repo includes non-canonical layout exploration routes for internal review:
+
+- `/review`
+- `/layouts/baseline`
+- `/layouts/kit-workbench`
+- `/layouts/kit-flow`
+- `/layouts/kit-ops-deck`
+
+These routes are intentionally marked `noindex` and excluded from canonical platform navigation and the sitemap.
 
 ## Content guidelines
 
 - Use **judgment** spelling in user-facing copy.
-- Keep tone operational: responsibilities, decision rights, quality gates, cadence.
+- Keep the tone operational: responsibilities, decision rights, quality gates, cadence.
 - Avoid vendor/tool framing. The platform is about judgment, not tooling.
 - Treat AI output as draft until decision rights are explicit, state coverage is pressure-tested, and rationale is captured for the committed direction.
 

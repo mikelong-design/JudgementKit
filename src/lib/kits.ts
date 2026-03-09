@@ -103,9 +103,9 @@ export const kits: Kit[] = [
         slug: 'responsibilities-matrix',
         title: 'Responsibilities Matrix',
         summary:
-          'Clarifies what the role owns, protects, and monitors while AI output accelerates.',
+          'Clarifies what designers own, protect, and monitor while AI output accelerates.',
         intro:
-          'A practical view of what the designer owns, protects, and checks week to week while output becomes cheaper and more convincing.',
+          'A practical view of what the designer owns, protects, and checks week to week.',
         helper: 'Use this as a diagnostic, not a policy document.',
         body: [
           'Responsibilities stay operational when they are visible early, not after work has already hardened into scope.',
@@ -142,11 +142,11 @@ export const kits: Kit[] = [
     howToUse: [
       'Pick one active initiative where AI drafts are moving fast.',
       'Agree on decision rights for that slice using the RACI snapshot.',
-      'Use the matrix and cadence to spot drift and correct it before commitments lock in.'
+      'Use the matrix to spot drift and correct it before commitments lock in.'
     ],
     failureModes: [
       'Design review happens only after tickets are scoped.',
-      'Looks complete is treated as consensus.',
+      '"Looks complete" is treated as consensus.',
       'AI speed increases output without clear ownership.'
     ],
     flowStages: [

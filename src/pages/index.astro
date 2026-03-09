@@ -10,7 +10,6 @@ const primaryModules = currentKit ? orderedModules(currentKit) : [];
 const navLinks = [
   { href: '/#vision', label: 'Vision' },
   { href: '/kits', label: 'Kits' },
-  { href: '/#domain-strategy', label: 'Domain Strategy' },
   { href: '/review', label: 'Review Routes' }
 ];
 ---
@@ -24,12 +23,12 @@ const navLinks = [
 >
   <section class="platform-hero" id="top" aria-labelledby="home-title">
     <div class="hero-copy">
-      <span class="muted-chip">Canonical platform: judgmentkit.design</span>
+      <span class="muted-chip">Platform vision</span>
       <h1 id="home-title">Judgment Kit Platform</h1>
       <p class="subhead">
-        Judgment Kit is a platform of practical operating kits that help AI-accelerated product teams
-        preserve <strong>decision quality</strong>, <strong>accountability</strong>, and
-        <strong> product coherence</strong> when output becomes cheap and finished-looking.
+        Judgment Kit is a platform of practical operating kits for AI-accelerated product teams that
+        protect <strong>decision quality</strong>, <strong>accountability</strong>, and
+        <strong>product coherence</strong> when output becomes cheap and finished-looking.
       </p>
       <div class="cta-row">
         <a class="button primary" href="/kits">Browse kits</a>
@@ -39,12 +38,12 @@ const navLinks = [
         Core thesis: <em>AI accelerates drafts; judgment prevents drafts becoming defaults.</em>
       </p>
       <p>
-        The failure mode has changed. Teams do not struggle to generate options; they struggle to keep
-        polished drafts from quietly becoming decisions without explicit ownership or tradeoff review.
+        The new failure mode is not lack of output. It is teams treating polished drafts as decisions
+        before ownership, tradeoffs, and rationale are explicit.
       </p>
       <p>
-        Judgment Kit turns judgment into a repeatable operating system so responsibilities, decision
-        rights, and cadence are visible before work hardens.
+        Judgment Kit makes judgment operational so responsibilities, decision rights, and weekly cadence
+        are visible before work hardens into default direction.
       </p>
     </div>
 
@@ -82,16 +81,16 @@ const navLinks = [
     <h2 id="vision-title">Draft speed is no longer the bottleneck</h2>
     <div class="kit-grid">
       <article class="spec-card">
-        <strong>Looks complete gets treated as consensus</strong>
-        <p>Teams collapse into default decisions because polished drafts arrive before rationale and ownership.</p>
+        <strong>Finished-looking work gets mistaken for agreement</strong>
+        <p>Teams need clearer decision ownership and tradeoff visibility before polished drafts start steering roadmaps.</p>
       </article>
       <article class="spec-card">
-        <strong>Output volume increases without clear ownership</strong>
-        <p>AI expands production capacity faster than teams clarify who protects coherence and quality.</p>
+        <strong>AI increases output faster than teams increase judgment</strong>
+        <p>Responsibilities, quality bars, and accountability must become more explicit as generation gets cheaper.</p>
       </article>
       <article class="spec-card">
-        <strong>Teams ship polish faster than they ship judgment</strong>
-        <p>Operational rituals lag behind generation speed, so mistakes become expensive before they become visible.</p>
+        <strong>Operational rituals need to catch up</strong>
+        <p>Judgment has to show up early and repeatedly, not only in rescue-mode reviews after scope is already set.</p>
       </article>
     </div>
   </section>
@@ -131,15 +130,15 @@ const navLinks = [
         }
       </div>
       <div class="review-panel">
-        <p>Each kit must also ship a short “How to use this kit” runbook and explicit failure modes.</p>
-        <p>The flow variant is optional and maps the kit to delivery stages from Frame through Audit.</p>
+        <p>Each kit ships practical modules, a short runbook, and explicit failure modes.</p>
+        <p>The flow variant is optional and maps kit usage to delivery stages from Frame through Audit.</p>
       </div>
     </div>
   </section>
 
   <section id="kits" aria-labelledby="current-kits-title">
     <span class="eyebrow">Current Kits</span>
-    <h2 id="current-kits-title">Citeable kits and modules</h2>
+    <h2 id="current-kits-title">Current kits</h2>
     <div class="current-kits-grid">
       {
         kits.map((kit) => (
@@ -157,56 +156,6 @@ const navLinks = [
           </article>
         ))
       }
-    </div>
-  </section>
-
-  <section id="domain-strategy" aria-labelledby="domain-title">
-    <span class="eyebrow">Domain Strategy</span>
-    <h2 id="domain-title">One canonical domain, two redirect-only catchers</h2>
-    <div class="domain-grid">
-      <figure class="domain-diagram">
-        <img
-          src="/diagrams/domain-strategy-platform.svg"
-          alt="Domain strategy flow showing judgmentkit.design as canonical and .com domains redirecting in one hop."
-          width="980"
-          height="540"
-          loading="lazy"
-          decoding="async"
-        />
-      </figure>
-      <div class="domain-rules">
-        <article class="domain-rule">
-          <strong>Canonical</strong>
-          <p>`judgmentkit.design` serves all HTML, metadata, and sitemap references.</p>
-        </article>
-        <article class="domain-rule">
-          <strong>Redirect-only catchers</strong>
-          <p>`judgmentkit.com` and `judgementkit.com` permanently redirect to the matching canonical path.</p>
-        </article>
-        <article class="domain-rule">
-          <strong>Normalization</strong>
-          <p>`www` redirects to apex and Vercel handles HTTP to HTTPS, preserving path and query.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section aria-labelledby="ia-title">
-    <span class="eyebrow">Information Architecture</span>
-    <h2 id="ia-title">Platform pages are organized for citation</h2>
-    <div class="ia-grid">
-      <article class="ia-card">
-        <strong>/kits</strong>
-        <p>Kit library index.</p>
-      </article>
-      <article class="ia-card">
-        <strong>/kits/&lt;kit-slug&gt;</strong>
-        <p>Kit landing page with modules, runbook, failure modes, and flow view.</p>
-      </article>
-      <article class="ia-card">
-        <strong>/kits/&lt;kit-slug&gt;/&lt;module-slug&gt;</strong>
-        <p>Shareable deep links for individual modules like responsibilities, decision rights, and cadence.</p>
-      </article>
     </div>
   </section>
 </SiteLayout>

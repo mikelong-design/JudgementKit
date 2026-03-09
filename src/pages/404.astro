@@ -1,0 +1,54 @@
+---
+import SiteLayout from '../components/SiteLayout.astro';
+
+const navLinks = [
+  { href: '/', label: 'Platform' },
+  { href: '/kits', label: 'Kits' },
+  { href: '/review', label: 'Review Routes' }
+];
+
+const requestedPath = Astro.url.pathname;
+---
+
+<SiteLayout
+  title="Page Not Found"
+  description="The requested Judgment Kit page could not be found."
+  path="/404"
+  navLinks={navLinks}
+  robots="noindex,nofollow"
+  bodyClass="not-found-page"
+>
+  <section aria-labelledby="not-found-title" class="platform-hero">
+    <div class="hero-copy">
+      <span class="eyebrow">404</span>
+      <h1 id="not-found-title">That page does not exist.</h1>
+      <p class="subhead">
+        The route <code>{requestedPath}</code> is not part of the current Judgment Kit platform.
+      </p>
+      <p>
+        If you followed an old review link or typed a module path manually, use the canonical kit
+        library to jump back into the published information architecture.
+      </p>
+      <div class="cta-row">
+        <a class="button primary" href="/kits">Browse kits</a>
+        <a class="button ghost" href="/">Back to platform</a>
+      </div>
+    </div>
+
+    <div class="hero-sidebar">
+      <article class="summary-card">
+        <strong>Canonical routes</strong>
+        <p>`/` for the platform, `/kits` for the library, and `/kits/&lt;kit-slug&gt;/&lt;module-slug&gt;` for citeable modules.</p>
+      </article>
+      <article class="summary-card">
+        <strong>Need review-only layouts?</strong>
+        <p>The internal exploration routes still live under <a href="/review">`/review`</a> and are intentionally non-canonical.</p>
+      </article>
+      <article class="summary-card">
+        <strong>Most likely next step</strong>
+        <p>Open the Design Judgment Kit and use its module deep links instead of legacy layout URLs.</p>
+        <a href="/kits/design-judgment">Open Design Judgment Kit</a>
+      </article>
+    </div>
+  </section>
+</SiteLayout>

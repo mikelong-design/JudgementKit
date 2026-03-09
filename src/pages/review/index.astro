@@ -16,10 +16,10 @@ import '../../styles/layout-review-hub.css';
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <title>Judgment Kit Review Routes</title>
+    <title>Design Judgment Kit - Local Layout Review Hub</title>
     <meta
       name="description"
-      content="Local-only review hub for non-canonical layout exploration routes."
+      content="Local-only review hub for kit-first layout concepts. No deployment changes included."
     />
     <meta name="robots" content="noindex,nofollow" />
   </head>
@@ -39,14 +39,12 @@ import '../../styles/layout-review-hub.css';
           Menu
         </button>
         <nav class="nav-links" aria-label="Primary">
-          <a href="/">Platform</a>
           <a href="#review-pack">Review pack</a>
           <a href="#layout-urls">Local URLs</a>
           <a href="#compare">Comparison</a>
         </nav>
       </div>
       <nav id="mobile-nav" class="mobile-menu" data-open="false" aria-label="Mobile sections">
-        <a href="/">Platform</a>
         <a href="#review-pack">Review pack</a>
         <a href="#layout-urls">Local URLs</a>
         <a href="#compare">Comparison</a>
@@ -56,57 +54,105 @@ import '../../styles/layout-review-hub.css';
     <main id="main-content" class="layout-shell">
       <section id="review-pack" aria-labelledby="review-pack-title">
         <div class="hub-intro">
-          <span class="muted-chip">Review only</span>
+          <span class="muted-chip">Local review only</span>
           <h1 id="review-pack-title">Kit-first layout exploration pack</h1>
           <p class="subhead">
-            These routes remain available for internal review. They are not canonical platform IA and are
-            excluded from indexing.
+            This route is your local review hub. It links to one cleaned baseline and three additional
+            layout concepts, all built around practical kit usage and explicitly excluding any style-guide
+            section.
           </p>
           <div class="cta-row">
             <a class="button primary" href="#layout-urls">Open local URLs</a>
-            <a class="button ghost" href="/">Back to platform</a>
+            <a class="button ghost" href="#compare">Jump to comparison table</a>
           </div>
         </div>
       </section>
 
       <section id="layout-urls" aria-labelledby="layout-urls-title">
-        <h2 id="layout-urls-title">Review URLs</h2>
-        <p class="intro">Each concept route stays available for isolated review and comparison.</p>
+        <h2 id="layout-urls-title">Local URLs</h2>
+        <p class="intro">Each concept has a dedicated route for isolated local review.</p>
         <div class="layout-grid">
           <article class="layout-link-card">
             <span class="muted-chip">Balanced narrative</span>
             <h3>Baseline (kit-refined)</h3>
-            <p>Keeps current structure and explicit kit modules for continuity review.</p>
+            <p>Keeps current structure, removes style-guide content, and adds explicit kit modules.</p>
+            <p><strong>Optimizes:</strong> Continuity with minimal IA change</p>
             <a href="/layouts/baseline">/layouts/baseline</a>
           </article>
           <article class="layout-link-card">
             <span class="muted-chip">Dashboard posture</span>
             <h3>Kit Workbench</h3>
-            <p>Front-loads module cards and operational checklists for fast scanning.</p>
+            <p>Front-loads module cards and operational checklists for fast decision-oriented scanning.</p>
+            <p><strong>Optimizes:</strong> Weekly operating usability</p>
             <a href="/layouts/kit-workbench">/layouts/kit-workbench</a>
           </article>
           <article class="layout-link-card">
             <span class="muted-chip">Stage-driven</span>
             <h3>Kit Flow</h3>
             <p>Maps judgment checkpoints directly to delivery phases from frame to audit.</p>
+            <p><strong>Optimizes:</strong> When-to-use clarity</p>
             <a href="/layouts/kit-flow">/layouts/kit-flow</a>
           </article>
           <article class="layout-link-card">
             <span class="muted-chip">Cadence-first</span>
             <h3>Kit Ops Deck</h3>
-            <p>Emphasizes rituals and accountability with a side-rail operating posture.</p>
+            <p>Uses a side rail and cadence deck to emphasize ongoing rituals and role accountability.</p>
+            <p><strong>Optimizes:</strong> Operations discipline</p>
             <a href="/layouts/kit-ops-deck">/layouts/kit-ops-deck</a>
           </article>
         </div>
       </section>
 
       <section id="compare" aria-labelledby="compare-title">
-        <h2 id="compare-title">Review posture</h2>
+        <h2 id="compare-title">Quick comparison table</h2>
+        <div class="table-wrap">
+          <table class="data-table" aria-describedby="compare-title">
+            <thead>
+              <tr>
+                <th scope="col">Route</th>
+                <th scope="col">IA emphasis</th>
+                <th scope="col">Scanning style</th>
+                <th scope="col">Review posture</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">/layouts/baseline</th>
+                <td>Balanced narrative + modules</td>
+                <td>Linear</td>
+                <td>Low-change continuity check</td>
+              </tr>
+              <tr>
+                <th scope="row">/layouts/kit-workbench</th>
+                <td>Module-first dashboard</td>
+                <td>Fast scan and action</td>
+                <td>Operational usability check</td>
+              </tr>
+              <tr>
+                <th scope="row">/layouts/kit-flow</th>
+                <td>Stage-based workflow rail</td>
+                <td>Top-down by delivery phase</td>
+                <td>Timing and sequence check</td>
+              </tr>
+              <tr>
+                <th scope="row">/layouts/kit-ops-deck</th>
+                <td>Cadence + side-rail modules</td>
+                <td>Ritual-oriented</td>
+                <td>Governance and role clarity check</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <div class="review-notes">
-          <p>These routes are intentionally non-canonical and should not be used as the public information architecture.</p>
-          <p>The production platform now lives under `/` and `/kits/*`.</p>
+          <p>No route includes an irrelevant visual-guidelines section.</p>
+          <p>All concept routes retain search, carousel, mobile nav, and responsive table/card behavior.</p>
+          <p>No deployment workflow was changed; this is local review only.</p>
         </div>
       </section>
+
+      <footer>
+        <p>Generated for local concept review. Deploy decision intentionally deferred.</p>
+      </footer>
     </main>
 
     <script>
