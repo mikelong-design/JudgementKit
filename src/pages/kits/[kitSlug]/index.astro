@@ -15,9 +15,14 @@ if (!kit) {
 }
 
 const modules = orderedModules(kit);
+const framingPagePath =
+  kit.slug === 'design-judgment'
+    ? `/kits/${kit.slug}/design-leadership-as-contract-authorship`
+    : undefined;
 const navLinks = [
   { href: '/', label: 'Platform' },
   { href: '/kits', label: 'Kits' },
+  ...(framingPagePath ? [{ href: '#framing', label: 'Framing' }] : []),
   { href: `#modules`, label: 'Modules' },
   { href: `#how-to-use`, label: 'How to Use' },
   { href: `#flow`, label: 'Flow' }
@@ -71,6 +76,40 @@ const navLinks = [
       )}
     </div>
   </section>
+
+  {framingPagePath && (
+    <section id="framing" aria-labelledby="framing-title">
+      <span class="eyebrow">For design leaders</span>
+      <h2 id="framing-title">Start with contract authorship</h2>
+      <div class="module-columns">
+        <div class="module-section">
+          <div class="module-copy">
+            <p>
+              Design leadership in AI-accelerated product work increasingly means making ownership,
+              decision rights, quality thresholds, and weekly cadence explicit before polished drafts
+              start acting like product direction.
+            </p>
+            <p>
+              Use the contract authorship page as the conceptual front door for the Design Judgment
+              Kit, then move into the three core modules to apply that posture in live delivery work.
+            </p>
+          </div>
+          <div class="cta-row">
+            <a class="button primary" href={framingPagePath}>Open contract authorship</a>
+            <a class="button ghost" href={`/kits/${kit.slug}/${modules[0]?.slug}`}>Open first module</a>
+          </div>
+        </div>
+
+        <aside class="module-sidecard" aria-label="Framing page summary">
+          <strong>What this adds</strong>
+          <p>
+            A role-specific framing page for design leaders that strengthens the existing kit without
+            turning it into a fourth module.
+          </p>
+        </aside>
+      </div>
+    </section>
+  )}
 
   <section id="modules" aria-labelledby="modules-title">
     <span class="eyebrow">Modules</span>

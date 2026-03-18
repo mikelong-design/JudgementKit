@@ -1,0 +1,326 @@
+---
+import SiteLayout from '../../../components/SiteLayout.astro';
+
+const kitPath = '/kits/design-judgment';
+const responsibilitiesPath = `${kitPath}/responsibilities-matrix`;
+const decisionRightsPath = `${kitPath}/decision-rights`;
+const weeklyCadencePath = `${kitPath}/weekly-cadence`;
+const pagePath = `${kitPath}/design-leadership-as-contract-authorship`;
+
+const navLinks = [
+  { href: '/', label: 'Platform' },
+  { href: '/kits', label: 'Kits' },
+  { href: kitPath, label: 'Design Judgment Kit' }
+];
+
+const anchorLinks = [
+  { href: '#overview', label: 'Overview' },
+  { href: '#four-contracts', label: 'Four contracts' },
+  { href: '#kit-modules', label: 'Kit modules' },
+  { href: '#failure-modes', label: 'Failure modes' }
+];
+
+const contractCards = [
+  {
+    title: 'Responsibility contract',
+    body: 'Makes ownership visible. Clarifies what design owns, protects, and monitors as AI output accelerates.'
+  },
+  {
+    title: 'Decision-rights contract',
+    body: 'Makes accountability explicit before drafts are treated as settled. Prevents generated artifacts from quietly becoming product decisions.'
+  },
+  {
+    title: 'Quality contract',
+    body: 'Defines what good means beyond polish. It includes state coverage, consistency, accessibility, clarity, and rationale.'
+  },
+  {
+    title: 'Cadence contract',
+    body: 'Turns judgment into repeatable operating rhythm. Keeps quality from depending on rescue reviews or heroic intervention.'
+  }
+];
+
+const moduleCards = [
+  {
+    title: 'Responsibilities Matrix',
+    body: 'Use this to make leadership ownership legible before work hardens.',
+    href: responsibilitiesPath,
+    cta: 'Open responsibilities matrix'
+  },
+  {
+    title: 'Decision Rights Snapshot',
+    body: 'Use this to make accountability explicit before AI drafts or screenshots start acting like commitments.',
+    href: decisionRightsPath,
+    cta: 'View decision rights'
+  },
+  {
+    title: 'Weekly Operating Cadence',
+    body: 'Use this to turn judgment into a recurring operating practice instead of a late-stage correction.',
+    href: weeklyCadencePath,
+    cta: 'Open weekly cadence'
+  }
+];
+
+const failureModes = [
+  {
+    title: 'Review starts too late',
+    body: 'Design review begins after scope is already set, so judgment shows up as cleanup instead of direction-setting.'
+  },
+  {
+    title: 'Polish gets mistaken for consensus',
+    body: 'Finished-looking drafts start acting like settled decisions before accountable owners have agreed on the tradeoffs.'
+  },
+  {
+    title: 'Output rises faster than ownership clarity',
+    body: 'AI increases throughput, but the team never makes explicit who owns the call, the bar, or the follow-through.'
+  },
+  {
+    title: 'Happy-path quality dominates',
+    body: 'Teams ship the polished path while missing critical states, edge conditions, accessibility gaps, and rationale capture.'
+  },
+  {
+    title: 'Design gets reduced to service work',
+    body: 'Without explicit contracts, design reacts to requests instead of operating as a decision partner with authority upstream.'
+  }
+];
+---
+
+<SiteLayout
+  title="Design Leadership as Contract Authorship"
+  description="A design-leader framing for AI-accelerated product work. Learn how explicit responsibilities, decision rights, and cadence keep polished drafts from becoming default direction."
+  path={pagePath}
+  navLinks={navLinks}
+  ogImage="/assets/support_judgment_early_header_1536x804.png"
+  bodyClass="support-page"
+>
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ol>
+      <li><a href="/">Platform</a></li>
+      <li><a href="/kits">Kits</a></li>
+      <li><a href={kitPath}>Design Judgment Kit</a></li>
+      <li aria-current="page">Design leadership as contract authorship</li>
+    </ol>
+  </nav>
+
+  <section id="overview" class="platform-hero" aria-labelledby="overview-title">
+    <div class="hero-copy">
+      <span class="muted-chip">For design leaders</span>
+      <h1 id="overview-title">Design leadership as contract authorship</h1>
+      <p class="subhead">
+        AI makes drafts faster, cheaper, and more convincing. Design leadership keeps those drafts
+        from becoming default direction before ownership, tradeoffs, and quality thresholds are
+        explicit.
+      </p>
+      <p class="small-note">
+        Use this page to frame how the Design Judgment Kit should be used by design leaders in live
+        delivery work.
+      </p>
+      <div class="cta-row">
+        <a class="button primary" href={responsibilitiesPath}>Open responsibilities matrix</a>
+        <a class="button ghost" href={decisionRightsPath}>View decision rights</a>
+      </div>
+    </div>
+
+    <div class="hero-sidebar">
+      <article class="summary-card">
+        <strong>What design leadership owns now</strong>
+        <p>Make ownership, decision rights, and quality thresholds explicit before polished drafts start steering the work.</p>
+      </article>
+      <article class="summary-card">
+        <strong>What this page is for</strong>
+        <p>Frame the existing kit modules so design leaders can use them as operating tools, not just reference pages.</p>
+      </article>
+      <figure class="supporting-image">
+        <img
+          src="/assets/support_judgment_early_header_1536x804.png"
+          alt="A small team gathers in a foggy scene while warm light marks where judgment enters early."
+          width="1536"
+          height="804"
+          loading="eager"
+          decoding="async"
+        />
+      </figure>
+    </div>
+  </section>
+
+  <nav class="anchor-rail" aria-label="In-page">
+    {
+      anchorLinks.map((link) => (
+        <a href={link.href}>{link.label}</a>
+      ))
+    }
+  </nav>
+
+  <section class="module-columns" aria-labelledby="problem-title">
+    <div class="module-section">
+      <span class="eyebrow">Overview</span>
+      <h2 id="problem-title">Make judgment usable before polish turns into direction</h2>
+      <div class="module-copy">
+        <p>
+          AI changes the shape of design leadership. The problem is no longer a shortage of options.
+          The problem is that teams can generate polished output before they clarify who owns the
+          decision, what tradeoffs matter, and what quality bar must be met before work is treated
+          as committed.
+        </p>
+        <p>That changes the role of the design leader.</p>
+        <p>
+          The job is not only to review artifacts after the fact. It is to author the contracts
+          that make judgment usable earlier. Those contracts can take the form of explicit
+          responsibilities, decision rights, quality gates, working agreements, and weekly
+          operating cadence.
+        </p>
+        <p>
+          If these conditions stay implicit, teams mistake polish for alignment. If they are made
+          explicit, teams can move faster without losing coherence.
+        </p>
+      </div>
+    </div>
+
+    <aside class="module-sidecard" aria-labelledby="definition-title">
+      <strong id="definition-title">What “contract authorship” means here</strong>
+      <p>In Judgment Kit, a contract is any explicit mechanism that makes decisions more reliable under pressure.</p>
+      <ul class="support-list">
+        <li>who owns what</li>
+        <li>who decides what</li>
+        <li>what quality thresholds must be met</li>
+        <li>when a draft becomes committed direction</li>
+      </ul>
+      <p>
+        The term is meant to stay operational. It points to concrete mechanisms teams can use in
+        live delivery work, not to abstract design philosophy.
+      </p>
+    </aside>
+  </section>
+
+  <section aria-labelledby="why-title">
+    <span class="eyebrow">Why Now</span>
+    <h2 id="why-title">Why design leaders need this framing</h2>
+    <div class="module-copy">
+      <p>
+        AI-generated output now arrives with enough polish to feel settled before the team has
+        agreed on ownership, tradeoffs, and thresholds. Design leadership needs a way to make
+        judgment visible earlier, when direction can still be shaped rather than repaired.
+      </p>
+    </div>
+    <div class="kit-grid">
+      <article class="spec-card">
+        <strong>Finished-looking output arrives before teams align</strong>
+        <p>Teams can react to something that looks done before they have agreed on what it means.</p>
+      </article>
+      <article class="spec-card">
+        <strong>Ownership stays implicit too long</strong>
+        <p>Critical calls get made in motion, without a clear accountable owner or explicit quality bar.</p>
+      </article>
+      <article class="spec-card">
+        <strong>Feedback gets mistaken for decision-making</strong>
+        <p>Commenting on a polished artifact is not the same as naming who decides and why.</p>
+      </article>
+      <article class="spec-card">
+        <strong>Judgment needs to be visible upstream</strong>
+        <p>Leaders need operating mechanisms that move decision quality earlier than artifact review.</p>
+      </article>
+    </div>
+    <article class="support-callout" aria-label="Direction callout">
+      <strong>Finished-looking output is not the same as decided direction.</strong>
+      <p>
+        If the team only reacts once artifacts look complete, it starts reviewing output after
+        direction has already hardened.
+      </p>
+    </article>
+  </section>
+
+  <section id="four-contracts" aria-labelledby="contracts-title">
+    <span class="eyebrow">Four Contracts</span>
+    <h2 id="contracts-title">What design leaders actually author</h2>
+    <div class="module-copy">
+      <p>
+        The work is not to add ceremony. It is to author the operating conditions that keep AI
+        speed from outrunning team clarity. The existing kit modules already support most of this
+        structure, with quality acting as connective tissue across all three.
+      </p>
+    </div>
+    <div class="module-nav-grid">
+      {
+        contractCards.map((card) => (
+          <article class="module-nav-card">
+            <h3>{card.title}</h3>
+            <p>{card.body}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section id="kit-modules" aria-labelledby="modules-title">
+    <span class="eyebrow">Kit Modules</span>
+    <h2 id="modules-title">How to use this framing with the kit</h2>
+    <div class="module-copy">
+      <p>
+        This page sets leadership posture. The kit modules turn that posture into operating
+        practice. Move from framing into the concrete mechanisms that make ownership, accountability,
+        and cadence usable in live delivery work.
+      </p>
+    </div>
+    <div class="module-nav-grid">
+      {
+        moduleCards.map((card) => (
+          <article class="module-nav-card">
+            <h3>{card.title}</h3>
+            <p>{card.body}</p>
+            <a href={card.href}>{card.cta}</a>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section id="failure-modes" aria-labelledby="failure-title">
+    <span class="eyebrow">Failure Modes</span>
+    <h2 id="failure-title">What breaks when no contract is explicit</h2>
+    <div class="kit-grid">
+      {
+        failureModes.map((item) => (
+          <article class="spec-card">
+            <strong>{item.title}</strong>
+            <p>{item.body}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="module-columns" aria-labelledby="practice-title">
+    <div class="module-section">
+      <span class="eyebrow">Leadership Posture</span>
+      <h2 id="practice-title">What changes in practice</h2>
+      <div class="module-copy">
+        <p>
+          Without explicit contracts, design leaders spend their time cleaning up after decisions
+          have already hardened.
+        </p>
+        <p>
+          With explicit contracts, they shape the conditions under which teams decide. That keeps
+          judgment upstream, keeps tradeoffs visible, and lets AI accelerate execution without
+          taking over authority.
+        </p>
+        <p>
+          That is the role this kit supports: making judgment explicit early enough for teams to
+          move faster without confusing polish with alignment.
+        </p>
+      </div>
+      <div class="cta-row">
+        <a class="button primary" href={responsibilitiesPath}>Open responsibilities matrix</a>
+        <a class="button ghost" href={decisionRightsPath}>View decision rights</a>
+        <a class="button ghost" href={weeklyCadencePath}>Open weekly cadence</a>
+      </div>
+    </div>
+
+    <aside class="module-sidecard" aria-label="Using the kit">
+      <strong>Use the kit in live delivery work</strong>
+      <ul class="support-list">
+        <li>Use the matrix to expose ownership gaps before scope hardens.</li>
+        <li>Use decision rights to stop screenshots and drafts from acting like commitments.</li>
+        <li>Use weekly cadence to keep judgment repeatable instead of heroic.</li>
+      </ul>
+    </aside>
+  </section>
+</SiteLayout>

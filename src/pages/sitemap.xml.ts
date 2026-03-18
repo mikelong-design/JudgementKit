@@ -9,6 +9,9 @@ export const GET: APIRoute = () => {
     '/kits',
     ...getAllKits().flatMap((kit) => [
       `/kits/${kit.slug}`,
+      ...(kit.slug === 'design-judgment'
+        ? ['/kits/design-judgment/design-leadership-as-contract-authorship']
+        : []),
       ...orderedModules(kit).map((module) => `/kits/${kit.slug}/${module.slug}`)
     ])
   ];

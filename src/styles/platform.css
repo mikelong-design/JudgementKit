@@ -199,6 +199,65 @@
   box-shadow: var(--shadow);
 }
 
+.anchor-rail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin: 0 0 1rem;
+  padding: 1rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.anchor-rail a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem 0.78rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.anchor-rail a:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.support-list {
+  margin: 0.8rem 0 0;
+  padding-left: 1.15rem;
+}
+
+.support-list li + li {
+  margin-top: 0.45rem;
+}
+
+.support-callout {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(31, 79, 135, 0.2);
+  background: linear-gradient(135deg, rgba(31, 79, 135, 0.08), rgba(255, 255, 255, 0.92));
+  box-shadow: var(--shadow);
+}
+
+.support-callout strong {
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.support-page .platform-hero,
+.support-page .module-columns {
+  align-items: start;
+}
+
 @media (max-width: 1023px) {
   .platform-hero,
   .domain-grid,
