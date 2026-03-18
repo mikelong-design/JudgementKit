@@ -1,11 +1,12 @@
 flowchart TD
   %% =========================
-  %% Domain Strategy (3 domains)
+  %% Domain Strategy (4 domains)
   %% =========================
 
   A["Traffic entry<br/>LinkedIn • SEO • AI citations • direct type-in"] --> B{"Which domain is requested?"}
 
   %% Catcher domains (never serve content)
+  B -->|"designjudgmentkit.com"| C0["designjudgmentkit.com<br/>Redirect-only"]
   B -->|"judgmentkit.com"| C1["judgmentkit.com<br/>Redirect-only"]
   B -->|"judgementkit.com"| C2["judgementkit.com<br/>Redirect-only"]
 
@@ -13,6 +14,7 @@ flowchart TD
   B -->|"judgmentkit.design"| D["judgmentkit.design<br/>Canonical site"]
 
   %% One-hop permanent redirects (preserve path & query)
+  C0 -->|"301/308 (one hop)<br/>preserve path + query"| E["https://judgmentkit.design/$path?$query"]
   C1 -->|"301/308 (one hop)<br/>preserve path + query"| E["https://judgmentkit.design/$path?$query"]
   C2 -->|"301/308 (one hop)<br/>preserve path + query"| E
 

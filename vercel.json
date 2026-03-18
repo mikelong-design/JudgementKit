@@ -5,6 +5,28 @@
       "has": [
         {
           "type": "host",
+          "value": "designjudgmentkit.com"
+        }
+      ],
+      "destination": "https://judgmentkit.design/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.designjudgmentkit.com"
+        }
+      ],
+      "destination": "https://judgmentkit.design/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
           "value": "judgmentkit.com"
         }
       ],

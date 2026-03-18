@@ -128,8 +128,9 @@ PDF export is planned but not implemented yet.
 ## Domain and deployment notes
 
 - Canonical platform: [judgmentkit.design](https://judgmentkit.design)
-- Redirect-only catcher domains: `judgmentkit.com` and `judgementkit.com`
+- Redirect-only catcher domains: `designjudgmentkit.com`, `judgmentkit.com`, and `judgementkit.com`
 - `www.judgmentkit.design` redirects to the apex domain
+- `www.designjudgmentkit.com` redirects to the apex canonical domain when attached
 - Canonical tags, sitemap entries, and OG metadata should reference only `judgmentkit.design`
 
 Verification examples:
@@ -137,6 +138,7 @@ Verification examples:
 ```bash
 curl -I https://judgmentkit.com/kits/design-judgment
 curl -I https://judgementkit.com/kits/design-judgment/decision-rights
+curl -I "https://designjudgmentkit.com/kits/design-judgment/decision-rights?ref=test"
 curl -I https://www.judgmentkit.design/
 ```
 

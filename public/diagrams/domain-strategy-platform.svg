@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 540" role="img" aria-labelledby="title desc">
   <title id="title">Judgment Kit domain strategy</title>
-  <desc id="desc">Traffic enters via judgmentkit.design, judgmentkit.com, or judgementkit.com. The .com domains redirect in one hop to the canonical design domain, which serves the /kits information architecture and module deep links.</desc>
+  <desc id="desc">Traffic enters via judgmentkit.design, designjudgmentkit.com, judgmentkit.com, or judgementkit.com. The redirect-only .com domains send traffic in one hop to the canonical design domain, which serves the /kits information architecture and module deep links.</desc>
   <style>
     .bg { fill: #f4f7fb; }
     .panel { fill: #ffffff; stroke: #cfd8e3; stroke-width: 2; rx: 18; }
@@ -21,13 +21,17 @@
   <text class="title" x="66" y="90">Traffic entry</text>
   <text class="muted" x="66" y="118">SEO, AI citations, LinkedIn, direct</text>
 
-  <rect class="panel" x="40" y="210" width="230" height="88" />
-  <text class="title" x="66" y="248">judgmentkit.com</text>
-  <text class="muted" x="66" y="276">Redirect-only catcher</text>
+  <rect class="panel" x="40" y="170" width="250" height="74" />
+  <text class="title" x="66" y="202">designjudgmentkit.com</text>
+  <text class="muted" x="66" y="224">Redirect-only catcher</text>
 
-  <rect class="panel" x="40" y="340" width="230" height="88" />
-  <text class="title" x="66" y="378">judgementkit.com</text>
-  <text class="muted" x="66" y="406">Redirect-only catcher</text>
+  <rect class="panel" x="40" y="270" width="250" height="74" />
+  <text class="title" x="66" y="302">judgmentkit.com</text>
+  <text class="muted" x="66" y="324">Redirect-only catcher</text>
+
+  <rect class="panel" x="40" y="370" width="250" height="74" />
+  <text class="title" x="66" y="402">judgementkit.com</text>
+  <text class="muted" x="66" y="424">Redirect-only catcher</text>
 
   <rect class="accent" x="360" y="180" width="270" height="126" />
   <text class="title" x="388" y="222">judgmentkit.design</text>
@@ -49,8 +53,9 @@
   <text class="muted" x="736" y="426">/decision-rights</text>
 
   <path class="line" d="M260 96 C316 96, 320 220, 360 220" />
-  <path class="line" d="M270 254 C330 254, 320 244, 360 244" />
-  <path class="line" d="M270 384 C330 384, 320 266, 360 266" />
+  <path class="line" d="M290 207 C330 207, 324 230, 360 230" />
+  <path class="line" d="M290 307 C330 307, 324 244, 360 244" />
+  <path class="line" d="M290 407 C330 407, 324 258, 360 258" />
   <path class="line" d="M630 220 C674 220, 682 147, 712 147" />
   <path class="line" d="M630 240 C674 240, 682 251, 712 251" />
   <path class="line" d="M630 268 C674 268, 682 374, 712 374" />
