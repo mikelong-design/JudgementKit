@@ -1,9 +1,10 @@
 :root {
   --maxw: 1120px;
-  --radius-lg: 20px;
-  --radius-md: 14px;
-  --radius-sm: 10px;
+  --radius-lg: 8px;
+  --radius-md: 6px;
+  --radius-sm: 4px;
   --border: rgba(17, 24, 39, 0.15);
+  --divider: rgba(17, 24, 39, 0.12);
   --text: #111827;
   --muted: rgba(17, 24, 39, 0.72);
   --muted-2: rgba(17, 24, 39, 0.58);
@@ -14,7 +15,19 @@
   --link: #1f4f87;
   --button-bg: #e8d3a7;
   --button-bg-2: #f7e5c1;
+  --shadow: none;
+}
+
+body.layout-review-hub,
+body.layout-baseline,
+body.layout-workbench,
+body.layout-flow,
+body.layout-ops-deck {
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
   --shadow: 0 12px 40px rgba(17, 24, 39, 0.1);
+  --divider: rgba(17, 24, 39, 0.15);
 }
 
 * {
@@ -33,6 +46,15 @@ body {
   background: var(--page-bg);
   min-height: 100vh;
   position: relative;
+}
+
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) {
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-5: 2.5rem;
+  --space-6: 3rem;
 }
 
 body::before,
@@ -60,6 +82,10 @@ body::after {
 
 a {
   color: var(--link);
+}
+
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) a {
+  text-decoration: none;
 }
 
 a:focus-visible,
@@ -194,6 +220,10 @@ section {
   padding: 2.5rem 0;
 }
 
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) section {
+  padding: var(--space-5) 0;
+}
+
 h1,
 h2,
 h3 {
@@ -201,6 +231,12 @@ h3 {
   line-height: 1.14;
   letter-spacing: -0.01em;
   font-family: "Instrument Serif", Georgia, Times, serif;
+}
+
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) h1,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) h2,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) h3 {
+  margin-bottom: var(--space-2);
 }
 
 h1 {
@@ -215,11 +251,26 @@ h3 {
   font-size: clamp(1.12rem, 2.2vw, 1.35rem);
 }
 
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .brand,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) h1,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) h2,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) h3 {
+  font-family: "Inter", "Avenir Next", "Segoe UI", sans-serif;
+}
+
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) em {
+  font-style: normal;
+}
+
 p,
 li,
 dd,
 dt {
   margin: 0;
+}
+
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) p + p {
+  margin-top: var(--space-2);
 }
 
 .intro,
@@ -322,6 +373,11 @@ dt {
   margin-top: 0.88rem;
 }
 
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .cta-row {
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
 .button {
   display: inline-flex;
   align-items: center;
@@ -352,6 +408,10 @@ dt {
 
 .divider {
   padding: 1.1rem 0;
+}
+
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .divider {
+  padding: var(--space-3) 0;
 }
 
 .panel {
@@ -412,6 +472,68 @@ dt {
   padding: 0.2rem 0.55rem;
   color: var(--muted);
   font-size: 0.82rem;
+}
+
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .button {
+  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--text) 14%, transparent);
+  background: rgba(255, 255, 255, 0.5);
+  padding: var(--space-1) var(--space-2);
+  line-height: 1.25;
+}
+
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .button.primary {
+  background: color-mix(in srgb, var(--button-bg) 42%, white 58%);
+  border-color: color-mix(in srgb, var(--button-bg) 55%, #8b6f44 45%);
+}
+
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .button.ghost {
+  background: transparent;
+  border-color: color-mix(in srgb, var(--text) 10%, transparent);
+}
+
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .muted-chip {
+  gap: var(--space-1);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+  letter-spacing: 0;
+  text-transform: none;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .panel,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .module-card,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .layout-link-card,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .pill-card,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .flow-stage,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .cadence-item,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .matrix-card,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .raci-card,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .callout {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  animation: none;
+}
+
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .panel {
+  padding: var(--space-1) 0;
+}
+
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .module-card,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .layout-link-card,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .pill-card,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .flow-stage,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .cadence-item,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .matrix-card,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .raci-card,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .callout {
+  padding: var(--space-2) 0 0;
+  border-top: 1px solid var(--divider);
 }
 
 .matrix-controls {
@@ -596,6 +718,10 @@ ul {
   gap: 0.68rem;
 }
 
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .downloads-row {
+  gap: var(--space-2);
+}
+
 footer {
   margin-top: 1.24rem;
   border-top: 1px solid var(--border);
@@ -603,8 +729,21 @@ footer {
   color: var(--muted);
 }
 
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) footer {
+  margin-top: var(--space-4);
+  padding: var(--space-4) 0 var(--space-6);
+}
+
 footer p {
   margin-top: 0.2rem;
+}
+
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) footer p {
+  margin-top: 0;
+}
+
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) footer p + p {
+  margin-top: var(--space-1);
 }
 
 .flow-rail {

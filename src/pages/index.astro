@@ -9,8 +9,7 @@ const primaryModules = currentKit ? orderedModules(currentKit) : [];
 
 const navLinks = [
   { href: '/#vision', label: 'Vision' },
-  { href: '/kits', label: 'Kits' },
-  { href: '/review', label: 'Review Routes' }
+  { href: '/kits', label: 'Kits' }
 ];
 ---
 
@@ -31,15 +30,15 @@ const navLinks = [
         <strong>product coherence</strong> when output becomes cheap and finished-looking.
       </p>
       <div class="cta-row">
-        <a class="button primary" href="/kits">Browse kits</a>
-        <a class="button ghost" href={currentKit ? `/kits/${currentKit.slug}` : '/kits'}>Open current kit</a>
+        <a class="button primary" href="/kits">See kit library</a>
+        <a class="button ghost" href={currentKit ? `/kits/${currentKit.slug}` : '/kits'}>
+          {currentKit ? `Read ${currentKit.title}` : 'See current kit'}
+        </a>
       </div>
-      <p class="small-note">
-        Core thesis: <em>AI accelerates drafts; judgment prevents drafts becoming defaults.</em>
-      </p>
       <p>
-        The new failure mode is not lack of output. It is teams treating polished drafts as decisions
-        before ownership, tradeoffs, and rationale are explicit.
+        AI accelerates drafts; judgment prevents drafts becoming defaults. The new failure mode is
+        not lack of output. It is teams treating polished drafts as decisions before ownership,
+        tradeoffs, and rationale are explicit.
       </p>
       <p>
         Judgment Kit makes judgment operational so responsibilities, decision rights, and weekly cadence
@@ -95,25 +94,6 @@ const navLinks = [
     </div>
   </section>
 
-  <section aria-labelledby="non-goals-title">
-    <span class="eyebrow">Non-goals</span>
-    <h2 id="non-goals-title">The platform is not a tool catalog</h2>
-    <div class="kit-grid">
-      <article class="spec-card">
-        <strong>Not a prompt library</strong>
-        <p>The kits are built for live delivery work, not prompt collection or vendor comparison.</p>
-      </article>
-      <article class="spec-card">
-        <strong>Not LLM-specific guidance</strong>
-        <p>The operating model focuses on judgment and accountability, not model recommendations.</p>
-      </article>
-      <article class="spec-card">
-        <strong>Not design philosophy essays</strong>
-        <p>Every page should stay operational, citeable, and useful in active product decisions.</p>
-      </article>
-    </div>
-  </section>
-
   <section aria-labelledby="kit-contract-title">
     <span class="eyebrow">Kit Contract</span>
     <h2 id="kit-contract-title">What ships in every kit</h2>
@@ -150,8 +130,10 @@ const navLinks = [
               <strong>Thesis:</strong> {kit.coreThesis}
             </p>
             <div class="cta-row">
-              <a class="button primary" href={`/kits/${kit.slug}`}>Open kit</a>
-              <a class="button ghost" href={`/kits/${kit.slug}/${kit.modules[0]?.slug}`}>Open first module</a>
+              <a class="button primary" href={`/kits/${kit.slug}`}>Read {kit.title}</a>
+              <a class="button ghost" href={`/kits/${kit.slug}/${kit.modules[0]?.slug}`}>
+                {kit.modules[0]?.title ? `Read ${kit.modules[0].title}` : 'Read first module'}
+              </a>
             </div>
           </article>
         ))

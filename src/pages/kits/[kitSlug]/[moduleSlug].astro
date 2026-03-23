@@ -33,6 +33,7 @@ const navLinks = [
 ];
 
 const modules = orderedModules(kit);
+const isMatrixModule = moduleEntry.tableData?.kind === 'matrix';
 const supportingImageBySlug: Record<ModuleSlug, string> = {
   'responsibilities-matrix': '/assets/support_draft_vs_default_header_1536x804.png',
   'decision-rights': '/assets/ownership_visible_v4_header_tight_1536x804.png',
@@ -77,16 +78,6 @@ const supportingImageBySlug: Record<ModuleSlug, string> = {
         </div>
       )}
 
-      <figure class="supporting-image">
-        <img
-          src={supportingImageBySlug[moduleEntry.slug]}
-          alt={`${moduleEntry.title} editorial illustration`}
-          width="1536"
-          height="804"
-          loading="lazy"
-          decoding="async"
-        />
-      </figure>
     </div>
 
     <aside class="module-sidecard">
@@ -112,8 +103,12 @@ const supportingImageBySlug: Record<ModuleSlug, string> = {
     </aside>
   </section>
 
-  <section id="module-content" class="module-section" aria-labelledby="module-content-title">
-    <h2 id="module-content-title">{moduleEntry.title}</h2>
+  <section
+    id="module-content"
+    class="module-section"
+    aria-labelledby={isMatrixModule ? 'module-title' : 'module-content-title'}
+  >
+    {!isMatrixModule && <h2 id="module-content-title">{moduleEntry.title}</h2>}
 
     {moduleEntry.tableData?.kind === 'matrix' && (
       <MatrixModule rows={moduleEntry.tableData.rows} helper={moduleEntry.helper} />

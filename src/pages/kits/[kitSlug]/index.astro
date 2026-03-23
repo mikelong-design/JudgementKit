@@ -54,8 +54,10 @@ const navLinks = [
         <strong>Core thesis:</strong> {kit.coreThesis}
       </p>
       <div class="cta-row">
-        <a class="button primary" href={`#modules`}>Open modules</a>
-        <a class="button ghost" href={`/kits/${kit.slug}/${modules[0]?.slug}`}>Open first module</a>
+        <a class="button primary" href={`#modules`}>Jump to kit modules</a>
+        <a class="button ghost" href={`/kits/${kit.slug}/${modules[0]?.slug}`}>
+          {modules[0]?.title ? `Read ${modules[0].title}` : 'Read first module'}
+        </a>
       </div>
     </div>
 
@@ -68,12 +70,6 @@ const navLinks = [
         <strong>What this protects</strong>
         <p>Decision quality, ownership, rationale capture, and system coherence before commitments lock in.</p>
       </article>
-      {kit.artDirection && (
-        <article class="summary-card">
-          <strong>Illustration direction</strong>
-          <p>{kit.artDirection.name}</p>
-        </article>
-      )}
     </div>
   </section>
 
@@ -95,8 +91,10 @@ const navLinks = [
             </p>
           </div>
           <div class="cta-row">
-            <a class="button primary" href={framingPagePath}>Open contract authorship</a>
-            <a class="button ghost" href={`/kits/${kit.slug}/${modules[0]?.slug}`}>Open first module</a>
+            <a class="button primary" href={framingPagePath}>Read contract authorship</a>
+            <a class="button ghost" href={`/kits/${kit.slug}/${modules[0]?.slug}`}>
+              {modules[0]?.title ? `Read ${modules[0].title}` : 'Read first module'}
+            </a>
           </div>
         </div>
 
@@ -121,7 +119,7 @@ const navLinks = [
             <span class="muted-chip">{module.slug}</span>
             <h3>{module.title}</h3>
             <p>{module.summary}</p>
-            <a href={`/kits/${kit.slug}/${module.slug}`}>Open module page</a>
+            <a href={`/kits/${kit.slug}/${module.slug}`}>Read {module.title}</a>
           </article>
         ))
       }
@@ -171,31 +169,4 @@ const navLinks = [
     </section>
   )}
 
-  <section aria-labelledby="credits-title">
-    <span class="eyebrow">Credits</span>
-    <h2 id="credits-title">Credits and art direction</h2>
-    <div class="module-columns">
-      <div class="module-section">
-        <ul>
-          {
-            (kit.credits || []).map((credit) => (
-              <li>{credit}</li>
-            ))
-          }
-        </ul>
-      </div>
-      {kit.artDirection && (
-        <aside class="module-sidecard">
-          <strong>{kit.artDirection.name}</strong>
-          <ul>
-            {
-              kit.artDirection.principles.map((item) => (
-                <li>{item}</li>
-              ))
-            }
-          </ul>
-        </aside>
-      )}
-    </div>
-  </section>
 </SiteLayout>

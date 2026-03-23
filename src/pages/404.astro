@@ -3,8 +3,7 @@ import SiteLayout from '../components/SiteLayout.astro';
 
 const navLinks = [
   { href: '/', label: 'Platform' },
-  { href: '/kits', label: 'Kits' },
-  { href: '/review', label: 'Review Routes' }
+  { href: '/kits', label: 'Kits' }
 ];
 
 const requestedPath = Astro.url.pathname;
@@ -30,7 +29,7 @@ const requestedPath = Astro.url.pathname;
         library to jump back into the published information architecture.
       </p>
       <div class="cta-row">
-        <a class="button primary" href="/kits">Browse kits</a>
+        <a class="button primary" href="/kits">See kit library</a>
         <a class="button ghost" href="/">Back to platform</a>
       </div>
     </div>
@@ -46,8 +45,8 @@ const requestedPath = Astro.url.pathname;
       </article>
       <article class="summary-card">
         <strong>Most likely next step</strong>
-        <p>Open the Design Judgment Kit and use its module deep links instead of legacy layout URLs.</p>
-        <a href="/kits/design-judgment">Open Design Judgment Kit</a>
+        <p>Read the Design Judgment Kit and use its module deep links instead of legacy layout URLs.</p>
+        <a href="/kits/design-judgment">Read Design Judgment Kit</a>
       </article>
     </div>
   </section>

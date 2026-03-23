@@ -5,8 +5,7 @@ import { getAllKits, orderedModules } from '../../lib/kits';
 const kits = getAllKits();
 const navLinks = [
   { href: '/', label: 'Platform' },
-  { href: '/kits', label: 'Kits' },
-  { href: '/review', label: 'Review Routes' }
+  { href: '/kits', label: 'Kits' }
 ];
 ---
 
@@ -44,13 +43,13 @@ const navLinks = [
                     <article class="module-nav-card">
                       <strong>{module.title}</strong>
                       <p>{module.summary}</p>
-                      <a href={`/kits/${kit.slug}/${module.slug}`}>Open module</a>
+                      <a href={`/kits/${kit.slug}/${module.slug}`}>Read {module.title}</a>
                     </article>
                   ))
                 }
               </div>
               <div class="cta-row">
-                <a class="button primary" href={`/kits/${kit.slug}`}>Open kit</a>
+                <a class="button primary" href={`/kits/${kit.slug}`}>Read {kit.title}</a>
               </div>
             </article>
           );

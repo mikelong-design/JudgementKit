@@ -106,7 +106,6 @@ export const kits: Kit[] = [
           'Clarifies what designers own, protect, and monitor while AI output accelerates.',
         intro:
           'A practical view of what the designer owns, protects, and checks week to week.',
-        helper: 'Use this as a diagnostic, not a policy document.',
         body: [
           'Responsibilities stay operational when they are visible early, not after work has already hardened into scope.',
           'Use the matrix live in planning, review, and weekly checkpoints to expose where judgment is missing or arriving too late.'
