@@ -1,0 +1,222 @@
+---
+import { render } from 'astro:content';
+
+import SiteLayout from '../../components/SiteLayout.astro';
+import {
+  getContractBySlug,
+  getContractsSiteData,
+  getDriftTestsForContract
+} from '../../lib/contracts';
+
+export async function getStaticPaths() {
+  const { contracts } = await getContractsSiteData();
+
+  return contracts.map((contract) => ({
+    params: { contractSlug: contract.slug }
+  }));
+}
+
+const { contracts, driftTests, workflows } = await getContractsSiteData();
+const contract = getContractBySlug(contracts, Astro.params.contractSlug || '');
+
+if (!contract) {
+  throw new Error(`Unknown contract slug: ${Astro.params.contractSlug}`);
+}
+
+const { Content } = await render(contract);
+const relatedTests = getDriftTestsForContract(driftTests, contract.data.id);
+const relatedWorkflows = workflows.filter((workflow) =>
+  workflow.data.contracts.includes(contract.data.id)
+);
+const navLinks = [
+  { href: '/', label: 'Platform' },
+  { href: '/kits', label: 'Kits' },
+  { href: '/contracts', label: 'Contracts' },
+  { href: `#rules`, label: 'Rules' }
+];
+---
+
+<SiteLayout
+  title={contract.data.name}
+  description={contract.data.intent}
+  path={`/contracts/${contract.slug}`}
+  navLinks={navLinks}
+  bodyClass="contracts-page contract-page"
+>
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ol>
+      <li><a href="/">Platform</a></li>
+      <li><a href="/contracts">Contracts</a></li>
+      <li aria-current="page">{contract.data.name}</li>
+    </ol>
+  </nav>
+
+  <section class="platform-hero" aria-labelledby="contract-title">
+    <div class="hero-copy">
+      <span class="muted-chip">{contract.data.id}</span>
+      <h1 id="contract-title">{contract.data.name}</h1>
+      <p class="subhead">{contract.data.intent}</p>
+      <p>
+        This contract declares where the workflow may adapt locally and where it must stop, repair,
+        or escalate before the output is treated as usable product work.
+      </p>
+      <div class="cta-row">
+        {
+          relatedWorkflows[0] && (
+            <a class="button primary" href={`/contracts/workflows/${relatedWorkflows[0].slug}`}>
+              Open related workflow
+            </a>
+          )
+        }
+        {
+          relatedTests[0] && (
+            <a class="button ghost" href={`/contracts/tests/${relatedTests[0].slug}`}>
+              Read first drift test
+            </a>
+          )
+        }
+      </div>
+    </div>
+
+    <aside class="module-sidecard" aria-label="Contract metadata">
+      <strong>Status</strong>
+      <p>{contract.data.status}</p>
+
+      <strong>Owner</strong>
+      <p>{contract.data.owner}</p>
+
+      <strong>Approver</strong>
+      <p>{contract.data.approver}</p>
+
+      <strong>Version</strong>
+      <p>{contract.data.version}</p>
+    </aside>
+  </section>
+
+  <section aria-labelledby="autonomy-title">
+    <span class="eyebrow">Bounded Autonomy</span>
+    <h2 id="autonomy-title">What this contract allows and disallows</h2>
+    <div class="module-nav-grid">
+      <article class="module-nav-card">
+        <h3>Allowed</h3>
+        <ul>
+          {
+            contract.data.boundedAutonomy.allowed.map((item) => (
+              <li>{item}</li>
+            ))
+          }
+        </ul>
+      </article>
+      <article class="module-nav-card">
+        <h3>Disallowed</h3>
+        <ul>
+          {
+            contract.data.boundedAutonomy.disallowed.map((item) => (
+              <li>{item}</li>
+            ))
+          }
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section id="rules" aria-labelledby="rules-title">
+    <span class="eyebrow">Rules</span>
+    <h2 id="rules-title">What must be true before this contract passes</h2>
+    <div class="module-columns">
+      <div class="module-section">
+        <ul class="support-list">
+          {
+            contract.data.policyRules.map((rule) => (
+              <li>{rule}</li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <aside class="module-sidecard" aria-label="Contract inputs">
+        <strong>Required inputs</strong>
+        <ul>
+          {
+            contract.data.requiredInputs.map((item) => (
+              <li>{item}</li>
+            ))
+          }
+        </ul>
+
+        <strong>Applies to workflows</strong>
+        <ul>
+          {
+            relatedWorkflows.map((workflow) => (
+              <li>
+                <a href={`/contracts/workflows/${workflow.slug}`}>{workflow.data.title}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section aria-labelledby="metrics-title">
+    <span class="eyebrow">Metrics</span>
+    <h2 id="metrics-title">Suggested measurements</h2>
+    <div class="table-wrap">
+      <table class="data-table" aria-describedby="metrics-title">
+        <thead>
+          <tr>
+            <th scope="col">Metric</th>
+            <th scope="col">Target</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            contract.data.metrics.map((metric) => (
+              <tr>
+                <td>{metric.name}</td>
+                <td>{metric.value}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="enforcement-title">
+    <span class="eyebrow">Enforcement</span>
+    <h2 id="enforcement-title">How the workflow responds to drift</h2>
+    <div class="module-columns">
+      <div class="module-section">
+        <ul class="support-list">
+          {
+            contract.data.enforcement.map((item) => (
+              <li>{item}</li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <aside class="module-sidecard" aria-label="Related drift tests">
+        <strong>Related drift tests</strong>
+        <ul>
+          {
+            relatedTests.map((test) => (
+              <li>
+                <a href={`/contracts/tests/${test.slug}`}>{test.data.name}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section aria-labelledby="context-title">
+    <span class="eyebrow">Context</span>
+    <h2 id="context-title">Why this contract exists</h2>
+    <div class="content-stack">
+      <Content />
+    </div>
+  </section>
+</SiteLayout>

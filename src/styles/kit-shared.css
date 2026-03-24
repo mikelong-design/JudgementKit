@@ -48,7 +48,7 @@ body {
   position: relative;
 }
 
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) {
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) {
   --space-1: 0.5rem;
   --space-2: 1rem;
   --space-3: 1.5rem;
@@ -84,7 +84,7 @@ a {
   color: var(--link);
 }
 
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) a {
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) a {
   text-decoration: none;
 }
 
@@ -220,7 +220,7 @@ section {
   padding: 2.5rem 0;
 }
 
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) section {
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) section {
   padding: var(--space-5) 0;
 }
 
@@ -233,9 +233,9 @@ h3 {
   font-family: "Instrument Serif", Georgia, Times, serif;
 }
 
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) h1,
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) h2,
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) h3 {
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) h1,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) h2,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) h3 {
   margin-bottom: var(--space-2);
 }
 
@@ -251,14 +251,14 @@ h3 {
   font-size: clamp(1.12rem, 2.2vw, 1.35rem);
 }
 
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .brand,
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) h1,
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) h2,
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) h3 {
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) .brand,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) h1,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) h2,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) h3 {
   font-family: "Inter", "Avenir Next", "Segoe UI", sans-serif;
 }
 
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) em {
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) em {
   font-style: normal;
 }
 
@@ -269,7 +269,7 @@ dt {
   margin: 0;
 }
 
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) p + p {
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) p + p {
   margin-top: var(--space-2);
 }
 
@@ -373,7 +373,7 @@ dt {
   margin-top: 0.88rem;
 }
 
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .cta-row {
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) .cta-row {
   gap: var(--space-2);
   margin-top: var(--space-2);
 }
@@ -410,7 +410,7 @@ dt {
   padding: 1.1rem 0;
 }
 
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .divider {
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) .divider {
   padding: var(--space-3) 0;
 }
 
@@ -474,7 +474,7 @@ dt {
   font-size: 0.82rem;
 }
 
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .button {
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) .button {
   border-radius: 10px;
   border: 1px solid color-mix(in srgb, var(--text) 14%, transparent);
   background: rgba(255, 255, 255, 0.5);
@@ -482,17 +482,17 @@ dt {
   line-height: 1.25;
 }
 
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .button.primary {
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) .button.primary {
   background: color-mix(in srgb, var(--button-bg) 42%, white 58%);
   border-color: color-mix(in srgb, var(--button-bg) 55%, #8b6f44 45%);
 }
 
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .button.ghost {
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) .button.ghost {
   background: transparent;
   border-color: color-mix(in srgb, var(--text) 10%, transparent);
 }
 
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .muted-chip {
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) .muted-chip {
   gap: var(--space-1);
   border: 0;
   border-radius: 0;
@@ -504,15 +504,15 @@ dt {
   font-weight: 600;
 }
 
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .panel,
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .module-card,
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .layout-link-card,
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .pill-card,
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .flow-stage,
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .cadence-item,
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .matrix-card,
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .raci-card,
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .callout {
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) .panel,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) .module-card,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) .layout-link-card,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) .pill-card,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) .flow-stage,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) .cadence-item,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) .matrix-card,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) .raci-card,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) .callout {
   border: 0;
   border-radius: 0;
   background: transparent;
@@ -520,18 +520,18 @@ dt {
   animation: none;
 }
 
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .panel {
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) .panel {
   padding: var(--space-1) 0;
 }
 
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .module-card,
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .layout-link-card,
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .pill-card,
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .flow-stage,
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .cadence-item,
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .matrix-card,
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .raci-card,
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .callout {
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) .module-card,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) .layout-link-card,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) .pill-card,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) .flow-stage,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) .cadence-item,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) .matrix-card,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) .raci-card,
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) .callout {
   padding: var(--space-2) 0 0;
   border-top: 1px solid var(--divider);
 }
@@ -718,7 +718,7 @@ ul {
   gap: 0.68rem;
 }
 
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .downloads-row {
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) .downloads-row {
   gap: var(--space-2);
 }
 
@@ -729,7 +729,7 @@ footer {
   color: var(--muted);
 }
 
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) footer {
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) footer {
   margin-top: var(--space-4);
   padding: var(--space-4) 0 var(--space-6);
 }
@@ -738,11 +738,11 @@ footer p {
   margin-top: 0.2rem;
 }
 
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) footer p {
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) footer p {
   margin-top: 0;
 }
 
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) footer p + p {
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) footer p + p {
   margin-top: var(--space-1);
 }
 

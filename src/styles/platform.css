@@ -50,7 +50,7 @@ section + section {
   border-top: 1px solid var(--divider);
 }
 
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) section + section {
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) section + section {
   border-top: 0;
 }
 
@@ -134,7 +134,7 @@ section + section {
   color: var(--muted);
 }
 
-:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page) .eyebrow {
+:is(body.platform-home, body.kits-index, body.kit-page, body.module-page, body.support-page, body.not-found-page, body.contracts-page) .eyebrow {
   letter-spacing: 0;
   text-transform: none;
   font-size: 0.82rem;
@@ -320,6 +320,30 @@ section + section {
   align-items: start;
 }
 
+.content-stack > * + * {
+  margin-top: var(--space-2, 1rem);
+}
+
+.content-stack ul,
+.content-stack ol {
+  margin-top: var(--space-2, 1rem);
+}
+
+.code-block {
+  margin: 0;
+  overflow: auto;
+  border-top: 1px solid var(--divider);
+  padding: var(--space-2, 1rem) 0 0;
+  background: transparent;
+  color: var(--text);
+  font: 0.92rem/1.6 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  white-space: pre-wrap;
+}
+
+.contract-workbench-page .summary-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 @media (max-width: 1023px) {
   .platform-hero,
   .domain-grid,
@@ -337,5 +361,9 @@ section + section {
   .breadcrumbs li::after {
     content: '';
     margin: 0;
+  }
+
+  .contract-workbench-page .summary-grid {
+    grid-template-columns: 1fr;
   }
 }

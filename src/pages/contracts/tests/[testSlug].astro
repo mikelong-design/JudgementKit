@@ -1,0 +1,154 @@
+---
+import { render } from 'astro:content';
+
+import SiteLayout from '../../../components/SiteLayout.astro';
+import {
+  getContractById,
+  getContractsSiteData,
+  getDriftTestBySlug
+} from '../../../lib/contracts';
+
+export async function getStaticPaths() {
+  const { driftTests } = await getContractsSiteData();
+
+  return driftTests.map((test) => ({
+    params: { testSlug: test.slug }
+  }));
+}
+
+const { contracts, driftTests, workflows } = await getContractsSiteData();
+const driftTest = getDriftTestBySlug(driftTests, Astro.params.testSlug || '');
+
+if (!driftTest) {
+  throw new Error(`Unknown drift test slug: ${Astro.params.testSlug}`);
+}
+
+const { Content } = await render(driftTest);
+const contract = getContractById(contracts, driftTest.data.contractId);
+const relatedWorkflows = workflows.filter((workflow) => workflow.data.tests.includes(driftTest.data.id));
+
+if (!contract) {
+  throw new Error(`Drift test ${driftTest.data.id} is missing its contract.`);
+}
+
+const navLinks = [
+  { href: '/', label: 'Platform' },
+  { href: '/contracts', label: 'Contracts' },
+  { href: `/contracts/${contract.slug}`, label: contract.data.name },
+  { href: '#method', label: 'Method' }
+];
+---
+
+<SiteLayout
+  title={driftTest.data.name}
+  description={driftTest.data.purpose}
+  path={`/contracts/tests/${driftTest.slug}`}
+  navLinks={navLinks}
+  bodyClass="contracts-page contract-test-page"
+>
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ol>
+      <li><a href="/">Platform</a></li>
+      <li><a href="/contracts">Contracts</a></li>
+      <li><a href={`/contracts/${contract.slug}`}>{contract.data.name}</a></li>
+      <li aria-current="page">{driftTest.data.name}</li>
+    </ol>
+  </nav>
+
+  <section class="platform-hero" aria-labelledby="test-title">
+    <div class="hero-copy">
+      <span class="muted-chip">{driftTest.data.id}</span>
+      <h1 id="test-title">{driftTest.data.name}</h1>
+      <p class="subhead">{driftTest.data.purpose}</p>
+      <p>
+        This test translates the contract into measurable drift signals so the workflow can decide
+        whether to pass, warn, fail, or escalate with evidence attached.
+      </p>
+      <div class="cta-row">
+        <a class="button primary" href={`/contracts/${contract.slug}`}>Read parent contract</a>
+        {
+          relatedWorkflows[0] && (
+            <a class="button ghost" href={`/contracts/workflows/${relatedWorkflows[0].slug}`}>
+              Open workflow
+            </a>
+          )
+        }
+      </div>
+    </div>
+
+    <aside class="module-sidecard" aria-label="Thresholds">
+      <strong>Pass</strong>
+      <p>{driftTest.data.thresholds.pass}</p>
+
+      <strong>Warn</strong>
+      <p>{driftTest.data.thresholds.warn}</p>
+
+      <strong>Fail</strong>
+      <p>{driftTest.data.thresholds.fail}</p>
+    </aside>
+  </section>
+
+  <section id="method" aria-labelledby="method-title">
+    <span class="eyebrow">Method</span>
+    <h2 id="method-title">How this test measures drift</h2>
+    <div class="module-columns">
+      <div class="module-section">
+        <ul class="support-list">
+          {
+            driftTest.data.method.map((item) => (
+              <li>{item}</li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <aside class="module-sidecard" aria-label="Required inputs">
+        <strong>Required inputs</strong>
+        <ul>
+          {
+            driftTest.data.requiredInputs.map((item) => (
+              <li>{item}</li>
+            ))
+          }
+        </ul>
+
+        <strong>Applies to workflows</strong>
+        <ul>
+          {
+            relatedWorkflows.map((workflow) => (
+              <li>
+                <a href={`/contracts/workflows/${workflow.slug}`}>{workflow.data.title}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section aria-labelledby="formula-title">
+    <span class="eyebrow">Formula</span>
+    <h2 id="formula-title">Scoring model</h2>
+    <pre class="code-block"><code>{driftTest.data.formula}</code></pre>
+  </section>
+
+  <section aria-labelledby="assertions-title">
+    <span class="eyebrow">Assertions</span>
+    <h2 id="assertions-title">Example checks</h2>
+    <ul class="support-list">
+      {
+        driftTest.data.exampleAssertions.map((item) => (
+          <li>{item}</li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section aria-labelledby="context-title">
+    <span class="eyebrow">Context</span>
+    <h2 id="context-title">Why this test matters</h2>
+    <div class="content-stack">
+      <Content />
+    </div>
+  </section>
+</SiteLayout>

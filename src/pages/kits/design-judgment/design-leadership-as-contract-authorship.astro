@@ -6,11 +6,14 @@ const responsibilitiesPath = `${kitPath}/responsibilities-matrix`;
 const decisionRightsPath = `${kitPath}/decision-rights`;
 const weeklyCadencePath = `${kitPath}/weekly-cadence`;
 const pagePath = `${kitPath}/design-leadership-as-contract-authorship`;
+const contractsPath = '/contracts';
+const pilotWorkflowPath = '/contracts/workflows/ai-ui-generation';
 
 const navLinks = [
   { href: '/', label: 'Platform' },
   { href: '/kits', label: 'Kits' },
-  { href: kitPath, label: 'Design Judgment Kit' }
+  { href: kitPath, label: 'Design Judgment Kit' },
+  { href: contractsPath, label: 'Contracts' }
 ];
 
 const anchorLinks = [
@@ -117,6 +120,7 @@ const failureModes = [
       <div class="cta-row">
         <a class="button primary" href={responsibilitiesPath}>Read responsibilities matrix</a>
         <a class="button ghost" href={decisionRightsPath}>Read decision rights snapshot</a>
+        <a class="button ghost" href={pilotWorkflowPath}>See contracts pilot</a>
       </div>
     </div>
 
@@ -167,6 +171,11 @@ const failureModes = [
           that make judgment usable earlier. Those contracts can take the form of explicit
           responsibilities, decision rights, quality gates, working agreements, and weekly
           operating cadence.
+        </p>
+        <p>
+          The contracts pilot for AI UI generation shows the same posture in workflow form: declared
+          constraints, measurable drift tests, and explicit response policies before generated UI is
+          treated as real direction.
         </p>
         <p>
           If these conditions stay implicit, teams mistake polish for alignment. If they are made

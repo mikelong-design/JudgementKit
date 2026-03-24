@@ -1,0 +1,194 @@
+---
+import { render } from 'astro:content';
+
+import SiteLayout from '../../../components/SiteLayout.astro';
+import {
+  getContractsForWorkflow,
+  getContractsSiteData,
+  getPlaybookBySlug,
+  getTestsForWorkflow,
+  getWorkflowBySlug
+} from '../../../lib/contracts';
+
+export async function getStaticPaths() {
+  const { workflows } = await getContractsSiteData();
+
+  return workflows.map((workflow) => ({
+    params: { workflowSlug: workflow.slug }
+  }));
+}
+
+const { contracts, driftTests, workflows, playbooks } = await getContractsSiteData();
+const workflow = getWorkflowBySlug(workflows, Astro.params.workflowSlug || '');
+
+if (!workflow) {
+  throw new Error(`Unknown workflow slug: ${Astro.params.workflowSlug}`);
+}
+
+const { Content } = await render(workflow);
+const relatedContracts = getContractsForWorkflow(workflow, contracts);
+const relatedTests = getTestsForWorkflow(workflow, driftTests);
+const playbook = getPlaybookBySlug(playbooks, workflow.data.playbookSlug);
+
+if (!playbook) {
+  throw new Error(`Workflow ${workflow.slug} is missing its playbook.`);
+}
+
+const flowSteps = [
+  {
+    title: 'Record',
+    body: 'Capture a stable decision record before the output leaves draft status.'
+  },
+  {
+    title: 'Evaluate',
+    body: 'Run contract-specific drift tests against copy, structure, runtime, and provenance.'
+  },
+  {
+    title: 'Respond',
+    body: 'Map pass, warn, or fail states to allow, nudge, correct, quarantine, or escalate.'
+  },
+  {
+    title: 'Revise',
+    body: 'Use incidents and near misses to update thresholds, rules, and ownership boundaries.'
+  }
+];
+
+const navLinks = [
+  { href: '/', label: 'Platform' },
+  { href: '/contracts', label: 'Contracts' },
+  { href: '#coverage', label: 'Coverage' },
+  { href: '#record', label: 'Decision Record' }
+];
+---
+
+<SiteLayout
+  title={workflow.data.title}
+  description={workflow.data.summary}
+  path={`/contracts/workflows/${workflow.slug}`}
+  navLinks={navLinks}
+  bodyClass="contracts-page contract-workflow-page"
+>
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ol>
+      <li><a href="/">Platform</a></li>
+      <li><a href="/contracts">Contracts</a></li>
+      <li aria-current="page">{workflow.data.title}</li>
+    </ol>
+  </nav>
+
+  <section class="platform-hero" aria-labelledby="workflow-title">
+    <div class="hero-copy">
+      <span class="muted-chip">{workflow.slug}</span>
+      <h1 id="workflow-title">{workflow.data.title}</h1>
+      <p class="subhead">{workflow.data.summary}</p>
+      <p>
+        This workflow is the first fully modeled Judgment Kit pilot because it turns the Design
+        Judgment Kit thesis into an operational review loop that teams can inspect before publish.
+      </p>
+      <div class="cta-row">
+        <a class="button primary" href={`/contracts/playbooks/${playbook.slug}`}>Read playbook</a>
+        <a class="button ghost" href="/kits/design-judgment">See Design Judgment Kit</a>
+      </div>
+    </div>
+
+    <aside class="module-sidecard" aria-label="Workflow defaults">
+      <strong>Default surface</strong>
+      <p>{workflow.data.defaultSurface}</p>
+
+      <strong>Default audience</strong>
+      <p>{workflow.data.defaultAudience}</p>
+
+      <strong>Contracts in scope</strong>
+      <p>{relatedContracts.length}</p>
+
+      <strong>Drift tests in scope</strong>
+      <p>{relatedTests.length}</p>
+    </aside>
+  </section>
+
+  <section aria-labelledby="steps-title">
+    <span class="eyebrow">Operating Flow</span>
+    <h2 id="steps-title">How a governed workflow runs</h2>
+    <div class="module-nav-grid">
+      {
+        flowSteps.map((step) => (
+          <article class="module-nav-card">
+            <h3>{step.title}</h3>
+            <p>{step.body}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section id="record" aria-labelledby="record-title">
+    <span class="eyebrow">Decision Record</span>
+    <h2 id="record-title">Required fields for every consequential decision</h2>
+    <div class="table-wrap">
+      <table class="data-table" aria-describedby="record-title">
+        <thead>
+          <tr>
+            <th scope="col">Field</th>
+            <th scope="col">Why it exists</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            workflow.data.decisionRecordFields.map((field) => (
+              <tr>
+                <td>{field}</td>
+                <td>Required to make the output attributable, comparable, and reviewable later.</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="coverage" aria-labelledby="coverage-title">
+    <span class="eyebrow">Coverage</span>
+    <h2 id="coverage-title">Contracts and tests mapped to this workflow</h2>
+    <div class="module-columns">
+      <div class="module-section">
+        <span class="eyebrow">Contracts</span>
+        <div class="module-nav-grid">
+          {
+            relatedContracts.map((contract) => (
+              <article class="module-nav-card">
+                <span class="muted-chip">{contract.data.id}</span>
+                <h3>{contract.data.name}</h3>
+                <p>{contract.data.intent}</p>
+                <a href={`/contracts/${contract.slug}`}>Read contract</a>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+
+      <div class="module-section">
+        <span class="eyebrow">Drift tests</span>
+        <div class="module-nav-grid">
+          {
+            relatedTests.map((test) => (
+              <article class="module-nav-card">
+                <span class="muted-chip">{test.data.id}</span>
+                <h3>{test.data.name}</h3>
+                <p>{test.data.purpose}</p>
+                <a href={`/contracts/tests/${test.slug}`}>Read drift test</a>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="context-title">
+    <span class="eyebrow">Context</span>
+    <h2 id="context-title">Why this workflow is the first pilot</h2>
+    <div class="content-stack">
+      <Content />
+    </div>
+  </section>
+</SiteLayout>

@@ -9,7 +9,8 @@ const primaryModules = currentKit ? orderedModules(currentKit) : [];
 
 const navLinks = [
   { href: '/#vision', label: 'Vision' },
-  { href: '/kits', label: 'Kits' }
+  { href: '/kits', label: 'Kits' },
+  { href: '/contracts', label: 'Contracts' }
 ];
 ---
 
@@ -113,6 +114,31 @@ const navLinks = [
         <p>Each kit ships practical modules, a short runbook, and explicit failure modes.</p>
         <p>The flow variant is optional and maps kit usage to delivery stages from Frame through Audit.</p>
       </div>
+    </div>
+  </section>
+
+  <section id="contracts" aria-labelledby="contracts-title">
+    <span class="eyebrow">Contracts</span>
+    <h2 id="contracts-title">Govern AI workflows before drafts become direction</h2>
+    <div class="kit-grid">
+      <article class="spec-card">
+        <strong>Contracts declare bounded autonomy</strong>
+        <p>Each workflow gets explicit rules for what AI may adapt and where it must stop or escalate.</p>
+      </article>
+      <article class="spec-card">
+        <strong>Drift tests turn judgment into evidence</strong>
+        <p>Scored checks expose tone drift, safety gaps, system violations, runtime overruns, and missing provenance.</p>
+      </article>
+      <article class="spec-card">
+        <strong>Playbooks decide the response</strong>
+        <p>Outputs are allowed, nudged, corrected, quarantined, or escalated with named evidence and receiving owners.</p>
+      </article>
+    </div>
+    <div class="cta-row">
+      <a class="button primary" href="/contracts">See contract registry</a>
+      <a class="button ghost" href="/contracts/workflows/ai-ui-generation">
+        Review AI UI generation pilot
+      </a>
     </div>
   </section>
 

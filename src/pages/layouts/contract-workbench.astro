@@ -1,0 +1,217 @@
+---
+import SiteLayout from '../../components/SiteLayout.astro';
+import { sampleDecisionRecord, sampleEscalationPayload, sampleEvaluationSummary } from '../../data/contract-workbench';
+import {
+  formatDriftStatus,
+  formatPolicyAction,
+  getContractById,
+  getContractsSiteData,
+  getDriftTestsForContract,
+  getWorkflowBySlug,
+  PILOT_WORKFLOW_SLUG
+} from '../../lib/contracts';
+
+const { contracts, driftTests, workflows } = await getContractsSiteData();
+const workflow = getWorkflowBySlug(workflows, PILOT_WORKFLOW_SLUG);
+
+if (!workflow) {
+  throw new Error(`Missing required workflow ${PILOT_WORKFLOW_SLUG} for the contract workbench.`);
+}
+
+const failingContractNames = sampleEscalationPayload.contract_ids
+  .map((contractId) => getContractById(contracts, contractId))
+  .filter((entry): entry is NonNullable<typeof contracts[number]> => Boolean(entry))
+  .map((entry) => entry.data.name);
+
+const resultsWithContext = sampleEvaluationSummary.results.map((result) => {
+  const test = driftTests.find((entry) => entry.data.id === result.test_id);
+  const contract = test ? getContractById(contracts, test.data.contractId) : undefined;
+
+  return {
+    result,
+    test,
+    contract
+  };
+});
+
+const navLinks = [
+  { href: '/review', label: 'Review' },
+  { href: '/contracts', label: 'Contracts' },
+  { href: `/contracts/workflows/${workflow.slug}`, label: workflow.data.title }
+];
+---
+
+<SiteLayout
+  title="Contract Workbench"
+  description="Review-only workbench for a governed AI UI generation decision."
+  path="/layouts/contract-workbench"
+  navLinks={navLinks}
+  robots="noindex,nofollow"
+  bodyClass="contracts-page contract-workbench-page"
+>
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ol>
+      <li><a href="/review">Review</a></li>
+      <li><a href="/contracts">Contracts</a></li>
+      <li aria-current="page">Contract Workbench</li>
+    </ol>
+  </nav>
+
+  <section class="platform-hero" aria-labelledby="workbench-title">
+    <div class="hero-copy">
+      <span class="muted-chip">Local review only</span>
+      <h1 id="workbench-title">Contract workbench prototype</h1>
+      <p class="subhead">
+        This review-only route shows how a governed AI UI generation decision can be inspected before
+        any live policy engine or persistence layer exists.
+      </p>
+      <p>
+        The prototype stays inside the public flattened style language on purpose. The emphasis
+        comes from structure, evidence, and sequence rather than dashboard chrome.
+      </p>
+      <div class="cta-row">
+        <a class="button primary" href={`/contracts/workflows/${workflow.slug}`}>Open workflow spec</a>
+        <a class="button ghost" href="/review">Back to review hub</a>
+      </div>
+    </div>
+
+    <div class="hero-sidebar">
+      <div class="summary-grid">
+        <article class="summary-card">
+          <strong>Decision</strong>
+          <p>{sampleDecisionRecord.decision_id}</p>
+        </article>
+        <article class="summary-card">
+          <strong>Overall action</strong>
+          <p>{formatPolicyAction(sampleEvaluationSummary.overall_action)}</p>
+        </article>
+        <article class="summary-card">
+          <strong>Severity</strong>
+          <p>{sampleEscalationPayload.severity}</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="record-title">
+    <span class="eyebrow">Decision Record</span>
+    <h2 id="record-title">Captured inputs before evaluation</h2>
+    <div class="module-columns">
+      <div class="module-section">
+        <div class="table-wrap">
+          <table class="data-table" aria-describedby="record-title">
+            <tbody>
+              <tr>
+                <th scope="row">workflow</th>
+                <td>{sampleDecisionRecord.workflow}</td>
+              </tr>
+              <tr>
+                <th scope="row">actor</th>
+                <td>{sampleDecisionRecord.actor}</td>
+              </tr>
+              <tr>
+                <th scope="row">model_version</th>
+                <td>{sampleDecisionRecord.model_version}</td>
+              </tr>
+              <tr>
+                <th scope="row">timestamp</th>
+                <td>{sampleDecisionRecord.timestamp}</td>
+              </tr>
+              <tr>
+                <th scope="row">toolchain</th>
+                <td>{sampleDecisionRecord.toolchain.join(', ')}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <aside class="module-sidecard" aria-label="Supporting evidence">
+        <strong>Evidence captured</strong>
+        <ul>
+          {
+            sampleDecisionRecord.evidence.map((item) => (
+              <li>{item}</li>
+            ))
+          }
+        </ul>
+
+        <strong>Metrics</strong>
+        <ul>
+          {Object.entries(sampleDecisionRecord.metrics).map(([key, value]) => <li>{key}: {String(value)}</li>)}
+        </ul>
+      </aside>
+    </div>
+
+    <pre class="code-block"><code>{JSON.stringify(sampleDecisionRecord.artifacts, null, 2)}</code></pre>
+  </section>
+
+  <section aria-labelledby="results-title">
+    <span class="eyebrow">Drift Results</span>
+    <h2 id="results-title">Per-test evaluation output</h2>
+    <div class="module-nav-grid">
+      {
+        resultsWithContext.map(({ result, test, contract }) => (
+          <article class="module-nav-card">
+            <span class="muted-chip">
+              {result.test_id} · {formatDriftStatus(result.status)}
+            </span>
+            <h3>{test?.data.name || result.test_id}</h3>
+            <p>
+              <strong>Action:</strong> {formatPolicyAction(result.action)} · <strong>Drift score:</strong>{' '}
+              {result.drift_score}
+            </p>
+            {contract && <p><strong>Contract:</strong> {contract.data.name}</p>}
+            <ul>
+              {
+                result.evidence.map((item) => (
+                  <li>{item}</li>
+                ))
+              }
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section aria-labelledby="response-title">
+    <span class="eyebrow">Response</span>
+    <h2 id="response-title">What the playbook does next</h2>
+    <div class="module-columns">
+      <div class="module-section">
+        <div class="content-stack">
+          <p>
+            The prototype maps two failures and two warnings into an overall action of{' '}
+            <strong>{formatPolicyAction(sampleEvaluationSummary.overall_action)}</strong>.
+          </p>
+          <p>
+            The design-system contract fails because the generated structure uses an unknown
+            component, raw style values, and a missing consent disclosure. Provenance also fails
+            because the audit evidence and override ownership are incomplete.
+          </p>
+          <p>
+            Failing contracts: <strong>{failingContractNames.join(', ')}</strong>.
+          </p>
+        </div>
+      </div>
+
+      <aside class="module-sidecard" aria-label="Related contract tests">
+        <strong>Tests for escalated contracts</strong>
+        <ul>
+          {
+            sampleEscalationPayload.contract_ids.flatMap((contractId) =>
+              getDriftTestsForContract(driftTests, contractId).map((test) => (
+                <li>
+                  <a href={`/contracts/tests/${test.slug}`}>{test.data.name}</a>
+                </li>
+              ))
+            )
+          }
+        </ul>
+      </aside>
+    </div>
+
+    <pre class="code-block"><code>{JSON.stringify(sampleEscalationPayload, null, 2)}</code></pre>
+  </section>
+</SiteLayout>

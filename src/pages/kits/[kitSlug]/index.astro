@@ -15,6 +15,8 @@ if (!kit) {
 }
 
 const modules = orderedModules(kit);
+const contractsPath = '/contracts';
+const pilotWorkflowPath = '/contracts/workflows/ai-ui-generation';
 const framingPagePath =
   kit.slug === 'design-judgment'
     ? `/kits/${kit.slug}/design-leadership-as-contract-authorship`
@@ -22,6 +24,7 @@ const framingPagePath =
 const navLinks = [
   { href: '/', label: 'Platform' },
   { href: '/kits', label: 'Kits' },
+  ...(kit.slug === 'design-judgment' ? [{ href: contractsPath, label: 'Contracts' }] : []),
   ...(framingPagePath ? [{ href: '#framing', label: 'Framing' }] : []),
   { href: `#modules`, label: 'Modules' },
   { href: `#how-to-use`, label: 'How to Use' },
@@ -151,6 +154,37 @@ const navLinks = [
       </aside>
     </div>
   </section>
+
+  {kit.slug === 'design-judgment' && (
+    <section aria-labelledby="contracts-title">
+      <span class="eyebrow">Contracts</span>
+      <h2 id="contracts-title">Extend this kit into governed AI UI review</h2>
+      <div class="module-columns">
+        <div class="module-section">
+          <div class="content-stack">
+            <p>
+              The Design Judgment Kit now connects directly to a contracts layer for AI UI
+              generation. It is the operational extension of the same thesis: make ownership,
+              quality thresholds, and review evidence explicit before polished drafts harden into
+              default product direction.
+            </p>
+            <div class="cta-row">
+              <a class="button primary" href={pilotWorkflowPath}>See governed workflow</a>
+              <a class="button ghost" href={contractsPath}>Browse contracts</a>
+            </div>
+          </div>
+        </div>
+
+        <aside class="module-sidecard" aria-label="Contracts layer summary">
+          <strong>What it adds</strong>
+          <p>
+            Explicit contracts, drift tests, and a response playbook that make AI interface review
+            inspectable instead of implicit.
+          </p>
+        </aside>
+      </div>
+    </section>
+  )}
 
   {kit.flowStages && (
     <section id="flow" class="flow-section" aria-labelledby="flow-title">

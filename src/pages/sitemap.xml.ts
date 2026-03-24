@@ -1,19 +1,26 @@
 import type { APIRoute } from 'astro';
 
+import { getContractsSiteData } from '../lib/contracts';
 import { getAllKits, orderedModules } from '../lib/kits';
 import { absoluteUrl } from '../lib/site';
 
-export const GET: APIRoute = () => {
+export const GET: APIRoute = async () => {
+  const { contracts, driftTests, workflows, playbooks } = await getContractsSiteData();
   const urls = [
     '/',
     '/kits',
+    '/contracts',
     ...getAllKits().flatMap((kit) => [
       `/kits/${kit.slug}`,
       ...(kit.slug === 'design-judgment'
         ? ['/kits/design-judgment/design-leadership-as-contract-authorship']
         : []),
       ...orderedModules(kit).map((module) => `/kits/${kit.slug}/${module.slug}`)
-    ])
+    ]),
+    ...contracts.map((contract) => `/contracts/${contract.slug}`),
+    ...driftTests.map((test) => `/contracts/tests/${test.slug}`),
+    ...workflows.map((workflow) => `/contracts/workflows/${workflow.slug}`),
+    ...playbooks.map((playbook) => `/contracts/playbooks/${playbook.slug}`)
   ];
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>

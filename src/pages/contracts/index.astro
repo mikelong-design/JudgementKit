@@ -1,0 +1,256 @@
+---
+import SiteLayout from '../../components/SiteLayout.astro';
+import {
+  CONTRACT_OWNERSHIP_RULES,
+  CONTRACT_REGISTRY_TEMPLATE,
+  CONTRACT_RELEASE_GATE,
+  CONTRACT_SEVERITY_MODEL,
+  CONTRACT_VERSIONING_RULES
+} from '../../data/contract-registry';
+import {
+  getContractsForWorkflow,
+  getPlaybookBySlug,
+  getTestsForWorkflow,
+  getWorkflowBySlug,
+  getContractsSiteData,
+  PILOT_WORKFLOW_SLUG
+} from '../../lib/contracts';
+
+const { contracts, driftTests, workflows, playbooks } = await getContractsSiteData();
+const pilotWorkflow = getWorkflowBySlug(workflows, PILOT_WORKFLOW_SLUG);
+const pilotContracts = pilotWorkflow ? getContractsForWorkflow(pilotWorkflow, contracts) : [];
+const pilotTests = pilotWorkflow ? getTestsForWorkflow(pilotWorkflow, driftTests) : [];
+const playbook = getPlaybookBySlug(playbooks, 'drift-response');
+
+if (!pilotWorkflow || !playbook) {
+  throw new Error('Contracts landing page is missing the pilot workflow or drift-response playbook.');
+}
+
+const navLinks = [
+  { href: '/', label: 'Platform' },
+  { href: '/kits', label: 'Kits' },
+  { href: '/contracts', label: 'Contracts' },
+  { href: '#pilot', label: 'Pilot' }
+];
+---
+
+<SiteLayout
+  title="Contracts"
+  description="Govern AI workflows with contracts, drift tests, and explicit response policies."
+  path="/contracts"
+  navLinks={navLinks}
+  bodyClass="contracts-page contracts-index"
+>
+  <section class="platform-hero" id="top" aria-labelledby="contracts-title">
+    <div class="hero-copy">
+      <span class="muted-chip">Contracts</span>
+      <h1 id="contracts-title">Govern AI workflows before polished drafts turn into defaults</h1>
+      <p class="subhead">
+        Judgment Kit now includes a contracts layer for bounded autonomy: declared rules, measurable
+        drift tests, and a response playbook that decides when to allow, nudge, correct,
+        quarantine, or escalate.
+      </p>
+      <p>
+        The first fully modeled workflow is <strong>{pilotWorkflow.data.title}</strong>. It combines
+        tone, safety, design-system fit, runtime discipline, and provenance into one reviewable
+        operating surface.
+      </p>
+      <div class="cta-row">
+        <a class="button primary" href={`/contracts/workflows/${pilotWorkflow.slug}`}>
+          Review AI UI generation pilot
+        </a>
+        <a class="button ghost" href={`/contracts/playbooks/${playbook.slug}`}>
+          Read drift response playbook
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-sidebar">
+      <div class="summary-grid">
+        <article class="summary-card">
+          <strong>{contracts.length} starter contracts</strong>
+          <p>Each contract declares what a workflow may adapt and what it must not cross.</p>
+        </article>
+        <article class="summary-card">
+          <strong>{driftTests.length} measurable drift tests</strong>
+          <p>Each test exposes fit against declared intent before output becomes operational.</p>
+        </article>
+        <article class="summary-card">
+          <strong>One shared response policy</strong>
+          <p>Outputs are allowed, nudged, corrected, quarantined, or escalated with explicit evidence.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="registry-title">
+    <span class="eyebrow">Registry</span>
+    <h2 id="registry-title">Contract releases need declared ownership and release gates</h2>
+    <div class="module-columns">
+      <div class="module-section">
+        <div class="module-nav-grid">
+          {
+            CONTRACT_REGISTRY_TEMPLATE.map((field) => (
+              <article class="module-nav-card">
+                <h3>{field.name}</h3>
+                <p>{field.description}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+
+      <aside class="module-sidecard" aria-label="Registry standards">
+        <strong>Severity model</strong>
+        <ul>
+          {
+            CONTRACT_SEVERITY_MODEL.map((item) => (
+              <li>
+                <strong>{item.name}:</strong> {item.description}
+              </li>
+            ))
+          }
+        </ul>
+
+        <strong>Release gate</strong>
+        <ul>
+          {
+            CONTRACT_RELEASE_GATE.map((item) => (
+              <li>{item}</li>
+            ))
+          }
+        </ul>
+
+        <strong>Versioning</strong>
+        <ul>
+          {
+            CONTRACT_VERSIONING_RULES.map((item) => (
+              <li>{item}</li>
+            ))
+          }
+        </ul>
+
+        <strong>Ownership</strong>
+        <ul>
+          {
+            CONTRACT_OWNERSHIP_RULES.map((item) => (
+              <li>{item}</li>
+            ))
+          }
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section id="pilot" aria-labelledby="pilot-title">
+    <span class="eyebrow">Pilot Workflow</span>
+    <h2 id="pilot-title">AI UI generation is the first fully modeled workflow</h2>
+    <div class="module-columns">
+      <div class="module-section">
+        <div class="content-stack">
+          <p>{pilotWorkflow.data.summary}</p>
+          <p>
+            It is the best fit for the platform because it translates the Design Judgment Kit thesis
+            directly into operational governance: speed stays high, but responsibility, quality
+            thresholds, and auditability become explicit before publish.
+          </p>
+          <div class="cta-row">
+            <a class="button primary" href={`/contracts/workflows/${pilotWorkflow.slug}`}>
+              Open workflow
+            </a>
+            <a class="button ghost" href="/kits/design-judgment">
+              Return to Design Judgment Kit
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <aside class="module-sidecard" aria-label="Pilot workflow metadata">
+        <strong>Default surface</strong>
+        <p>{pilotWorkflow.data.defaultSurface}</p>
+
+        <strong>Default audience</strong>
+        <p>{pilotWorkflow.data.defaultAudience}</p>
+
+        <strong>Decision record fields</strong>
+        <p>{pilotWorkflow.data.decisionRecordFields.length} required fields</p>
+      </aside>
+    </div>
+
+    <div class="module-columns">
+      <div class="module-section">
+        <span class="eyebrow">Contracts covering this workflow</span>
+        <div class="module-nav-grid">
+          {
+            pilotContracts.map((contract) => (
+              <article class="module-nav-card">
+                <span class="muted-chip">{contract.data.id}</span>
+                <h3>{contract.data.name}</h3>
+                <p>{contract.data.intent}</p>
+                <a href={`/contracts/${contract.slug}`}>Read contract</a>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+
+      <div class="module-section">
+        <span class="eyebrow">Drift tests</span>
+        <div class="module-nav-grid">
+          {
+            pilotTests.map((test) => (
+              <article class="module-nav-card">
+                <span class="muted-chip">{test.data.id}</span>
+                <h3>{test.data.name}</h3>
+                <p>{test.data.purpose}</p>
+                <a href={`/contracts/tests/${test.slug}`}>Read drift test</a>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="contracts-grid-title">
+    <span class="eyebrow">Contracts</span>
+    <h2 id="contracts-grid-title">Starter contract library</h2>
+    <div class="module-nav-grid">
+      {
+        contracts.map((contract) => (
+          <article class="module-nav-card">
+            <span class="muted-chip">{contract.data.id}</span>
+            <h3>{contract.data.name}</h3>
+            <p>{contract.data.intent}</p>
+            <a href={`/contracts/${contract.slug}`}>Read contract</a>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section aria-labelledby="playbook-title">
+    <span class="eyebrow">Response Policy</span>
+    <h2 id="playbook-title">What happens after drift is measured</h2>
+    <div class="module-columns">
+      <div class="module-section">
+        <div class="module-nav-grid">
+          {
+            playbook.data.responseClasses.map((item) => (
+              <article class="module-nav-card">
+                <h3>{item.name}</h3>
+                <p>{item.description}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+
+      <aside class="module-sidecard" aria-label="Playbook summary">
+        <strong>{playbook.data.title}</strong>
+        <p>{playbook.data.summary}</p>
+        <a href={`/contracts/playbooks/${playbook.slug}`}>Read playbook</a>
+      </aside>
+    </div>
+  </section>
+</SiteLayout>

@@ -1,0 +1,94 @@
+---
+import { render } from 'astro:content';
+
+import SiteLayout from '../../../components/SiteLayout.astro';
+import { getContractsSiteData, getPlaybookBySlug } from '../../../lib/contracts';
+
+export async function getStaticPaths() {
+  const { playbooks } = await getContractsSiteData();
+
+  return playbooks.map((playbook) => ({
+    params: { playbookSlug: playbook.slug }
+  }));
+}
+
+const { playbooks } = await getContractsSiteData();
+const playbook = getPlaybookBySlug(playbooks, Astro.params.playbookSlug || '');
+
+if (!playbook) {
+  throw new Error(`Unknown playbook slug: ${Astro.params.playbookSlug}`);
+}
+
+const { Content } = await render(playbook);
+const navLinks = [
+  { href: '/', label: 'Platform' },
+  { href: '/contracts', label: 'Contracts' },
+  { href: '#responses', label: 'Responses' }
+];
+---
+
+<SiteLayout
+  title={playbook.data.title}
+  description={playbook.data.summary}
+  path={`/contracts/playbooks/${playbook.slug}`}
+  navLinks={navLinks}
+  bodyClass="contracts-page playbook-page"
+>
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ol>
+      <li><a href="/">Platform</a></li>
+      <li><a href="/contracts">Contracts</a></li>
+      <li aria-current="page">{playbook.data.title}</li>
+    </ol>
+  </nav>
+
+  <section class="platform-hero" aria-labelledby="playbook-title">
+    <div class="hero-copy">
+      <span class="muted-chip">Playbook</span>
+      <h1 id="playbook-title">{playbook.data.title}</h1>
+      <p class="subhead">{playbook.data.summary}</p>
+      <p>
+        The playbook is the operating policy that turns drift scores into explicit actions. It keeps
+        the contracts section practical instead of leaving enforcement as an implied human judgment call.
+      </p>
+      <div class="cta-row">
+        <a class="button primary" href="/contracts">Back to contracts</a>
+        <a class="button ghost" href="/contracts/workflows/ai-ui-generation">Open pilot workflow</a>
+      </div>
+    </div>
+
+    <aside class="module-sidecard" aria-label="Escalation payload fields">
+      <strong>Escalation payload fields</strong>
+      <ul>
+        {
+          playbook.data.escalationPayloadFields.map((field) => (
+            <li>{field}</li>
+          ))
+        }
+      </ul>
+    </aside>
+  </section>
+
+  <section id="responses" aria-labelledby="responses-title">
+    <span class="eyebrow">Responses</span>
+    <h2 id="responses-title">The five response classes</h2>
+    <div class="module-nav-grid">
+      {
+        playbook.data.responseClasses.map((item) => (
+          <article class="module-nav-card">
+            <h3>{item.name}</h3>
+            <p>{item.description}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section aria-labelledby="context-title">
+    <span class="eyebrow">Context</span>
+    <h2 id="context-title">How the playbook should be used</h2>
+    <div class="content-stack">
+      <Content />
+    </div>
+  </section>
+</SiteLayout>
