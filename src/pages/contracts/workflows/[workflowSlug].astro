@@ -29,6 +29,7 @@ const { Content } = await render(workflow);
 const relatedContracts = getContractsForWorkflow(workflow, contracts);
 const relatedTests = getTestsForWorkflow(workflow, driftTests);
 const playbook = getPlaybookBySlug(playbooks, workflow.data.playbookSlug);
+const provenanceContract = relatedContracts.find((contract) => contract.data.id === 'JK-CONTRACT-005');
 
 if (!playbook) {
   throw new Error(`Workflow ${workflow.slug} is missing its playbook.`);
@@ -123,26 +124,38 @@ const navLinks = [
 
   <section id="record" aria-labelledby="record-title">
     <span class="eyebrow">Decision Record</span>
-    <h2 id="record-title">Required fields for every consequential decision</h2>
-    <div class="table-wrap">
-      <table class="data-table" aria-describedby="record-title">
-        <thead>
-          <tr>
-            <th scope="col">Field</th>
-            <th scope="col">Why it exists</th>
-          </tr>
-        </thead>
-        <tbody>
+    <h2 id="record-title">Required fields for governed AI workflow decisions</h2>
+    <div class="module-columns">
+      <div class="module-section">
+        <p>
+          These fields form the minimum audit trail needed to make consequential AI outputs
+          attributable and reviewable before they leave draft status.
+        </p>
+        <ul class="support-list" aria-describedby="record-title">
           {
             workflow.data.decisionRecordFields.map((field) => (
-              <tr>
-                <td>{field}</td>
-                <td>Required to make the output attributable, comparable, and reviewable later.</td>
-              </tr>
+              <li><code>{field}</code></li>
             ))
           }
-        </tbody>
-      </table>
+        </ul>
+      </div>
+
+      <aside class="module-sidecard" aria-label="Decision record rationale">
+        <strong>Why this checklist exists</strong>
+        <p>
+          The deeper rationale lives in the provenance contract, which defines the accountable
+          trace required for consequential workflow actions.
+        </p>
+        {
+          provenanceContract ? (
+            <p>
+              <a href={`/contracts/${provenanceContract.slug}`}>
+                Read {provenanceContract.data.name}
+              </a>
+            </p>
+          ) : null
+        }
+      </aside>
     </div>
   </section>
 
