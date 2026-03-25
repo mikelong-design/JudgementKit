@@ -1,10 +1,6 @@
 ---
 import SiteLayout from '../components/SiteLayout.astro';
-
-const navLinks = [
-  { href: '/', label: 'Platform' },
-  { href: '/kits', label: 'Kits' }
-];
+import { ROUTES } from '../lib/ia';
 
 const requestedPath = Astro.url.pathname;
 ---
@@ -13,7 +9,6 @@ const requestedPath = Astro.url.pathname;
   title="Page Not Found"
   description="The requested Judgment Kit page could not be found."
   path="/404"
-  navLinks={navLinks}
   robots="noindex,nofollow"
   bodyClass="not-found-page"
 >
@@ -22,22 +17,23 @@ const requestedPath = Astro.url.pathname;
       <span class="eyebrow">404</span>
       <h1 id="not-found-title">That page does not exist.</h1>
       <p class="subhead">
-        The route <code>{requestedPath}</code> is not part of the current Judgment Kit platform.
+        The route <code>{requestedPath}</code> is not part of the current JudgmentKit public
+        library.
       </p>
       <p>
-        If you followed an old review link or typed a module path manually, use the canonical kit
+        If you followed an old link or typed a path manually, use the kits library or the resource
         library to jump back into the published information architecture.
       </p>
       <div class="cta-row">
-        <a class="button primary" href="/kits">See kit library</a>
-        <a class="button ghost" href="/">Back to platform</a>
+        <a class="button primary" href={ROUTES.kits}>Browse kits</a>
+        <a class="button ghost" href={ROUTES.resources}>Browse resources</a>
       </div>
     </div>
 
     <div class="hero-sidebar">
       <article class="summary-card">
         <strong>Canonical routes</strong>
-        <p>`/` for the platform, `/kits` for the library, and `/kits/&lt;kit-slug&gt;/&lt;module-slug&gt;` for citeable modules.</p>
+        <p>`/` for the platform, `/kits` for operating kits, and `/resources` for the full public library.</p>
       </article>
       <article class="summary-card">
         <strong>Need review-only layouts?</strong>
@@ -45,8 +41,8 @@ const requestedPath = Astro.url.pathname;
       </article>
       <article class="summary-card">
         <strong>Most likely next step</strong>
-        <p>Read the Design Judgment Kit and use its module deep links instead of legacy layout URLs.</p>
-        <a href="/kits/design-judgment">Read Design Judgment Kit</a>
+        <p>Read the Design Judgment Kit, then use `/resources` when you need workflow-governance detail.</p>
+        <a href={ROUTES.designKit}>Read Design Judgment Kit</a>
       </article>
     </div>
   </section>

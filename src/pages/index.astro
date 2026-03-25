@@ -1,5 +1,7 @@
 ---
 import SiteLayout from '../components/SiteLayout.astro';
+import PageSubnav from '../components/PageSubnav.astro';
+import { ROUTES } from '../lib/ia';
 import { getAllKits, orderedModules } from '../lib/kits';
 import { SITE } from '../lib/site';
 
@@ -7,10 +9,11 @@ const kits = getAllKits();
 const currentKit = kits[0];
 const primaryModules = currentKit ? orderedModules(currentKit) : [];
 
-const navLinks = [
-  { href: '/#vision', label: 'Vision' },
-  { href: '/kits', label: 'Kits' },
-  { href: '/contracts', label: 'Contracts' }
+const sectionLinks = [
+  { href: '#what-judgmentkit-is', label: 'What it is' },
+  { href: '#who-its-for', label: 'Who it is for' },
+  { href: '#what-you-get', label: 'What you get' },
+  { href: '#start-here', label: 'Start here' }
 ];
 ---
 
@@ -18,152 +21,141 @@ const navLinks = [
   title="Platform"
   description={SITE.description}
   path="/"
-  navLinks={navLinks}
   bodyClass="platform-home"
 >
-  <section class="platform-hero" id="top" aria-labelledby="home-title">
-    <div class="hero-copy">
-      <span class="muted-chip">Platform vision</span>
-      <h1 id="home-title">Judgment Kit Platform</h1>
-      <p class="subhead">
-        Judgment Kit is a platform of practical operating kits for AI-accelerated product teams that
-        protect <strong>decision quality</strong>, <strong>accountability</strong>, and
-        <strong>product coherence</strong> when output becomes cheap and finished-looking.
-      </p>
-      <div class="cta-row">
-        <a class="button primary" href="/kits">See kit library</a>
-        <a class="button ghost" href={currentKit ? `/kits/${currentKit.slug}` : '/kits'}>
-          {currentKit ? `Read ${currentKit.title}` : 'See current kit'}
-        </a>
-      </div>
-      <p>
-        AI accelerates drafts; judgment prevents drafts becoming defaults. The new failure mode is
-        not lack of output. It is teams treating polished drafts as decisions before ownership,
-        tradeoffs, and rationale are explicit.
-      </p>
-      <p>
-        Judgment Kit makes judgment operational so responsibilities, decision rights, and weekly cadence
-        are visible before work hardens into default direction.
-      </p>
-    </div>
+  <section class="platform-hero platform-home-hero" id="top" aria-labelledby="home-title">
+    <figure class="home-hero-spotlight">
+      <img
+        class="home-hero-image"
+        src="/assets/ownership_visible_v4_header_1536x804.png"
+        alt="A small group shares a lantern in fog, lighting a clear path while other lanterns drift unattended."
+        width="1536"
+        height="804"
+        loading="eager"
+        decoding="async"
+      />
+      <div class="home-hero-shade" aria-hidden="true"></div>
+      <figcaption class="home-hero-overlay">
+        <span class="muted-chip">JudgmentKit</span>
+        <h1 id="home-title">One library, three practical resource types</h1>
+        <p class="subhead">
+          JudgmentKit is a public library of operating kits, workflow-governance resources, and
+          response playbooks for design-led teams shipping with AI. Start with the kit, then move
+          into governance when the work carries publish risk.
+        </p>
+        <div class="cta-row">
+          <a class="button primary" href={ROUTES.kits}>Browse operating kits</a>
+        </div>
+      </figcaption>
+    </figure>
+  </section>
 
-    <div class="hero-sidebar">
-      <div class="summary-grid">
-        <article class="summary-card">
-          <strong>Responsibilities are explicit</strong>
-          <p>What is owned, protected, and monitored as output accelerates.</p>
-        </article>
-        <article class="summary-card">
-          <strong>Decision rights are explicit</strong>
-          <p>Who is accountable before polished drafts harden into default decisions.</p>
-        </article>
-        <article class="summary-card">
-          <strong>Cadence is explicit</strong>
-          <p>Judgment shows up as ritual instead of rescue work.</p>
-        </article>
-      </div>
+  <PageSubnav links={sectionLinks} />
 
-      <figure class="supporting-image">
-        <img
-          src="/assets/ownership_visible_v4_header_1536x804.png"
-          alt="A small group shares a lantern in fog, lighting a clear path while other lanterns drift unattended."
-          width="1536"
-          height="804"
-          loading="eager"
-          decoding="async"
-        />
-      </figure>
+  <section id="what-judgmentkit-is" aria-labelledby="what-title">
+    <span class="eyebrow">What JudgmentKit is</span>
+    <h2 id="what-title">Operating kits, workflow governance, and response playbooks</h2>
+    <div class="page-intro-grid">
+      <article class="spec-card">
+        <strong>Operating kits</strong>
+        <p>Concrete kits for making responsibilities, decision rights, and operating cadence usable in live delivery work.</p>
+      </article>
+      <article class="spec-card">
+        <strong>Workflow governance</strong>
+        <p>Contracts, drift tests, and governed workflows for consequential AI output that needs review evidence before publish.</p>
+      </article>
+      <article class="spec-card">
+        <strong>Response playbooks</strong>
+        <p>Explicit policies for what happens after drift is measured so enforcement does not stay implicit.</p>
+      </article>
     </div>
   </section>
 
-  <section id="vision" aria-labelledby="vision-title">
-    <span class="eyebrow">Vision</span>
-    <h2 id="vision-title">Draft speed is no longer the bottleneck</h2>
+  <section id="who-its-for" aria-labelledby="audience-title">
+    <span class="eyebrow">Who it is for</span>
+    <h2 id="audience-title">Built for design-led teams that need clarity before output hardens.</h2>
     <div class="kit-grid">
       <article class="spec-card">
-        <strong>Finished-looking work gets mistaken for agreement</strong>
-        <p>Teams need clearer decision ownership and tradeoff visibility before polished drafts start steering roadmaps.</p>
+        <strong>Design leaders</strong>
+        <p>Use JudgmentKit to make ownership, quality thresholds, and decision rights visible earlier.</p>
       </article>
       <article class="spec-card">
-        <strong>AI increases output faster than teams increase judgment</strong>
-        <p>Responsibilities, quality bars, and accountability must become more explicit as generation gets cheaper.</p>
+        <strong>PM and engineering partners</strong>
+        <p>Use the same resources to align on tradeoffs, accountable owners, and review gates before implementation commits.</p>
       </article>
       <article class="spec-card">
-        <strong>Operational rituals need to catch up</strong>
-        <p>Judgment has to show up early and repeatedly, not only in rescue-mode reviews after scope is already set.</p>
+        <strong>AI-accelerated product teams</strong>
+        <p>Use the library when polished drafts are arriving faster than teams can maintain shared judgment.</p>
       </article>
     </div>
   </section>
 
-  <section aria-labelledby="kit-contract-title">
-    <span class="eyebrow">Kit Contract</span>
-    <h2 id="kit-contract-title">What ships in every kit</h2>
-    <div class="kit-contract">
-      <div class="module-nav-grid">
-        {
-          primaryModules.map((module) => (
-            <article class="module-nav-card">
-              <span class="muted-chip">{module.slug}</span>
-              <h3>{module.title}</h3>
-              <p>{module.summary}</p>
-            </article>
-          ))
-        }
+  <section id="what-you-get" aria-labelledby="offer-title">
+    <span class="eyebrow">What you get</span>
+    <h2 id="offer-title">A kit-first entry point, plus workflow governance when the risk rises.</h2>
+    <div class="module-columns">
+      <div class="module-section">
+        <div class="module-nav-grid">
+          {
+            primaryModules.map((module) => (
+              <article class="module-nav-card">
+                <span class="muted-chip">Included in every kit</span>
+                <h3>{module.title}</h3>
+                <p>{module.summary}</p>
+              </article>
+            ))
+          }
+        </div>
       </div>
-      <div class="review-panel">
-        <p>Each kit ships practical modules, a short runbook, and explicit failure modes.</p>
-        <p>The flow variant is optional and maps kit usage to delivery stages from Frame through Audit.</p>
-      </div>
+
+      <aside class="module-sidecard" aria-label="Workflow governance summary">
+        <strong>Workflow governance stays public, but secondary.</strong>
+        <p>
+          JudgmentKit leads with operating kits. Workflow governance is the companion resource
+          family for cases where AI-generated work needs explicit contracts, drift tests, and a
+          response policy before teams treat it as committed direction.
+        </p>
+        <div class="cta-row">
+          <a class="button primary" href={ROUTES.resources}>Browse resource library</a>
+          <a class="button ghost" href={ROUTES.pilotWorkflow}>Open featured workflow</a>
+        </div>
+      </aside>
     </div>
   </section>
 
-  <section id="contracts" aria-labelledby="contracts-title">
-    <span class="eyebrow">Contracts</span>
-    <h2 id="contracts-title">Govern AI workflows before drafts become direction</h2>
-    <div class="kit-grid">
-      <article class="spec-card">
-        <strong>Contracts declare bounded autonomy</strong>
-        <p>Each workflow gets explicit rules for what AI may adapt and where it must stop or escalate.</p>
-      </article>
-      <article class="spec-card">
-        <strong>Drift tests turn judgment into evidence</strong>
-        <p>Scored checks expose tone drift, safety gaps, system violations, runtime overruns, and missing provenance.</p>
-      </article>
-      <article class="spec-card">
-        <strong>Playbooks decide the response</strong>
-        <p>Outputs are allowed, nudged, corrected, quarantined, or escalated with named evidence and receiving owners.</p>
-      </article>
-    </div>
-    <div class="cta-row">
-      <a class="button primary" href="/contracts">See contract registry</a>
-      <a class="button ghost" href="/contracts/workflows/ai-ui-generation">
-        Review AI UI generation pilot
-      </a>
-    </div>
-  </section>
-
-  <section id="kits" aria-labelledby="current-kits-title">
-    <span class="eyebrow">Current Kits</span>
-    <h2 id="current-kits-title">Current kits</h2>
+  <section id="start-here" aria-labelledby="start-title">
+    <span class="eyebrow">Start here</span>
+    <h2 id="start-title">The clearest starting paths right now</h2>
     <div class="current-kits-grid">
-      {
-        kits.map((kit) => (
-          <article class="kit-card">
-            <span class="muted-chip">{kit.audience}</span>
-            <h3>{kit.title}</h3>
-            <p>{kit.subtitle}</p>
-            <p>
-              <strong>Thesis:</strong> {kit.coreThesis}
-            </p>
-            <div class="cta-row">
-              <a class="button primary" href={`/kits/${kit.slug}`}>Read {kit.title}</a>
-              <a class="button ghost" href={`/kits/${kit.slug}/${kit.modules[0]?.slug}`}>
-                {kit.modules[0]?.title ? `Read ${kit.modules[0].title}` : 'Read first module'}
-              </a>
-            </div>
-          </article>
-        ))
-      }
+      {currentKit && (
+        <article class="kit-card">
+          <span class="muted-chip">Start with a kit</span>
+          <h3>{currentKit.title}</h3>
+          <p>{currentKit.summary}</p>
+          <p>
+            <strong>Audience:</strong> {currentKit.audience}
+          </p>
+          <div class="cta-row">
+            <a class="button primary" href={`/kits/${currentKit.slug}`}>Start with this kit</a>
+            <a class="button ghost" href={`/kits/${currentKit.slug}/${currentKit.modules[0]?.slug}`}>
+              {currentKit.modules[0]?.title ? `Read ${currentKit.modules[0].title}` : 'Read first module'}
+            </a>
+          </div>
+        </article>
+      )}
+
+      <article class="kit-card">
+        <span class="muted-chip">When governance is needed</span>
+        <h3>AI UI Generation workflow</h3>
+        <p>See how JudgmentKit handles consequential AI-generated interface output with explicit contracts and measurable drift checks.</p>
+        <p>
+          <strong>Best for:</strong> teams that need reviewable workflow governance before publish.
+        </p>
+        <div class="cta-row">
+          <a class="button primary" href={ROUTES.pilotWorkflow}>Open featured workflow</a>
+          <a class="button ghost" href={ROUTES.resources}>Browse all resources</a>
+        </div>
+      </article>
     </div>
   </section>
 </SiteLayout>

@@ -1,8 +1,10 @@
 ---
 import SiteLayout from '../../../components/SiteLayout.astro';
+import PageSubnav from '../../../components/PageSubnav.astro';
 import MatrixModule from '../../../components/MatrixModule.astro';
 import DecisionRightsModule from '../../../components/DecisionRightsModule.astro';
 import WeeklyCadenceModule from '../../../components/WeeklyCadenceModule.astro';
+import { IA_LABELS, ROUTES } from '../../../lib/ia';
 import { getAllKits, getKitBySlug, getModuleBySlug, orderedModules, type ModuleSlug } from '../../../lib/kits';
 
 export function getStaticPaths() {
@@ -25,15 +27,23 @@ if (!moduleEntry) {
   throw new Error(`Unknown module slug: ${Astro.params.moduleSlug}`);
 }
 
-const navLinks = [
-  { href: '/', label: 'Platform' },
-  { href: '/kits', label: 'Kits' },
-  { href: `/kits/${kit.slug}`, label: kit.title },
-  { href: '#module-content', label: 'Module' }
-];
-
 const modules = orderedModules(kit);
+const moduleIndex = modules.findIndex((item) => item.slug === moduleEntry.slug);
+const nextModule = moduleIndex >= 0 && moduleIndex < modules.length - 1 ? modules[moduleIndex + 1] : undefined;
 const isMatrixModule = moduleEntry.tableData?.kind === 'matrix';
+const sectionLinks = [
+  { href: '#module-content', label: 'Module content' },
+  { href: '#next-steps', label: 'Next steps' }
+];
+const relatedGovernanceResource =
+  kit.slug === 'design-judgment'
+    ? {
+        title: 'AI UI Generation workflow',
+        body: 'See how the same judgment model becomes explicit workflow governance before generated UI reaches publish risk.',
+        href: ROUTES.pilotWorkflow,
+        cta: 'Open workflow'
+      }
+    : undefined;
 const supportingImageBySlug: Record<ModuleSlug, string> = {
   'responsibilities-matrix': '/assets/support_draft_vs_default_header_1536x804.png',
   'decision-rights': '/assets/ownership_visible_v4_header_tight_1536x804.png',
@@ -45,14 +55,13 @@ const supportingImageBySlug: Record<ModuleSlug, string> = {
   title={`${kit.title}: ${moduleEntry.title}`}
   description={moduleEntry.summary}
   path={`/kits/${kit.slug}/${moduleEntry.slug}`}
-  navLinks={navLinks}
   ogImage={supportingImageBySlug[moduleEntry.slug]}
   bodyClass="module-page"
 >
   <nav class="breadcrumbs" aria-label="Breadcrumb">
     <ol>
-      <li><a href="/">Platform</a></li>
-      <li><a href="/kits">Kits</a></li>
+      <li><a href={ROUTES.home}>{IA_LABELS.home}</a></li>
+      <li><a href={ROUTES.kits}>{IA_LABELS.kits}</a></li>
       <li><a href={`/kits/${kit.slug}`}>{kit.title}</a></li>
       <li aria-current="page">{moduleEntry.title}</li>
     </ol>
@@ -77,11 +86,15 @@ const supportingImageBySlug: Record<ModuleSlug, string> = {
           }
         </div>
       )}
-
     </div>
 
-    <aside class="module-sidecard">
-      <strong>Kit navigation</strong>
+    <aside class="module-sidecard" aria-label="Module context">
+      <strong>Part of this kit</strong>
+      <p>
+        <a href={`/kits/${kit.slug}`}>{kit.title}</a>
+      </p>
+
+      <strong>Kit modules</strong>
       <ul>
         {
           modules.map((item) => (
@@ -102,6 +115,8 @@ const supportingImageBySlug: Record<ModuleSlug, string> = {
       </ol>
     </aside>
   </section>
+
+  <PageSubnav links={sectionLinks} />
 
   <section
     id="module-content"
@@ -135,5 +150,36 @@ const supportingImageBySlug: Record<ModuleSlug, string> = {
         }
       </div>
     )}
+  </section>
+
+  <section id="next-steps" aria-labelledby="next-steps-title">
+    <span class="eyebrow">Next steps</span>
+    <h2 id="next-steps-title">Recover the hierarchy and keep moving</h2>
+    <div class="module-nav-grid">
+      <article class="module-nav-card">
+        <span class="muted-chip">Back to kit</span>
+        <h3>{kit.title}</h3>
+        <p>Return to the full kit overview, runbook, and related resources.</p>
+        <a href={`/kits/${kit.slug}`}>Back to kit overview</a>
+      </article>
+
+      {nextModule && (
+        <article class="module-nav-card">
+          <span class="muted-chip">Next module</span>
+          <h3>{nextModule.title}</h3>
+          <p>Continue through the kit in sequence so the modules build on one another.</p>
+          <a href={`/kits/${kit.slug}/${nextModule.slug}`}>Read {nextModule.title}</a>
+        </article>
+      )}
+
+      {relatedGovernanceResource && (
+        <article class="module-nav-card">
+          <span class="muted-chip">Related governance</span>
+          <h3>{relatedGovernanceResource.title}</h3>
+          <p>{relatedGovernanceResource.body}</p>
+          <a href={relatedGovernanceResource.href}>{relatedGovernanceResource.cta}</a>
+        </article>
+      )}
+    </div>
   </section>
 </SiteLayout>

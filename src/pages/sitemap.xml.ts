@@ -9,6 +9,7 @@ export const GET: APIRoute = async () => {
   const urls = [
     '/',
     '/kits',
+    '/resources',
     '/contracts',
     ...getAllKits().flatMap((kit) => [
       `/kits/${kit.slug}`,

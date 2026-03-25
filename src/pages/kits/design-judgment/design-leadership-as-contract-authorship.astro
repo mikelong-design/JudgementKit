@@ -1,20 +1,12 @@
 ---
 import SiteLayout from '../../../components/SiteLayout.astro';
+import { IA_LABELS, ROUTES } from '../../../lib/ia';
 
-const kitPath = '/kits/design-judgment';
+const kitPath = ROUTES.designKit;
 const responsibilitiesPath = `${kitPath}/responsibilities-matrix`;
 const decisionRightsPath = `${kitPath}/decision-rights`;
 const weeklyCadencePath = `${kitPath}/weekly-cadence`;
-const pagePath = `${kitPath}/design-leadership-as-contract-authorship`;
-const contractsPath = '/contracts';
-const pilotWorkflowPath = '/contracts/workflows/ai-ui-generation';
-
-const navLinks = [
-  { href: '/', label: 'Platform' },
-  { href: '/kits', label: 'Kits' },
-  { href: kitPath, label: 'Design Judgment Kit' },
-  { href: contractsPath, label: 'Contracts' }
-];
+const pagePath = ROUTES.designLeadership;
 
 const anchorLinks = [
   { href: '#overview', label: 'Overview' },
@@ -91,16 +83,15 @@ const failureModes = [
   title="Design Leadership as Contract Authorship"
   description="A design-leader framing for AI-accelerated product work. Learn how explicit responsibilities, decision rights, and cadence keep polished drafts from becoming default direction."
   path={pagePath}
-  navLinks={navLinks}
   ogImage="/assets/support_judgment_early_header_1536x804.png"
   bodyClass="support-page"
 >
   <nav class="breadcrumbs" aria-label="Breadcrumb">
     <ol>
-      <li><a href="/">Platform</a></li>
-      <li><a href="/kits">Kits</a></li>
+      <li><a href={ROUTES.home}>{IA_LABELS.home}</a></li>
+      <li><a href={ROUTES.kits}>{IA_LABELS.kits}</a></li>
       <li><a href={kitPath}>Design Judgment Kit</a></li>
-      <li aria-current="page">Design leadership as contract authorship</li>
+      <li aria-current="page">{IA_LABELS.leadershipFraming}</li>
     </ol>
   </nav>
 
@@ -120,7 +111,7 @@ const failureModes = [
       <div class="cta-row">
         <a class="button primary" href={responsibilitiesPath}>Read responsibilities matrix</a>
         <a class="button ghost" href={decisionRightsPath}>Read decision rights snapshot</a>
-        <a class="button ghost" href={pilotWorkflowPath}>See contracts pilot</a>
+        <a class="button ghost" href={ROUTES.workflowGovernance}>Browse workflow governance</a>
       </div>
     </div>
 

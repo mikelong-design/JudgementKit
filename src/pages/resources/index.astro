@@ -1,0 +1,131 @@
+---
+import SiteLayout from '../../components/SiteLayout.astro';
+import PageSubnav from '../../components/PageSubnav.astro';
+import { IA_LABELS } from '../../lib/ia';
+import {
+  formatResourceKind,
+  getResourceActionLabel,
+  getResourceIndexSections,
+  type ResourceIndexEntry
+} from '../../lib/resources';
+
+const sections = await getResourceIndexSections();
+const allEntries = [
+  ...sections.startHere,
+  ...sections.operatingKits,
+  ...sections.workflowGovernance,
+  ...sections.playbooks
+];
+const titleByHref = new Map(allEntries.map((entry) => [entry.href, entry.title]));
+const sectionLinks = [
+  { href: '#start-here', label: IA_LABELS.startHere },
+  { href: '#operating-kits', label: IA_LABELS.operatingKits },
+  { href: '#workflow-governance', label: IA_LABELS.workflowGovernance },
+  { href: '#playbooks', label: IA_LABELS.playbooks }
+];
+
+const pageSections: Array<{
+  id: string;
+  eyebrow: string;
+  title: string;
+  intro: string;
+  entries: ResourceIndexEntry[];
+}> = [
+  {
+    id: 'start-here',
+    eyebrow: IA_LABELS.startHere,
+    title: 'The clearest starting paths in the library',
+    intro: 'Start with an operating kit, then move into workflow governance when AI-generated work reaches publish risk.',
+    entries: sections.startHere
+  },
+  {
+    id: 'operating-kits',
+    eyebrow: IA_LABELS.operatingKits,
+    title: 'Operating kits',
+    intro: 'JudgmentKit leads with kits because they are the practical entry point for better ownership, decision rights, and cadence.',
+    entries: sections.operatingKits
+  },
+  {
+    id: 'workflow-governance',
+    eyebrow: IA_LABELS.workflowGovernance,
+    title: 'Workflow governance resources',
+    intro: 'Use these resources when consequential AI output needs explicit contracts, drift tests, and review evidence before publish.',
+    entries: sections.workflowGovernance
+  },
+  {
+    id: 'playbooks',
+    eyebrow: IA_LABELS.playbooks,
+    title: 'Playbooks',
+    intro: 'Playbooks turn measurement into explicit action so enforcement stays operational instead of implied.',
+    entries: sections.playbooks
+  }
+];
+---
+
+<SiteLayout
+  title="Resources"
+  description="Browse JudgmentKit operating kits, workflow-governance resources, and playbooks."
+  path="/resources"
+  bodyClass="platform-home"
+>
+  <section class="platform-hero" aria-labelledby="resources-title">
+    <div class="hero-copy">
+      <span class="muted-chip">{IA_LABELS.resources}</span>
+      <h1 id="resources-title">Browse everything JudgmentKit provides in one place.</h1>
+      <p class="subhead">
+        The resource library brings the public JudgmentKit offer into one hierarchy: start with
+        operating kits, then move into workflow governance and playbooks when the work needs more
+        explicit review structure.
+      </p>
+      <div class="cta-row">
+        <a class="button primary" href="#start-here">Start here</a>
+        <a class="button ghost" href="#workflow-governance">Browse workflow governance</a>
+      </div>
+    </div>
+
+    <div class="hero-sidebar">
+      <div class="summary-grid">
+        <article class="summary-card">
+          <strong>{sections.operatingKits.length} operating kit</strong>
+          <p>Use kits first when you need responsibilities, decision rights, and cadence to be explicit.</p>
+        </article>
+        <article class="summary-card">
+          <strong>{sections.workflowGovernance.length} workflow-governance resources</strong>
+          <p>Use contracts, workflows, and drift tests when consequential AI output needs measurable guardrails.</p>
+        </article>
+        <article class="summary-card">
+          <strong>{sections.playbooks.length} playbook</strong>
+          <p>Use playbooks to decide what happens after drift is measured.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <PageSubnav links={sectionLinks} />
+
+  {pageSections.map((section) => (
+    <section id={section.id} aria-labelledby={`${section.id}-title`}>
+      <span class="eyebrow">{section.eyebrow}</span>
+      <h2 id={`${section.id}-title`}>{section.title}</h2>
+      <p class="subhead">{section.intro}</p>
+      <div class="resource-grid">
+        {section.entries.map((entry) => (
+          <article class="module-nav-card">
+            <span class="muted-chip">{formatResourceKind(entry.kind)}</span>
+            <h3>{entry.title}</h3>
+            <p>{entry.summary}</p>
+            <div class="resource-meta">
+              <span class="resource-kicker">Belongs in {entry.parentLabel}</span>
+              {entry.relatedHref && titleByHref.get(entry.relatedHref) && (
+                <p class="resource-related">
+                  Related: <a href={entry.relatedHref}>{titleByHref.get(entry.relatedHref)}</a>
+                </p>
+              )}
+            </div>
+            <a href={entry.href}>{getResourceActionLabel(entry)}</a>
+          </article>
+        ))}
+      </div>
+    </section>
+  ))}
+</SiteLayout>

@@ -2,6 +2,8 @@
 import { render } from 'astro:content';
 
 import SiteLayout from '../../../components/SiteLayout.astro';
+import PageSubnav from '../../../components/PageSubnav.astro';
+import { IA_LABELS, ROUTES } from '../../../lib/ia';
 import { getContractsSiteData, getPlaybookBySlug } from '../../../lib/contracts';
 
 export async function getStaticPaths() {
@@ -14,30 +16,29 @@ export async function getStaticPaths() {
 
 const { playbooks } = await getContractsSiteData();
 const playbook = getPlaybookBySlug(playbooks, Astro.params.playbookSlug || '');
+const sectionLinks = [
+  { href: '#responses', label: 'Responses' },
+  { href: '#context', label: 'Context' }
+];
 
 if (!playbook) {
   throw new Error(`Unknown playbook slug: ${Astro.params.playbookSlug}`);
 }
 
 const { Content } = await render(playbook);
-const navLinks = [
-  { href: '/', label: 'Platform' },
-  { href: '/contracts', label: 'Contracts' },
-  { href: '#responses', label: 'Responses' }
-];
 ---
 
 <SiteLayout
   title={playbook.data.title}
   description={playbook.data.summary}
   path={`/contracts/playbooks/${playbook.slug}`}
-  navLinks={navLinks}
   bodyClass="contracts-page playbook-page"
 >
   <nav class="breadcrumbs" aria-label="Breadcrumb">
     <ol>
-      <li><a href="/">Platform</a></li>
-      <li><a href="/contracts">Contracts</a></li>
+      <li><a href={ROUTES.home}>{IA_LABELS.home}</a></li>
+      <li><a href={ROUTES.resources}>{IA_LABELS.resources}</a></li>
+      <li><a href={ROUTES.workflowGovernance}>{IA_LABELS.workflowGovernance}</a></li>
       <li aria-current="page">{playbook.data.title}</li>
     </ol>
   </nav>
@@ -49,15 +50,21 @@ const navLinks = [
       <p class="subhead">{playbook.data.summary}</p>
       <p>
         The playbook is the operating policy that turns drift scores into explicit actions. It keeps
-        the contracts section practical instead of leaving enforcement as an implied human judgment call.
+        the governance layer practical instead of leaving enforcement as an implied human judgment call.
       </p>
       <div class="cta-row">
-        <a class="button primary" href="/contracts">Back to contracts</a>
-        <a class="button ghost" href="/contracts/workflows/ai-ui-generation">Open pilot workflow</a>
+        <a class="button primary" href={ROUTES.pilotWorkflow}>Open related workflow</a>
+        <a class="button ghost" href={ROUTES.resources}>Back to resources</a>
       </div>
     </div>
 
-    <aside class="module-sidecard" aria-label="Escalation payload fields">
+    <aside class="module-sidecard" aria-label="Playbook context">
+      <strong>Related workflow</strong>
+      <p><a href={ROUTES.pilotWorkflow}>AI UI Generation</a></p>
+
+      <strong>Related kit</strong>
+      <p><a href={ROUTES.designKit}>Design Judgment Kit</a></p>
+
       <strong>Escalation payload fields</strong>
       <ul>
         {
@@ -68,6 +75,8 @@ const navLinks = [
       </ul>
     </aside>
   </section>
+
+  <PageSubnav links={sectionLinks} />
 
   <section id="responses" aria-labelledby="responses-title">
     <span class="eyebrow">Responses</span>
@@ -84,7 +93,7 @@ const navLinks = [
     </div>
   </section>
 
-  <section aria-labelledby="context-title">
+  <section id="context" aria-labelledby="context-title">
     <span class="eyebrow">Context</span>
     <h2 id="context-title">How the playbook should be used</h2>
     <div class="content-stack">

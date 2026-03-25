@@ -1,5 +1,6 @@
 ---
 import SiteLayout from '../../components/SiteLayout.astro';
+import PageSubnav from '../../components/PageSubnav.astro';
 import {
   CONTRACT_OWNERSHIP_RULES,
   CONTRACT_REGISTRY_TEMPLATE,
@@ -7,6 +8,7 @@ import {
   CONTRACT_SEVERITY_MODEL,
   CONTRACT_VERSIONING_RULES
 } from '../../data/contract-registry';
+import { IA_LABELS, ROUTES } from '../../lib/ia';
 import {
   getContractsForWorkflow,
   getPlaybookBySlug,
@@ -26,66 +28,157 @@ if (!pilotWorkflow || !playbook) {
   throw new Error('Contracts landing page is missing the pilot workflow or drift-response playbook.');
 }
 
-const navLinks = [
-  { href: '/', label: 'Platform' },
-  { href: '/kits', label: 'Kits' },
-  { href: '/contracts', label: 'Contracts' },
-  { href: '#pilot', label: 'Pilot' }
+const sectionLinks = [
+  { href: '#featured-workflow', label: 'Featured workflow' },
+  { href: '#contracts-library', label: 'Contracts' },
+  { href: '#drift-tests', label: 'Drift tests' },
+  { href: '#playbook', label: 'Playbook' },
+  { href: '#standards', label: 'Standards' }
 ];
 ---
 
 <SiteLayout
-  title="Contracts"
-  description="Govern AI workflows with contracts, drift tests, and explicit response policies."
+  title="Workflow Governance Resources"
+  description="Browse JudgmentKit workflow-governance resources: workflows, contracts, drift tests, and response playbooks."
   path="/contracts"
-  navLinks={navLinks}
   bodyClass="contracts-page contracts-index"
 >
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ol>
+      <li><a href={ROUTES.home}>{IA_LABELS.home}</a></li>
+      <li><a href={ROUTES.resources}>{IA_LABELS.resources}</a></li>
+      <li aria-current="page">{IA_LABELS.workflowGovernance}</li>
+    </ol>
+  </nav>
+
   <section class="platform-hero" id="top" aria-labelledby="contracts-title">
     <div class="hero-copy">
-      <span class="muted-chip">Contracts</span>
-      <h1 id="contracts-title">Govern AI workflows before polished drafts turn into defaults</h1>
+      <span class="muted-chip">{IA_LABELS.workflowGovernance}</span>
+      <h1 id="contracts-title">Workflow governance resources for JudgmentKit.</h1>
       <p class="subhead">
-        Judgment Kit now includes a contracts layer for bounded autonomy: declared rules, measurable
-        drift tests, and a response playbook that decides when to allow, nudge, correct,
-        quarantine, or escalate.
-      </p>
-      <p>
-        The first fully modeled workflow is <strong>{pilotWorkflow.data.title}</strong>. It combines
-        tone, safety, design-system fit, runtime discipline, and provenance into one reviewable
-        operating surface.
+        This route is the workflow-governance subsection of the library. Use it when AI-generated
+        work needs explicit contracts, measurable drift tests, and a response playbook before teams
+        treat the output as committed direction.
       </p>
       <div class="cta-row">
-        <a class="button primary" href={`/contracts/workflows/${pilotWorkflow.slug}`}>
-          Review AI UI generation pilot
-        </a>
-        <a class="button ghost" href={`/contracts/playbooks/${playbook.slug}`}>
-          Read drift response playbook
-        </a>
+        <a class="button primary" href={ROUTES.resources}>Back to resources</a>
+        <a class="button ghost" href={`/contracts/workflows/${pilotWorkflow.slug}`}>Open featured workflow</a>
       </div>
     </div>
 
     <div class="hero-sidebar">
       <div class="summary-grid">
         <article class="summary-card">
-          <strong>{contracts.length} starter contracts</strong>
-          <p>Each contract declares what a workflow may adapt and what it must not cross.</p>
+          <strong>{workflows.length} workflow</strong>
+          <p>Use workflows to model the governed path from decision record through response.</p>
         </article>
         <article class="summary-card">
-          <strong>{driftTests.length} measurable drift tests</strong>
-          <p>Each test exposes fit against declared intent before output becomes operational.</p>
+          <strong>{contracts.length} contracts and {driftTests.length} drift tests</strong>
+          <p>Use them to declare boundaries and measure whether the output stayed inside them.</p>
         </article>
         <article class="summary-card">
-          <strong>One shared response policy</strong>
-          <p>Outputs are allowed, nudged, corrected, quarantined, or escalated with explicit evidence.</p>
+          <strong>{playbooks.length} playbook</strong>
+          <p>Use the playbook to turn drift scores into explicit actions.</p>
         </article>
       </div>
     </div>
   </section>
 
-  <section aria-labelledby="registry-title">
-    <span class="eyebrow">Registry</span>
-    <h2 id="registry-title">Contract releases need declared ownership and release gates</h2>
+  <PageSubnav links={sectionLinks} />
+
+  <section id="featured-workflow" aria-labelledby="pilot-title">
+    <span class="eyebrow">Featured workflow</span>
+    <h2 id="pilot-title">Start with the featured workflow</h2>
+    <div class="module-columns">
+      <div class="module-section">
+        <div class="content-stack">
+          <p>{pilotWorkflow.data.summary}</p>
+          <p>
+            This is the clearest entry point into workflow governance because it applies the Design
+            Judgment Kit thesis directly to consequential AI-generated interface work.
+          </p>
+          <div class="cta-row">
+            <a class="button primary" href={`/contracts/workflows/${pilotWorkflow.slug}`}>Open workflow</a>
+            <a class="button ghost" href={ROUTES.designKit}>See related kit</a>
+          </div>
+        </div>
+      </div>
+
+      <aside class="module-sidecard" aria-label="Featured workflow metadata">
+        <strong>Default surface</strong>
+        <p>{pilotWorkflow.data.defaultSurface}</p>
+
+        <strong>Default audience</strong>
+        <p>{pilotWorkflow.data.defaultAudience}</p>
+
+        <strong>Decision record fields</strong>
+        <p>{pilotWorkflow.data.decisionRecordFields.length} required fields</p>
+      </aside>
+    </div>
+  </section>
+
+  <section id="contracts-library" aria-labelledby="contracts-grid-title">
+    <span class="eyebrow">Contracts</span>
+    <h2 id="contracts-grid-title">Contracts used by the featured workflow</h2>
+    <div class="module-nav-grid">
+      {
+        pilotContracts.map((contract) => (
+          <article class="module-nav-card">
+            <span class="muted-chip">{contract.data.id}</span>
+            <h3>{contract.data.name}</h3>
+            <p>{contract.data.intent}</p>
+            <a href={`/contracts/${contract.slug}`}>Read contract</a>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section id="drift-tests" aria-labelledby="tests-title">
+    <span class="eyebrow">Drift tests</span>
+    <h2 id="tests-title">Drift tests mapped to the featured workflow</h2>
+    <div class="module-nav-grid">
+      {
+        pilotTests.map((test) => (
+          <article class="module-nav-card">
+            <span class="muted-chip">{test.data.id}</span>
+            <h3>{test.data.name}</h3>
+            <p>{test.data.purpose}</p>
+            <a href={`/contracts/tests/${test.slug}`}>Read drift test</a>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section id="playbook" aria-labelledby="playbook-title">
+    <span class="eyebrow">Playbook</span>
+    <h2 id="playbook-title">The response playbook turns drift into action</h2>
+    <div class="module-columns">
+      <div class="module-section">
+        <div class="module-nav-grid">
+          {
+            playbook.data.responseClasses.map((item) => (
+              <article class="module-nav-card">
+                <h3>{item.name}</h3>
+                <p>{item.description}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+
+      <aside class="module-sidecard" aria-label="Playbook summary">
+        <strong>{playbook.data.title}</strong>
+        <p>{playbook.data.summary}</p>
+        <a href={`/contracts/playbooks/${playbook.slug}`}>Read playbook</a>
+      </aside>
+    </div>
+  </section>
+
+  <section id="standards" aria-labelledby="registry-title">
+    <span class="eyebrow">Standards</span>
+    <h2 id="registry-title">Registry standards for releasing governance resources</h2>
     <div class="module-columns">
       <div class="module-section">
         <div class="module-nav-grid">
@@ -138,118 +231,6 @@ const navLinks = [
             ))
           }
         </ul>
-      </aside>
-    </div>
-  </section>
-
-  <section id="pilot" aria-labelledby="pilot-title">
-    <span class="eyebrow">Pilot Workflow</span>
-    <h2 id="pilot-title">AI UI generation is the first fully modeled workflow</h2>
-    <div class="module-columns">
-      <div class="module-section">
-        <div class="content-stack">
-          <p>{pilotWorkflow.data.summary}</p>
-          <p>
-            It is the best fit for the platform because it translates the Design Judgment Kit thesis
-            directly into operational governance: speed stays high, but responsibility, quality
-            thresholds, and auditability become explicit before publish.
-          </p>
-          <div class="cta-row">
-            <a class="button primary" href={`/contracts/workflows/${pilotWorkflow.slug}`}>
-              Open workflow
-            </a>
-            <a class="button ghost" href="/kits/design-judgment">
-              Return to Design Judgment Kit
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <aside class="module-sidecard" aria-label="Pilot workflow metadata">
-        <strong>Default surface</strong>
-        <p>{pilotWorkflow.data.defaultSurface}</p>
-
-        <strong>Default audience</strong>
-        <p>{pilotWorkflow.data.defaultAudience}</p>
-
-        <strong>Decision record fields</strong>
-        <p>{pilotWorkflow.data.decisionRecordFields.length} required fields</p>
-      </aside>
-    </div>
-
-    <div class="module-columns">
-      <div class="module-section">
-        <span class="eyebrow">Contracts covering this workflow</span>
-        <div class="module-nav-grid">
-          {
-            pilotContracts.map((contract) => (
-              <article class="module-nav-card">
-                <span class="muted-chip">{contract.data.id}</span>
-                <h3>{contract.data.name}</h3>
-                <p>{contract.data.intent}</p>
-                <a href={`/contracts/${contract.slug}`}>Read contract</a>
-              </article>
-            ))
-          }
-        </div>
-      </div>
-
-      <div class="module-section">
-        <span class="eyebrow">Drift tests</span>
-        <div class="module-nav-grid">
-          {
-            pilotTests.map((test) => (
-              <article class="module-nav-card">
-                <span class="muted-chip">{test.data.id}</span>
-                <h3>{test.data.name}</h3>
-                <p>{test.data.purpose}</p>
-                <a href={`/contracts/tests/${test.slug}`}>Read drift test</a>
-              </article>
-            ))
-          }
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section aria-labelledby="contracts-grid-title">
-    <span class="eyebrow">Contracts</span>
-    <h2 id="contracts-grid-title">Starter contract library</h2>
-    <div class="module-nav-grid">
-      {
-        contracts.map((contract) => (
-          <article class="module-nav-card">
-            <span class="muted-chip">{contract.data.id}</span>
-            <h3>{contract.data.name}</h3>
-            <p>{contract.data.intent}</p>
-            <a href={`/contracts/${contract.slug}`}>Read contract</a>
-          </article>
-        ))
-      }
-    </div>
-  </section>
-
-  <section aria-labelledby="playbook-title">
-    <span class="eyebrow">Response Policy</span>
-    <h2 id="playbook-title">What happens after drift is measured</h2>
-    <div class="module-columns">
-      <div class="module-section">
-        <div class="module-nav-grid">
-          {
-            playbook.data.responseClasses.map((item) => (
-              <article class="module-nav-card">
-                <h3>{item.name}</h3>
-                <p>{item.description}</p>
-              </article>
-            ))
-          }
-        </div>
-      </div>
-
-      <aside class="module-sidecard" aria-label="Playbook summary">
-        <strong>{playbook.data.title}</strong>
-        <p>{playbook.data.summary}</p>
-        <a href={`/contracts/playbooks/${playbook.slug}`}>Read playbook</a>
       </aside>
     </div>
   </section>

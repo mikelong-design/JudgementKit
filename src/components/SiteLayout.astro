@@ -8,6 +8,7 @@ import '../styles/kit-shared.css';
 import '../styles/platform.css';
 
 import { SITE, absoluteUrl, buildPageTitle, ogImageUrl, type NavLink } from '../lib/site';
+import { getPrimaryNav, isPrimaryNavActive } from '../lib/ia';
 
 interface Props {
   title?: string;
@@ -32,6 +33,7 @@ const {
 const fullTitle = buildPageTitle(title);
 const canonical = absoluteUrl(path);
 const resolvedOgImage = ogImageUrl(ogImage);
+const resolvedNavLinks = navLinks.length > 0 ? navLinks : getPrimaryNav();
 ---
 
 <html lang="en">
@@ -73,16 +75,20 @@ const resolvedOgImage = ogImageUrl(ogImage);
         </button>
         <nav class="nav-links" aria-label="Primary">
           {
-            navLinks.map((link) => (
-              <a href={link.href}>{link.label}</a>
+            resolvedNavLinks.map((link) => (
+              <a href={link.href} aria-current={isPrimaryNavActive(path, link.href) ? 'page' : undefined}>
+                {link.label}
+              </a>
             ))
           }
         </nav>
       </div>
       <nav id="mobile-nav" class="mobile-menu" data-open="false" aria-label="Mobile sections">
         {
-          navLinks.map((link) => (
-            <a href={link.href}>{link.label}</a>
+          resolvedNavLinks.map((link) => (
+            <a href={link.href} aria-current={isPrimaryNavActive(path, link.href) ? 'page' : undefined}>
+              {link.label}
+            </a>
           ))
         }
       </nav>

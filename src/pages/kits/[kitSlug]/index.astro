@@ -1,5 +1,7 @@
 ---
 import SiteLayout from '../../../components/SiteLayout.astro';
+import PageSubnav from '../../../components/PageSubnav.astro';
+import { IA_LABELS, ROUTES } from '../../../lib/ia';
 import { getAllKits, getKitBySlug, orderedModules } from '../../../lib/kits';
 
 export function getStaticPaths() {
@@ -15,34 +17,52 @@ if (!kit) {
 }
 
 const modules = orderedModules(kit);
-const contractsPath = '/contracts';
-const pilotWorkflowPath = '/contracts/workflows/ai-ui-generation';
-const framingPagePath =
-  kit.slug === 'design-judgment'
-    ? `/kits/${kit.slug}/design-leadership-as-contract-authorship`
-    : undefined;
-const navLinks = [
-  { href: '/', label: 'Platform' },
-  { href: '/kits', label: 'Kits' },
-  ...(kit.slug === 'design-judgment' ? [{ href: contractsPath, label: 'Contracts' }] : []),
-  ...(framingPagePath ? [{ href: '#framing', label: 'Framing' }] : []),
-  { href: `#modules`, label: 'Modules' },
-  { href: `#how-to-use`, label: 'How to Use' },
-  { href: `#flow`, label: 'Flow' }
+const framingPagePath = kit.slug === 'design-judgment' ? ROUTES.designLeadership : undefined;
+const sectionLinks = [
+  { href: '#modules', label: 'Modules' },
+  { href: '#runbook', label: 'Runbook' },
+  ...(framingPagePath ? [{ href: '#leadership-framing', label: IA_LABELS.leadershipFraming }] : []),
+  ...(kit.slug === 'design-judgment'
+    ? [{ href: '#related-resources', label: 'Related resources' }]
+    : []),
+  ...(kit.flowStages ? [{ href: '#flow', label: 'Flow' }] : [])
 ];
+
+const relatedResources =
+  kit.slug === 'design-judgment'
+    ? [
+        {
+          title: 'AI UI Generation workflow',
+          body: 'See how the same judgment model becomes explicit workflow governance before generated UI reaches publish risk.',
+          href: ROUTES.pilotWorkflow,
+          cta: 'Open workflow'
+        },
+        {
+          title: 'Workflow governance library',
+          body: 'Browse the contracts, drift tests, and governance resources that extend this kit into operational review.',
+          href: ROUTES.workflowGovernance,
+          cta: 'Browse workflow governance'
+        },
+        {
+          title: 'Drift Response Playbook',
+          body: 'Read the response policy that decides what happens after drift is measured.',
+          href: '/contracts/playbooks/drift-response',
+          cta: 'Read playbook'
+        }
+      ]
+    : [];
 ---
 
 <SiteLayout
   title={kit.title}
   description={kit.summary}
   path={`/kits/${kit.slug}`}
-  navLinks={navLinks}
   bodyClass="kit-page"
 >
   <nav class="breadcrumbs" aria-label="Breadcrumb">
     <ol>
-      <li><a href="/">Platform</a></li>
-      <li><a href="/kits">Kits</a></li>
+      <li><a href={ROUTES.home}>{IA_LABELS.home}</a></li>
+      <li><a href={ROUTES.kits}>{IA_LABELS.kits}</a></li>
       <li aria-current="page">{kit.title}</li>
     </ol>
   </nav>
@@ -57,10 +77,10 @@ const navLinks = [
         <strong>Core thesis:</strong> {kit.coreThesis}
       </p>
       <div class="cta-row">
-        <a class="button primary" href={`#modules`}>Jump to kit modules</a>
-        <a class="button ghost" href={`/kits/${kit.slug}/${modules[0]?.slug}`}>
-          {modules[0]?.title ? `Read ${modules[0].title}` : 'Read first module'}
+        <a class="button primary" href={`/kits/${kit.slug}/${modules[0]?.slug}`}>
+          {modules[0]?.title ? `Start with ${modules[0].title}` : 'Start with this kit'}
         </a>
+        <a class="button ghost" href={ROUTES.resources}>Browse all resources</a>
       </div>
     </div>
 
@@ -76,45 +96,11 @@ const navLinks = [
     </div>
   </section>
 
-  {framingPagePath && (
-    <section id="framing" aria-labelledby="framing-title">
-      <span class="eyebrow">For design leaders</span>
-      <h2 id="framing-title">Start with contract authorship</h2>
-      <div class="module-columns">
-        <div class="module-section">
-          <div class="module-copy">
-            <p>
-              Design leadership in AI-accelerated product work increasingly means making ownership,
-              decision rights, quality thresholds, and weekly cadence explicit before polished drafts
-              start acting like product direction.
-            </p>
-            <p>
-              Use the contract authorship page as the conceptual front door for the Design Judgment
-              Kit, then move into the three core modules to apply that posture in live delivery work.
-            </p>
-          </div>
-          <div class="cta-row">
-            <a class="button primary" href={framingPagePath}>Read contract authorship</a>
-            <a class="button ghost" href={`/kits/${kit.slug}/${modules[0]?.slug}`}>
-              {modules[0]?.title ? `Read ${modules[0].title}` : 'Read first module'}
-            </a>
-          </div>
-        </div>
-
-        <aside class="module-sidecard" aria-label="Framing page summary">
-          <strong>What this adds</strong>
-          <p>
-            A role-specific framing page for design leaders that strengthens the existing kit without
-            turning it into a fourth module.
-          </p>
-        </aside>
-      </div>
-    </section>
-  )}
+  <PageSubnav links={sectionLinks} />
 
   <section id="modules" aria-labelledby="modules-title">
     <span class="eyebrow">Modules</span>
-    <h2 id="modules-title">Kit modules</h2>
+    <h2 id="modules-title">Start with the concrete kit modules</h2>
     <div class="module-nav-grid">
       {
         modules.map((module) => (
@@ -129,9 +115,9 @@ const navLinks = [
     </div>
   </section>
 
-  <section id="how-to-use" aria-labelledby="how-title">
+  <section id="runbook" aria-labelledby="how-title">
     <span class="eyebrow">Runbook</span>
-    <h2 id="how-title">How to use this kit</h2>
+    <h2 id="how-title">How to use this kit in live delivery work</h2>
     <div class="module-columns">
       <div class="module-section">
         <ol>
@@ -155,40 +141,61 @@ const navLinks = [
     </div>
   </section>
 
-  {kit.slug === 'design-judgment' && (
-    <section aria-labelledby="contracts-title">
-      <span class="eyebrow">Contracts</span>
-      <h2 id="contracts-title">Extend this kit into governed AI UI review</h2>
+  {framingPagePath && (
+    <section id="leadership-framing" aria-labelledby="framing-title">
+      <span class="eyebrow">{IA_LABELS.leadershipFraming}</span>
+      <h2 id="framing-title">Recommended background reading for design leaders</h2>
       <div class="module-columns">
         <div class="module-section">
-          <div class="content-stack">
+          <div class="module-copy">
             <p>
-              The Design Judgment Kit now connects directly to a contracts layer for AI UI
-              generation. It is the operational extension of the same thesis: make ownership,
-              quality thresholds, and review evidence explicit before polished drafts harden into
-              default product direction.
+              Use the leadership-framing page when you need the design-leadership rationale behind
+              this kit before moving into the working modules.
             </p>
-            <div class="cta-row">
-              <a class="button primary" href={pilotWorkflowPath}>See governed workflow</a>
-              <a class="button ghost" href={contractsPath}>Browse contracts</a>
-            </div>
+            <p>
+              It explains why ownership, decision rights, quality thresholds, and cadence have to
+              become explicit earlier when AI makes drafts look finished before teams are aligned.
+            </p>
+          </div>
+          <div class="cta-row">
+            <a class="button primary" href={framingPagePath}>Read leadership framing</a>
+            <a class="button ghost" href={`/kits/${kit.slug}/${modules[0]?.slug}`}>
+              {modules[0]?.title ? `Start with ${modules[0].title}` : 'Start with this kit'}
+            </a>
           </div>
         </div>
 
-        <aside class="module-sidecard" aria-label="Contracts layer summary">
+        <aside class="module-sidecard" aria-label="Leadership framing summary">
           <strong>What it adds</strong>
           <p>
-            Explicit contracts, drift tests, and a response playbook that make AI interface review
-            inspectable instead of implicit.
+            A role-specific explanation of how to use this kit as an operating mechanism, not just
+            as a reference page.
           </p>
         </aside>
       </div>
     </section>
   )}
 
+  {relatedResources.length > 0 && (
+    <section id="related-resources" aria-labelledby="related-title">
+      <span class="eyebrow">Related resources</span>
+      <h2 id="related-title">Related workflow governance resources</h2>
+      <div class="module-nav-grid">
+        {relatedResources.map((resource) => (
+          <article class="module-nav-card">
+            <span class="muted-chip">Workflow governance</span>
+            <h3>{resource.title}</h3>
+            <p>{resource.body}</p>
+            <a href={resource.href}>{resource.cta}</a>
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
+
   {kit.flowStages && (
     <section id="flow" class="flow-section" aria-labelledby="flow-title">
-      <span class="eyebrow">Flow Variant</span>
+      <span class="eyebrow">Flow</span>
       <h2 id="flow-title">Stage-driven workflow</h2>
       <div class="flow-rail">
         {
@@ -202,5 +209,4 @@ const navLinks = [
       </div>
     </section>
   )}
-
 </SiteLayout>

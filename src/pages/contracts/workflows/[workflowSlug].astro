@@ -2,6 +2,8 @@
 import { render } from 'astro:content';
 
 import SiteLayout from '../../../components/SiteLayout.astro';
+import PageSubnav from '../../../components/PageSubnav.astro';
+import { IA_LABELS, ROUTES } from '../../../lib/ia';
 import {
   getContractsForWorkflow,
   getContractsSiteData,
@@ -30,6 +32,12 @@ const relatedContracts = getContractsForWorkflow(workflow, contracts);
 const relatedTests = getTestsForWorkflow(workflow, driftTests);
 const playbook = getPlaybookBySlug(playbooks, workflow.data.playbookSlug);
 const provenanceContract = relatedContracts.find((contract) => contract.data.id === 'JK-CONTRACT-005');
+const sectionLinks = [
+  { href: '#steps', label: 'Operating flow' },
+  { href: '#record', label: 'Decision record' },
+  { href: '#coverage', label: 'Coverage' },
+  { href: '#context', label: 'Context' }
+];
 
 if (!playbook) {
   throw new Error(`Workflow ${workflow.slug} is missing its playbook.`);
@@ -53,62 +61,57 @@ const flowSteps = [
     body: 'Use incidents and near misses to update thresholds, rules, and ownership boundaries.'
   }
 ];
-
-const navLinks = [
-  { href: '/', label: 'Platform' },
-  { href: '/contracts', label: 'Contracts' },
-  { href: '#coverage', label: 'Coverage' },
-  { href: '#record', label: 'Decision Record' }
-];
 ---
 
 <SiteLayout
   title={workflow.data.title}
   description={workflow.data.summary}
   path={`/contracts/workflows/${workflow.slug}`}
-  navLinks={navLinks}
   bodyClass="contracts-page contract-workflow-page"
 >
   <nav class="breadcrumbs" aria-label="Breadcrumb">
     <ol>
-      <li><a href="/">Platform</a></li>
-      <li><a href="/contracts">Contracts</a></li>
+      <li><a href={ROUTES.home}>{IA_LABELS.home}</a></li>
+      <li><a href={ROUTES.resources}>{IA_LABELS.resources}</a></li>
+      <li><a href={ROUTES.workflowGovernance}>{IA_LABELS.workflowGovernance}</a></li>
       <li aria-current="page">{workflow.data.title}</li>
     </ol>
   </nav>
 
   <section class="platform-hero" aria-labelledby="workflow-title">
     <div class="hero-copy">
-      <span class="muted-chip">{workflow.slug}</span>
+      <span class="muted-chip">Workflow</span>
       <h1 id="workflow-title">{workflow.data.title}</h1>
       <p class="subhead">{workflow.data.summary}</p>
       <p>
-        This workflow is the first fully modeled Judgment Kit pilot because it turns the Design
+        This workflow is the first fully modeled JudgmentKit pilot because it turns the Design
         Judgment Kit thesis into an operational review loop that teams can inspect before publish.
       </p>
       <div class="cta-row">
         <a class="button primary" href={`/contracts/playbooks/${playbook.slug}`}>Read playbook</a>
-        <a class="button ghost" href="/kits/design-judgment">See Design Judgment Kit</a>
+        <a class="button ghost" href={ROUTES.resources}>Back to resources</a>
       </div>
     </div>
 
-    <aside class="module-sidecard" aria-label="Workflow defaults">
+    <aside class="module-sidecard" aria-label="Workflow context">
       <strong>Default surface</strong>
       <p>{workflow.data.defaultSurface}</p>
 
       <strong>Default audience</strong>
       <p>{workflow.data.defaultAudience}</p>
 
-      <strong>Contracts in scope</strong>
-      <p>{relatedContracts.length}</p>
+      <strong>Related kit</strong>
+      <p><a href={ROUTES.designKit}>Design Judgment Kit</a></p>
 
-      <strong>Drift tests in scope</strong>
-      <p>{relatedTests.length}</p>
+      <strong>Back to resources</strong>
+      <p><a href={ROUTES.workflowGovernance}>Browse workflow governance</a></p>
     </aside>
   </section>
 
-  <section aria-labelledby="steps-title">
-    <span class="eyebrow">Operating Flow</span>
+  <PageSubnav links={sectionLinks} />
+
+  <section id="steps" aria-labelledby="steps-title">
+    <span class="eyebrow">Operating flow</span>
     <h2 id="steps-title">How a governed workflow runs</h2>
     <div class="module-nav-grid">
       {
@@ -123,7 +126,7 @@ const navLinks = [
   </section>
 
   <section id="record" aria-labelledby="record-title">
-    <span class="eyebrow">Decision Record</span>
+    <span class="eyebrow">Decision record</span>
     <h2 id="record-title">Required fields for governed AI workflow decisions</h2>
     <div class="module-columns">
       <div class="module-section">
@@ -161,7 +164,7 @@ const navLinks = [
 
   <section id="coverage" aria-labelledby="coverage-title">
     <span class="eyebrow">Coverage</span>
-    <h2 id="coverage-title">Contracts and tests mapped to this workflow</h2>
+    <h2 id="coverage-title">Related contracts and drift tests</h2>
     <div class="module-columns">
       <div class="module-section">
         <span class="eyebrow">Contracts</span>
@@ -197,7 +200,7 @@ const navLinks = [
     </div>
   </section>
 
-  <section aria-labelledby="context-title">
+  <section id="context" aria-labelledby="context-title">
     <span class="eyebrow">Context</span>
     <h2 id="context-title">Why this workflow is the first pilot</h2>
     <div class="content-stack">

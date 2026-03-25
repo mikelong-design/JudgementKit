@@ -2,6 +2,8 @@
 import { render } from 'astro:content';
 
 import SiteLayout from '../../components/SiteLayout.astro';
+import PageSubnav from '../../components/PageSubnav.astro';
+import { IA_LABELS, ROUTES } from '../../lib/ia';
 import {
   getContractBySlug,
   getContractsSiteData,
@@ -28,11 +30,12 @@ const relatedTests = getDriftTestsForContract(driftTests, contract.data.id);
 const relatedWorkflows = workflows.filter((workflow) =>
   workflow.data.contracts.includes(contract.data.id)
 );
-const navLinks = [
-  { href: '/', label: 'Platform' },
-  { href: '/kits', label: 'Kits' },
-  { href: '/contracts', label: 'Contracts' },
-  { href: `#rules`, label: 'Rules' }
+const primaryWorkflow = relatedWorkflows[0];
+const sectionLinks = [
+  { href: '#rules', label: 'Rules' },
+  { href: '#metrics', label: 'Metrics' },
+  { href: '#enforcement', label: 'Enforcement' },
+  { href: '#context', label: 'Context' }
 ];
 ---
 
@@ -40,13 +43,13 @@ const navLinks = [
   title={contract.data.name}
   description={contract.data.intent}
   path={`/contracts/${contract.slug}`}
-  navLinks={navLinks}
   bodyClass="contracts-page contract-page"
 >
   <nav class="breadcrumbs" aria-label="Breadcrumb">
     <ol>
-      <li><a href="/">Platform</a></li>
-      <li><a href="/contracts">Contracts</a></li>
+      <li><a href={ROUTES.home}>{IA_LABELS.home}</a></li>
+      <li><a href={ROUTES.resources}>{IA_LABELS.resources}</a></li>
+      <li><a href={ROUTES.workflowGovernance}>{IA_LABELS.workflowGovernance}</a></li>
       <li aria-current="page">{contract.data.name}</li>
     </ol>
   </nav>
@@ -61,20 +64,12 @@ const navLinks = [
         or escalate before the output is treated as usable product work.
       </p>
       <div class="cta-row">
-        {
-          relatedWorkflows[0] && (
-            <a class="button primary" href={`/contracts/workflows/${relatedWorkflows[0].slug}`}>
-              Open related workflow
-            </a>
-          )
-        }
-        {
-          relatedTests[0] && (
-            <a class="button ghost" href={`/contracts/tests/${relatedTests[0].slug}`}>
-              Read first drift test
-            </a>
-          )
-        }
+        {primaryWorkflow && (
+          <a class="button primary" href={`/contracts/workflows/${primaryWorkflow.slug}`}>
+            Open related workflow
+          </a>
+        )}
+        <a class="button ghost" href={ROUTES.resources}>Back to resources</a>
       </div>
     </div>
 
@@ -90,11 +85,19 @@ const navLinks = [
 
       <strong>Version</strong>
       <p>{contract.data.version}</p>
+
+      <strong>Related kit</strong>
+      <p><a href={ROUTES.designKit}>Design Judgment Kit</a></p>
+
+      <strong>Back to resources</strong>
+      <p><a href={ROUTES.workflowGovernance}>Browse workflow governance</a></p>
     </aside>
   </section>
 
+  <PageSubnav links={sectionLinks} />
+
   <section aria-labelledby="autonomy-title">
-    <span class="eyebrow">Bounded Autonomy</span>
+    <span class="eyebrow">Bounded autonomy</span>
     <h2 id="autonomy-title">What this contract allows and disallows</h2>
     <div class="module-nav-grid">
       <article class="module-nav-card">
@@ -144,7 +147,7 @@ const navLinks = [
           }
         </ul>
 
-        <strong>Applies to workflows</strong>
+        <strong>Related workflow</strong>
         <ul>
           {
             relatedWorkflows.map((workflow) => (
@@ -158,7 +161,7 @@ const navLinks = [
     </div>
   </section>
 
-  <section aria-labelledby="metrics-title">
+  <section id="metrics" aria-labelledby="metrics-title">
     <span class="eyebrow">Metrics</span>
     <h2 id="metrics-title">Suggested measurements</h2>
     <div class="table-wrap">
@@ -183,7 +186,7 @@ const navLinks = [
     </div>
   </section>
 
-  <section aria-labelledby="enforcement-title">
+  <section id="enforcement" aria-labelledby="enforcement-title">
     <span class="eyebrow">Enforcement</span>
     <h2 id="enforcement-title">How the workflow responds to drift</h2>
     <div class="module-columns">
@@ -212,7 +215,7 @@ const navLinks = [
     </div>
   </section>
 
-  <section aria-labelledby="context-title">
+  <section id="context" aria-labelledby="context-title">
     <span class="eyebrow">Context</span>
     <h2 id="context-title">Why this contract exists</h2>
     <div class="content-stack">

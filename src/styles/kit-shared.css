@@ -168,6 +168,16 @@ summary:focus-visible {
   color: var(--text);
 }
 
+.nav-links a[aria-current='page'],
+.mobile-menu a[aria-current='page'] {
+  color: var(--text);
+}
+
+.nav-links a[aria-current='page'] {
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+}
+
 .menu-toggle {
   display: none;
   border: 1px solid var(--border);
